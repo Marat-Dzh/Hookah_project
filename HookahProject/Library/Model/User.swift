@@ -1,8 +1,10 @@
 //
-//  AuthorizationProtocols.swift
+//  UserModel.swift
 //  HookahProject
 //
 //  Created by Nikita Kuznetsov on 19.10.2020.
 //
 
-import Foundation
+final class User: BaseModel{
+    
+}
