@@ -6,5 +6,8 @@
 //
 
 class BaseModel{
-    
+    let fio: String
+    init(_ fio:String){
+        self.fio=fio
+    }
 }
