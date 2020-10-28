@@ -1,16 +1,16 @@
 //
-//  ViewController.swift
+//  BasketViewController.swift
 //  HookahProject
 //
-//  Created by Nikita Kuznetsov on 18.10.2020.
+//  Created by Nikita Kuznetsov on 28.10.2020.
 //
 
 import UIKit
 
-class FeedViewController: UIViewController {
-    private let output: FeedViewOutput
+class BasketViewController: UIViewController {
+    private let output: BasketViewOutput
     
-    init(_ output:FeedViewOutput){
+    init(_ output:BasketViewOutput){
         self.output = output
         super.init(nibName: nil, bundle: nil)
     }
@@ -18,22 +18,16 @@ class FeedViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view.
     }
+
 }
 
-extension FeedViewController: FeedViewInput{
-    func displayNews() {
+extension BasketViewController: BasketViewInput{
+    func displayOrders() {
         //
     }
-    
-    func displayStocks() {
-        //
-    }
-    
-    
 }
-
