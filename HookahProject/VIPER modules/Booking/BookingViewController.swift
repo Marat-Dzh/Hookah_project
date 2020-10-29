@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class BookingViewController: UIViewController {
     private let output: BookingViewOutput
