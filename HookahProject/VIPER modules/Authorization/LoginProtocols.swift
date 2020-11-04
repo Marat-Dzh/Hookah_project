@@ -15,7 +15,7 @@ protocol LoginViewOutput : class{
     func onClose()
     func onSkip()
     func login(type: AuthType, data: LoginData)
-    
+    func register(type: AuthType, data: LoginData)
 }
 
 protocol LoginModuleInput{
@@ -24,20 +24,21 @@ protocol LoginModuleInput{
 
 protocol LoginModuleOutput: class{
     func onClose()
-    func didFinish(result: AuthenticationResult)
+    func didFinish()
     
 }
 
 protocol LoginInteractorInput{
     func login(type: AuthType, context: LoginData)
+    func register (type: AuthType, data: LoginData)
 }
 
 protocol LoginInteractorOutput: class{
-    func authorizationCompleted()
-    func gotError()
+    func authorizationCompleted(context: AuthContext)
+    func gotError(_ error: ErrorType)
 }
 
 protocol LoginRouterInput{
-    func loginByPhone()
+    func loginByPhone(context: AuthContext)
     func loginBySkip()
 }

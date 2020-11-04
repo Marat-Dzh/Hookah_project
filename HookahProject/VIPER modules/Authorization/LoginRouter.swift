@@ -12,7 +12,7 @@ final class LoginRouter{
 }
 
 extension LoginRouter: LoginRouterInput{
-    func loginByPhone() {
+    func loginByPhone(context: AuthContext) {
         //assemble feed module
     }
     

@@ -38,14 +38,17 @@ extension LoginPresenter: LoginViewOutput{
     func login(type: AuthType, data: LoginData) {
         interactor.login(type: type, context: data)
     }
+    func register(type: AuthType, data: LoginData) {
+        interactor.register(type: type, data: data)
+    }
 }
 
 extension LoginPresenter: LoginInteractorOutput{
-    func authorizationCompleted() {
-        router.loginByPhone()
+    func gotError(_ error: ErrorType) {
+        //view method
     }
     
-    func gotError() {
-        //View method
+    func authorizationCompleted(context: AuthContext){
+        router.loginByPhone(context: context)
     }
 }
