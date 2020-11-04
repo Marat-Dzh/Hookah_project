@@ -34,5 +34,4 @@ final class LoginContainer{
 
 struct LoginContext {
     weak var output: LoginModuleOutput?
-    let data: AuthContext
 }
