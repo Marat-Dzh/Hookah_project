@@ -12,7 +12,9 @@ class PersonContext{
 
 class PersonInfo{
     let fio: String
-    init(_ fio:String){
+    let email: String
+    init(_ fio:String, _ email:String){
         self.fio=fio
+        self.email = email
     }
 }
