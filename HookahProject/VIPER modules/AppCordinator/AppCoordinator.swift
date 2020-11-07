@@ -21,6 +21,8 @@ class AppCoordinator {
     func start(){
         self.setupBooking()
         self.setupBasket()
+        self.setupFeed()
+        self.setupAccount()
         let navigationControllers = NavControllerType.allCases.compactMap{
             self.navigationControllers[$0]
         }
@@ -43,15 +45,36 @@ private extension AppCoordinator {
         container.viewController.navigationItem.title = NavControllerType.menu.title
     }
     
-    private func setupBasket(){
+    func setupBasket(){
         guard let navController = self.navigationControllers[.basket] else {
             fatalError("can't finid navController")
         }
         let viewController = UIViewController()
-        viewController.view.backgroundColor = .brown
+        viewController.view.backgroundColor = .red
         navController.setViewControllers([viewController], animated: false)
         viewController.navigationItem.title = NavControllerType.basket.title
     }
+    
+    func setupFeed(){
+        guard let navController = self.navigationControllers[.feed] else {
+            fatalError("can't finid navController")
+        }
+        let viewController = UIViewController()
+        viewController.view.backgroundColor = .yellow 
+        navController.setViewControllers([viewController], animated: false)
+        viewController.navigationItem.title = NavControllerType.feed.title
+    }
+    
+    func setupAccount(){
+        guard let navController = self.navigationControllers[.account] else {
+            fatalError("can't finid navController")
+        }
+        let viewController = UIViewController()
+        viewController.view.backgroundColor = .green
+        navController.setViewControllers([viewController], animated: false)
+        viewController.navigationItem.title = NavControllerType.account.title
+    }
+    
     
     func setupAppearance(){
         UINavigationBar.appearance().barTintColor = .gray
@@ -75,7 +98,7 @@ private extension AppCoordinator {
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 
         UITabBar.appearance().barTintColor = .gray
-        UITabBar.appearance().tintColor = .black
+        UITabBar.appearance().tintColor = .white
     }
     
     static func makeNavigationControllers() -> [NavControllerType : UINavigationController] {
@@ -94,7 +117,7 @@ private extension AppCoordinator {
 }
 
 fileprivate enum NavControllerType: Int, CaseIterable {
-    case feed, basket, menu, account
+    case feed, menu, basket, account
     
     var title: String{
         switch self {
@@ -112,13 +135,13 @@ fileprivate enum NavControllerType: Int, CaseIterable {
     var image: UIImage? {
         switch self {
         case .feed:
-            return UIImage(named: "list.bulet")
+            return UIImage(named: "list.bullet")
         case .menu:
-            return UIImage(named: "list.bulet")
+            return UIImage(named: "list.bullet")
         case .basket:
-            return UIImage(named: "list.bulet")
+            return UIImage(named: "list.bullet")
         case .account:
-            return UIImage(named: "list.bulet")
+            return UIImage(named: "list.bullet")
         }
     }
 }
