@@ -6,9 +6,9 @@
 //
 
 final class UserContext{
-    let info: UserInfo
-    let ordersHistory: [Order]
-    let activeOrders: [Order]
+    var info: UserInfo
+    var ordersHistory: [Order]
+    var activeOrders: [Order]
     init(info: UserInfo, history: [Order], orders:[Order]){
         self.info = info
         self.ordersHistory = history
@@ -19,9 +19,9 @@ final class UserContext{
 final class UserInfo: PersonInfo{
     let cardId: Int
     let numberOfPoints: Int
-    init(id:Int, points:Int, name:String, email:String){
+    init(id:Int, points:Int, name:String, email:String, uId:String){
         self.cardId=id
         self.numberOfPoints=points
-        super.init(name,email)
+        super.init(name,email,uId)
     }
 }

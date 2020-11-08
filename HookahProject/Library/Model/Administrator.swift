@@ -8,7 +8,7 @@
 import Foundation
 
 final class AdministratorContext{
-    let info: AdministratorInfo
+    var info: AdministratorInfo
     
     init(info: AdministratorInfo){
         self.info = info
@@ -17,8 +17,8 @@ final class AdministratorContext{
 
 final class AdministratorInfo: PersonInfo{
     let uId: Int
-    init(id: Int, email: String){
+    init(id: Int, email: String, uId: String){
         self.uId = id
-        super.init("admin",email)
+        super.init("admin",email,uId)
     }
 }
