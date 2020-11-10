@@ -7,6 +7,7 @@ protocol BookingViewInput: class{
 
 protocol BookingViewOutput : class{
     func viewDidLoad()
+    
 }
 
 protocol BookingModuleInput{
@@ -15,19 +16,18 @@ protocol BookingModuleInput{
 }
 
 protocol BookingModuleOutput: class{
-    
+    func makeCatalog()
 }
 
 protocol BookingInteractorInput{
-//    func addComponent()
-//    func confirmOrder()
+    func getCatalog()
+    func addToBasket()
 }
 
 protocol BookingInteractorOutput: class{
-//    func confirmAdding()
-//    func confirmNewOrder()
+    func makeModels(feedModel: FeedModel)
 }
 
 protocol BookingRouterInput{
-//    func openConstructor()
+   
 }

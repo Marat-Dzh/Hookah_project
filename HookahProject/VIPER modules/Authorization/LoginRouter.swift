@@ -16,7 +16,7 @@ extension LoginRouter: LoginRouterInput{
     func loginByPhone(context: AuthContext) {
         
         let window = UIApplication.shared.windows[0]
-        let appCoordinator = AppCoordinator(window: window)
+        let appCoordinator = AppCoordinator(window: window, context: context)
         appCoordinator.start()
     }
     

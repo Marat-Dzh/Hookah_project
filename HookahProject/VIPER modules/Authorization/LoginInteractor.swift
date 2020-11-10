@@ -68,4 +68,7 @@ private extension LoginInteractor{
         let context: AuthContext = AuthContext(id: user.uid, email: user.email!)
         return context
     }
+    func processResult(){
+        
+    }
 }

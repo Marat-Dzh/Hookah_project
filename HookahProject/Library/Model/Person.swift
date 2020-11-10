@@ -6,10 +6,6 @@
 //
 import Foundation
 
-class PersonContext{
-    
-}
-
 class PersonInfo{
     var fio: String
     var email: String

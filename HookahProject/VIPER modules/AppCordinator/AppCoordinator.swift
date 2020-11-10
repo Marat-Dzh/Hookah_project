@@ -8,12 +8,14 @@
 import UIKit
 
 class AppCoordinator {
-
     private let window: UIWindow
     private lazy var tabBarController = UITabBarController()
     private lazy var navigationControllers = AppCoordinator.makeNavigationControllers()
     
-    init(window: UIWindow){
+    private let userContext: UserContext
+    
+    init(window: UIWindow, context: AuthContext){
+        userContext = AppCoordinatorService.getPersonContext(context: context)
         self.window = window
         self.setupAppearance()
     }
@@ -98,7 +100,8 @@ private extension AppCoordinator {
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 
         UITabBar.appearance().barTintColor = .gray
-        UITabBar.appearance().tintColor = .white
+        UITabBar.appearance().tintColor = .black
+        UITabBar.appearance().unselectedItemTintColor = .white
     }
     
     static func makeNavigationControllers() -> [NavControllerType : UINavigationController] {
@@ -135,13 +138,13 @@ fileprivate enum NavControllerType: Int, CaseIterable {
     var image: UIImage? {
         switch self {
         case .feed:
-            return UIImage(named: "list.bullet")
+            return UIImage(named: "news")
         case .menu:
-            return UIImage(named: "list.bullet")
+            return UIImage(named: "catalog")
         case .basket:
-            return UIImage(named: "list.bullet")
+            return UIImage(named: "basket")
         case .account:
-            return UIImage(named: "list.bullet")
+            return UIImage(named: "account")
         }
     }
 }
