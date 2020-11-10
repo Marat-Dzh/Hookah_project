@@ -26,7 +26,7 @@ class BookingCardView: UIView{
  
         
         self.titleLabel.numberOfLines = 3
-        self.shortDescriptionLabel.numberOfLines = 2
+        self.shortDescriptionLabel.numberOfLines = 1
         self.infoLabel.numberOfLines = 1
         
         self.infoLabel.font = Font.system(ofSize: 20, weight: .bold)

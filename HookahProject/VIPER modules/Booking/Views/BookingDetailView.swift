@@ -13,8 +13,9 @@ final class BookingDetailView: AutoLayoutView {
     //private let titleLabel = UILabel()
     private let shortDescriptionLabel = UILabel()
     private let imageView = UIImageView()
-    
+
     private let buttonToBasket  = ButtonToBasket()
+    var onTapButtonToBasketItem: (() -> Void)?
     
     init() {
         super.init(frame: .zero)
@@ -25,11 +26,6 @@ final class BookingDetailView: AutoLayoutView {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    func set(_ viewModel: BookingCardViewModel){
-//        self.imageView.image = UIImage(named: viewModel.imageName)
-//        self.infoLabel.text = viewModel.info
-//        self.shortDescriptionLabel.text = viewModel.shortDescription
-//    }
     func set(_ viewModel: BookingCardViewModel){
         self.imageView.image = UIImage(named: viewModel.imageName)
         self.infoLabel.text = viewModel.info
@@ -47,6 +43,8 @@ final class BookingDetailView: AutoLayoutView {
         self.shortDescriptionLabel.textColor = .white
         
         self.backgroundColor = .white
+        
+        self.buttonToBasket.addTarget(self, action: #selector(onTapButtonToBasketFunc), for: .touchUpInside)
     }
     
     override func setupConstraints() {
@@ -72,4 +70,10 @@ final class BookingDetailView: AutoLayoutView {
 
         self.buttonToBasket.attach(to: self)
     }
+    
+    @objc
+    private func onTapButtonToBasketFunc() {
+        self.onTapButtonToBasketItem?()
+    }
+    
 }

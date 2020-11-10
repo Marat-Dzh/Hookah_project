@@ -51,6 +51,7 @@ final class BookingViewController: UIViewController {
                 self.navigationController?.pushViewController(viewController, animated: true)
             }
     }
+    
 }
 
 extension BookingViewController: BookingViewInput{
@@ -94,4 +95,6 @@ private extension BookingViewController {
         self.collectionView.backgroundColor = .black
         self.collectionView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
     }
+    
+    
 }

@@ -36,9 +36,9 @@ extension BookingPresenter: BookingInteractorOutput{
 
 private extension BookingPresenter {
     func makeViewModels() -> [BookingCardViewModel] {
-        return [BookingCardViewModel(info: "Конструкутор кальяна", title: "title 1", shortDescription: "собери свой кальян", imageName: "Constructor"),
-                BookingCardViewModel(info: "Лимоно-имбирный чай", title: "title 2", shortDescription: "лимон, имбирь, мед", imageName: "lemontea"),
-                BookingCardViewModel(info: "Ягодный чай", title: "title 3", shortDescription: "малина, черная смородина, клюква", imageName: "berrytea"),
-                BookingCardViewModel(info: "Облепиховый чай", title: "title 3", shortDescription: "облепиха", imageName: "seabuckthorntea")]
+        return [BookingCardViewModel(info: "Конструкутор кальяна", title: "title 1", shortDescription: "Собери свой кальян", imageName: "Constructor"),
+                BookingCardViewModel(info: "Лимоно-имбирный чай", title: "title 2", shortDescription: "800мл   450 руб.", imageName: "lemontea"),
+                BookingCardViewModel(info: "Ягодный чай", title: "title 3", shortDescription: "800мл   450 руб.", imageName: "berrytea"),
+                BookingCardViewModel(info: "Облепиховый чай", title: "title 3", shortDescription: "800мл   450 руб.", imageName: "seabuckthorntea")]
     }
 }

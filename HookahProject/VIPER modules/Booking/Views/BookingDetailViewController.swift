@@ -24,6 +24,10 @@ class BookingDetailViewController : UIViewController {
         
         self.bookingDetailView.set(bdvc)
         self.bookingDetailView.backgroundColor = .black
+        
+        self.bookingDetailView.onTapButtonToBasketItem = { [weak self] in
+            print("Привет, добавил чай в корзину")
+        }
     }
     
 }
