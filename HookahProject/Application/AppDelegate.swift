@@ -18,22 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
          
         let window = UIWindow()
-        self.appCoordinator = AppCoordinator(window: window)
-        self.window = window
-        do{
-            sleep(2)
-        }
-        self.appCoordinator?.start()
-        
-        /*let window = UIWindow()
         let context = LoginContext(output: nil)
         let loginContainer = LoginContainer.assemble(context: context)
         window.rootViewController = loginContainer.viewController
+        do{
+            sleep(2)
+        }
         window.makeKeyAndVisible()
         self.window = window
-        */
+        
         return true
     }
-
 }
 
