@@ -14,11 +14,11 @@ final class FeedInteractor{
 
 extension FeedInteractor: FeedInteractorInput{
     func getNewsFromServer() {
-        <#code#>
+        presenter?.updateNews()
     }
     
     func getStocksFromServer() {
-        <#code#>
+        presenter?.updateStocks()
     }
     
     

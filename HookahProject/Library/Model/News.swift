@@ -6,3 +6,6 @@
 //
 
 import Foundation
+
+final class News: Article{
+    }

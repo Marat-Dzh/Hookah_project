@@ -14,8 +14,7 @@ final class LoginContainer{
     
     class func assemble(context: LoginContext)-> LoginContainer{
         let router = LoginRouter()
-        let loginServiceFactory = LoginServiceFactory()
-        let interactor = LoginInteractor(loginServiceFactory)
+        let interactor = LoginInteractor()
         let presenter = LoginPresenter(router, interactor)
         let viewController = LoginViewController(presenter)
         

@@ -19,7 +19,7 @@ protocol ProfileViewOutput : class{
 
 protocol ProfileModuleInput{
     
-    func showUserInfo()
+    func showPersonInfo()
 }
 
 protocol ProfileModuleOutput: class{

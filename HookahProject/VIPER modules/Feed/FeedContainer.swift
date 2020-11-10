@@ -13,7 +13,7 @@ final class FeedContainer{
     let viewController: UIViewController
     
     class func assemble(context: FeedContext)-> FeedContainer{
-        let router = FeedRouter()
+        let router = FeedRouter(context: context)
         let interactor = FeedInteractor()
         let presenter = FeedPresenter(router, interactor)
         let viewController = FeedViewController(presenter)
@@ -34,4 +34,5 @@ final class FeedContainer{
 
 struct FeedContext {
     weak var output: LoginModuleOutput?
+    let feed: FeedModel
 }

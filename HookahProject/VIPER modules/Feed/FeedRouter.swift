@@ -8,7 +8,11 @@
 import Foundation
 
 final class FeedRouter{
+    let feedContext: FeedContext
     
+    init(context: FeedContext){
+        self.feedContext = context
+    }
 }
 
 extension FeedRouter: FeedRouterInput{
