@@ -39,6 +39,7 @@ class BookingConstructorHookahView : AutoLayoutView {
     
     var picker : UIDatePicker!
     
+        
     init() {
         super.init(frame: .zero)
         self.setup()
@@ -70,7 +71,7 @@ class BookingConstructorHookahView : AutoLayoutView {
         
         self.buttonToBasket.addTarget(self, action: #selector(onTapButtonToBasketFuncHookah), for: .touchUpInside)
     }
-    
+
     override func setupConstraints() {
         super.setupConstraints()
         
@@ -85,7 +86,7 @@ class BookingConstructorHookahView : AutoLayoutView {
     }
 }
 
-private extension BookingConstructorHookahView {
+extension BookingConstructorHookahView {
     func settingFirstLabelTF(){
         self.stackView.addArrangedSubview(self.firstStepLabel)
         self.stackView.addArrangedSubview(self.firstStepTF)
@@ -95,10 +96,11 @@ private extension BookingConstructorHookahView {
         self.firstStepTF.borderStyle = .roundedRect
         self.firstStepTF.clearButtonMode = .always
         
-//        let elemPickerfirst = UIPickerView()
-//        elemPickerfirst.delegate = self
-//        firstStepTF.inputView = elemPickerfirst
-//
+        let elemPickerfirst = UIPickerView()
+        elemPickerfirst.delegate = self
+        firstStepTF.inputView = elemPickerfirst
+        elemPickerfirst.tag = 1
+
     }
     func settingSecondLabelTF(){
         self.stackView.addArrangedSubview(self.secondStepLabel)
@@ -109,9 +111,10 @@ private extension BookingConstructorHookahView {
         self.secondStepTF.borderStyle = .roundedRect
         self.secondStepTF.clearButtonMode = .always
         
-//        let elemPickerSecond = UIPickerView()
-//        elemPickerSecond.delegate = self
-//        secondStepTF.inputView = elemPickerSecond
+        let elemPickerSecond = UIPickerView()
+        elemPickerSecond.delegate = self
+        secondStepTF.inputView = elemPickerSecond
+        elemPickerSecond.tag = 2
     }
     func settingThirdLabelTF(){
         self.stackView.addArrangedSubview(self.thirdStepLabel)
@@ -122,9 +125,10 @@ private extension BookingConstructorHookahView {
         self.thirdStepTF.borderStyle = .roundedRect
         self.thirdStepTF.clearButtonMode = .always
         
-//        let elemPickerThird = UIPickerView()
-//        elemPickerThird.delegate = self
-//        thirdStepTF.inputView = elemPickerThird
+        let elemPickerThird = UIPickerView()
+        elemPickerThird.delegate = self
+        thirdStepTF.inputView = elemPickerThird
+        elemPickerThird.tag = 3
 
 
     }
@@ -137,6 +141,11 @@ private extension BookingConstructorHookahView {
         self.fourthStepTF.borderStyle = .roundedRect
         self.fourthStepTF.clearButtonMode = .always
         
+        let elemPickerFourth = UIPickerView()
+        elemPickerFourth.delegate = self
+        fourthStepTF.inputView = elemPickerFourth
+        elemPickerFourth.tag = 4
+        
 
     }
     func settingFifthLabelTF(){
@@ -147,6 +156,11 @@ private extension BookingConstructorHookahView {
         self.fifthStepTF.placeholder = "классическая, фруктовая"
         self.fifthStepTF.borderStyle = .roundedRect
         self.fifthStepTF.clearButtonMode = .always
+        
+        let elemPickerFifth = UIPickerView()
+        elemPickerFifth.delegate = self
+        fifthStepTF.inputView = elemPickerFifth
+        elemPickerFifth.tag = 5
 
     }
     
@@ -160,82 +174,80 @@ private extension BookingConstructorHookahView {
         self.sixthStepTF.borderStyle = .roundedRect
         self.sixthStepTF.clearButtonMode = .always
         
-
+        let elemPickerSixth = UIPickerView()
+        elemPickerSixth.delegate = self
+        sixthStepTF.inputView = elemPickerSixth
+        elemPickerSixth.tag = 6
     }
 }
 
-//extension BookingConstructorHookahView : UIPickerViewDataSource, UIPickerViewDelegate{
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return 0
-//
-//
-//        switch  {
-//        case firstStepTF:
-//            return chooseItemFirst.count
-//        case secondStepTF:
-//            return chooseItemSecond.count
-//        case thirdStepTF:
-//            return chooseItemThird.count
-//        case fourthStepTF:
-//            return chooseItemFourth.count
-//        case fifthStepTF:
-//            return chooseItemFifth.count
-//        case sixthStepTF:
-//            return chooseItemSixth.count
-//        default:
-//            return 0
-//        }
-//
-//        if firstStepTF {
-//            return self.chooseItemFirst.count
-//        } else if secondStepTF.isEnabled {
-//            return self.chooseItemSecond.count
-//        } else if thirdStepTF.isEnabled {
-//            return self.chooseItemThird.count
-//        } else {
-//            return 0
-//        }
-//
-//
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        switch UITextField() {
-//        case firstStepTF:
-//            return chooseItemFirst[row]
-//        case secondStepTF:
-//            return chooseItemSecond[row]
-//        case thirdStepTF:
-//            return chooseItemThird[row]
-//        case fourthStepTF:
-//            return chooseItemFourth[row]
-//        case fifthStepTF:
-//            return chooseItemFifth[row]
-//        case sixthStepTF:
-//            return chooseItemSixth[row]
-//        default:
-//            return "0"
-//        }
-//        if firstStepTF.isEnabled == false{
-//            return self.chooseItemFirst[row]
-//        } else if secondStepTF.isEnabled{
-//            return self.chooseItemSecond[row]
-//        } else if secondStepTF.isEnabled {
-//            return self.chooseItemThird[row]
-//        } else {
-//            return "0"
-//        }
-//
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        selectedElements = chooseItemFirst[row]
-//        self.firstStepTF.text = selectedElements
-//    }
-//
-//
-//}
+extension BookingConstructorHookahView : UIPickerViewDataSource, UIPickerViewDelegate{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+
+        switch pickerView.tag {
+        case 1:
+            return chooseItemFirst.count
+        case 2:
+            return chooseItemSecond.count
+        case 3:
+            return chooseItemThird.count
+        case 4:
+            return chooseItemFourth.count
+        case 5:
+            return chooseItemFifth.count
+        case 6:
+            return chooseItemSixth.count
+        default:
+            return 0
+        }
+    }
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch pickerView.tag {
+        case 1:
+            return chooseItemFirst[row]
+        case 2:
+            return chooseItemSecond[row]
+        case 3:
+            return chooseItemThird[row]
+        case 4:
+            return chooseItemFourth[row]
+        case 5:
+            return chooseItemFifth[row]
+        case 6:
+            return chooseItemSixth[row]
+        default:
+            return "0"
+        }
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        switch pickerView.tag {
+        case 1:
+            selectedElements = chooseItemFirst[row]
+            self.firstStepTF.text = selectedElements
+        case 2:
+            selectedElements = chooseItemSecond[row]
+            self.secondStepTF.text = selectedElements
+        case 3:
+            selectedElements = chooseItemThird[row]
+            self.thirdStepTF.text = selectedElements
+        case 4:
+            selectedElements = chooseItemFourth[row]
+            self.fourthStepTF.text = selectedElements
+        case 5:
+            selectedElements = chooseItemFifth[row]
+            self.fifthStepTF.text = selectedElements
+        case 6:
+            selectedElements = chooseItemSixth[row]
+            self.sixthStepTF.text = selectedElements
+        default:
+            return
+        }
+    }
+}

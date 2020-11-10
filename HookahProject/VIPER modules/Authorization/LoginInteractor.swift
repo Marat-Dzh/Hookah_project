@@ -25,11 +25,13 @@ extension LoginInteractor: LoginInteractorInput{
         case .loginAndPassword:
             let data = context as! LoginAndPasswordData
             Auth.auth().signIn(withEmail: data.login, password: data.password) { [weak self] (user, error) in
-                if error==nil{
+                if error != nil{
                     self?.presenter?.gotError(.error)
+                    return
                 }
-                if user==nil{
+                if user == nil{
                     self?.presenter?.gotError(.userNotFound)
+                    return
                 }
                 self?.presenter?.authorizationCompleted(context: (self?.formContext())!)
                 }
@@ -43,11 +45,13 @@ extension LoginInteractor: LoginInteractorInput{
         case .loginAndPassword:
             let data = data as! LoginAndPasswordData
             Auth.auth().createUser(withEmail: data.login, password: data.password) { [weak self] (user, error) in
-                if error==nil{
+                if error != nil{
                     self?.presenter?.gotError(.error)
+                    return
                 }
-                if user==nil{
+                if user == nil{
                     self?.presenter?.gotError(.userNotFound)
+                    return
                 }
                 self?.presenter?.authorizationCompleted(context: (self?.formContext())!)
                 }
@@ -63,5 +67,8 @@ private extension LoginInteractor{
         let user: User = Auth.auth().currentUser!
         let context: AuthContext = AuthContext(id: user.uid, email: user.email!)
         return context
+    }
+    func processResult(){
+        
     }
 }

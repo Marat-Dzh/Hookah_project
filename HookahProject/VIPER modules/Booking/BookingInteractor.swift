@@ -13,13 +13,12 @@ final class BookingInteractor{
 }
 
 extension BookingInteractor: BookingInteractorInput{
-//    func getNewsFromServer() {
-//
-//    }
-//
-//    func getStocksFromServer() {
-//
-//    }
+    func addToBasket() {
+        //
+    }
     
-    
+    func getCatalog() {
+        //getting catalog from firebase database
+        presenter?.makeModels(feedModel: FeedModel(stocks: [], news: []))
+    }
 }

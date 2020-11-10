@@ -42,7 +42,7 @@ extension LoginPresenter: LoginViewOutput{
 
 extension LoginPresenter: LoginInteractorOutput{
     func gotError(_ error: ErrorType) {
-        //view method
+        //
     }
     
     func authorizationCompleted(context: AuthContext){

@@ -46,6 +46,7 @@ final class LoginViewController: UIViewController {
         let textFieldView = TextFieldView()
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
         textFieldView.backgroundColor = UIColor.clear
+        
         return textFieldView
     }()
     
@@ -101,6 +102,21 @@ private extension LoginViewController{
     func onForgorPassTap(){
         //do something...
     }
+    @objc
+    func valueChange() {
+        if textFieldView1.textField.hasText && textFieldView2.textField.hasText{
+            signInButton.alpha = 1
+            signInButton.isEnabled = true
+            signUpButton.alpha = 1
+            signUpButton.isEnabled = true
+        }
+        else{
+            signInButton.alpha = 0.4
+            signInButton.isEnabled = false
+            signUpButton.alpha = 0.4
+            signUpButton.isEnabled = false
+        }
+    }
     func getLoginData() -> LoginAndPasswordData{
         let data: LoginAndPasswordData = LoginAndPasswordData(login: textFieldView1.textField.text ?? "", password: textFieldView2.textField.text ?? "")
         return data
@@ -138,24 +154,24 @@ private extension LoginViewController{
          textFieldView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
          textFieldView1.heightAnchor.constraint(equalToConstant: textFieldViewHeight).isActive = true
          
-         textFieldView1.imgView.image = UIImage(named: "Profile")
+         textFieldView1.imgView.image = UIImage(named: "mail")
         let attributesDictionary = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
          textFieldView1.textField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: attributesDictionary)
          textFieldView1.textField.textColor = templateColor
+        textFieldView1.textField.addTarget(self, action: #selector(valueChange), for: .allEditingEvents)
          
-         // Password textfield and icon
          view.insertSubview(textFieldView2, aboveSubview: bgView)
          textFieldView2.topAnchor.constraint(equalTo: textFieldView1.bottomAnchor, constant: 0.0).isActive = true
          textFieldView2.leadingAnchor.constraint(equalTo: textFieldView1.leadingAnchor, constant: 0.0).isActive = true
          textFieldView2.trailingAnchor.constraint(equalTo: textFieldView1.trailingAnchor, constant: 0.0).isActive = true
          textFieldView2.heightAnchor.constraint(equalTo: textFieldView1.heightAnchor, constant: 0.0).isActive = true
          
-         textFieldView2.imgView.image = UIImage(named: "Lock")
+         textFieldView2.imgView.image = UIImage(named: "lock")
          textFieldView2.textField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: attributesDictionary)
          textFieldView2.textField.isSecureTextEntry = true
          textFieldView2.textField.textColor = templateColor
-         
-         // Sign In Button
+        textFieldView2.textField.addTarget(self, action: #selector(valueChange), for: .allEditingEvents)
+        
          view.insertSubview(signInButton, aboveSubview: bgView)
          signInButton.topAnchor.constraint(equalTo: textFieldView2.bottomAnchor, constant: 20.0).isActive = true
          signInButton.leadingAnchor.constraint(equalTo: textFieldView1.leadingAnchor, constant: 0.0).isActive = true
@@ -164,8 +180,9 @@ private extension LoginViewController{
          
         let buttonAttributesDictionary = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0),
                                           NSAttributedString.Key.foregroundColor: templateColor]
-         signInButton.alpha = 0.4
-         signInButton.backgroundColor = UIColor.systemBlue
+        signInButton.alpha = 0.4
+        signInButton.isEnabled = false
+         signInButton.backgroundColor = UIColor.gray
          signInButton.setAttributedTitle(NSAttributedString(string: "SIGN IN", attributes: buttonAttributesDictionary), for: .normal)
          signInButton.isEnabled = true
          signInButton.addTarget(self, action: #selector(onSubmitTap), for: .touchUpInside)

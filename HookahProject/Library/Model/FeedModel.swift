@@ -8,8 +8,8 @@
 import Foundation
 
 class FeedModel{
-    let stocks: [Stock]
-    let news: [News]
+    var stocks: [Stock]
+    var news: [News]
     
     init(stocks: [Stock], news: [News]){
         self.news = news

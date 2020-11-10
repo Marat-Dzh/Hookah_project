@@ -23,19 +23,20 @@ extension BookingPresenter: BookingModuleInput{
 
 }
 
-
-extension BookingPresenter: BookingViewOutput{
-    func viewDidLoad(){
-        self.view?.set(viewModels: self.makeViewModels())
+extension BookingPresenter: BookingInteractorOutput{
+    func makeModels(feedModel: FeedModel) {
+        self.view?.set(viewModels:makeViewModels(news: feedModel.news, stocks: feedModel.stocks))
     }
 }
 
-extension BookingPresenter: BookingInteractorOutput{
-    
+extension BookingPresenter: BookingViewOutput{
+    func viewDidLoad(){
+        interactor.getCatalog()
+    }
 }
 
 private extension BookingPresenter {
-    func makeViewModels() -> [BookingCardViewModel] {
+    func makeViewModels(news: [News], stocks: [Stock]) -> [BookingCardViewModel] {
         return [BookingCardViewModel(info: "Конструкутор кальяна", title: "title 1", shortDescription: "Собери свой кальян", imageName: "Constructor"),
                 BookingCardViewModel(info: "Лимоно-имбирный чай", title: "title 2", shortDescription: "800мл   450 руб.", imageName: "lemontea"),
                 BookingCardViewModel(info: "Ягодный чай", title: "title 3", shortDescription: "800мл   450 руб.", imageName: "berrytea"),
