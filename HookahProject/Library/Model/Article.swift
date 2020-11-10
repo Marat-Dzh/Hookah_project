@@ -6,13 +6,15 @@
 //
 
 import Foundation
+import UIKit
 
 class Article{
     let title: String
     let description: String?
-    // let image: ImageType
-    init(title: String, description: String?){
+    let image: UIImage
+    init(title: String, description: String?, image:UIImage){
         self.title = title
         self.description = description
+        self.image = image
     }
 }

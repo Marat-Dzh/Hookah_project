@@ -34,5 +34,4 @@ final class FeedContainer{
 
 struct FeedContext {
     weak var output: LoginModuleOutput?
-    let feed: FeedModel
 }

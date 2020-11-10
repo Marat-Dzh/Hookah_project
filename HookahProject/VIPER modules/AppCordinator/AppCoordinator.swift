@@ -61,10 +61,9 @@ private extension AppCoordinator {
         guard let navController = self.navigationControllers[.feed] else {
             fatalError("can't finid navController")
         }
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .yellow 
-        navController.setViewControllers([viewController], animated: false)
-        viewController.navigationItem.title = NavControllerType.feed.title
+        let feedContainer = FeedContainer.assemble(context: FeedContext(output: nil))
+        navController.setViewControllers([feedContainer.viewController], animated: false)
+        feedContainer.viewController.navigationItem.title = NavControllerType.feed.title
     }
     
     func setupAccount(){

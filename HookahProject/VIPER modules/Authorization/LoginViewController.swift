@@ -154,7 +154,7 @@ private extension LoginViewController{
          textFieldView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
          textFieldView1.heightAnchor.constraint(equalToConstant: textFieldViewHeight).isActive = true
          
-         textFieldView1.imgView.image = UIImage(named: "Profile")
+         textFieldView1.imgView.image = UIImage(named: "mail")
         let attributesDictionary = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
          textFieldView1.textField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: attributesDictionary)
          textFieldView1.textField.textColor = templateColor
@@ -166,7 +166,7 @@ private extension LoginViewController{
          textFieldView2.trailingAnchor.constraint(equalTo: textFieldView1.trailingAnchor, constant: 0.0).isActive = true
          textFieldView2.heightAnchor.constraint(equalTo: textFieldView1.heightAnchor, constant: 0.0).isActive = true
          
-         textFieldView2.imgView.image = UIImage(named: "Lock")
+         textFieldView2.imgView.image = UIImage(named: "lock")
          textFieldView2.textField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: attributesDictionary)
          textFieldView2.textField.isSecureTextEntry = true
          textFieldView2.textField.textColor = templateColor
