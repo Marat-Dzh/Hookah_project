@@ -17,7 +17,7 @@ class BookingViewCell<T: UIView>: UICollectionViewCell {
         self.contentView.addSubview(self.containerView)
     }
     
-    required override init?(coder aDecoder: NSCoder){
+    required init?(coder aDecoder: NSCoder){
         fatalError("unsupported")
     }
     

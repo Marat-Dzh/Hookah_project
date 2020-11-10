@@ -38,7 +38,8 @@ class BookingCardView: UIView{
         self.shortDescriptionLabel.textColor = .white
     }
     
-   required override init?(coder aDecoder: NSCoder){
+
+    required init?(coder aDecoder: NSCoder){
         fatalError("unsupported")
     }
     

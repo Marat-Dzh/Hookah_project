@@ -21,22 +21,22 @@ final class FeedPresenter{
 
 extension FeedPresenter: FeedModuleInput{
     func getNews() {
-        <#code#>
+         
     }
     
     func getStocks() {
-        <#code#>
+         
     }
     
     
 }
 extension FeedPresenter: FeedViewInput{
     func displayNews() {
-        <#code#>
+         
     }
     
     func displayStocks() {
-        <#code#>
+         
     }
     
     
@@ -48,11 +48,11 @@ extension FeedPresenter: FeedViewOutput{
 
 extension FeedPresenter: FeedInteractorOutput{
     func updateStocks() {
-        <#code#>
+         
     }
     
     func updateNews() {
-        <#code#>
+         
     }
     
     
