@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class LoginRouter{
     
@@ -13,7 +14,10 @@ final class LoginRouter{
 
 extension LoginRouter: LoginRouterInput{
     func loginByPhone(context: AuthContext) {
-        //assemble feed module
+        
+        let window = UIApplication.shared.windows[0]
+        let appCoordinator = AppCoordinator(window: window)
+        appCoordinator.start()
     }
     
     func loginBySkip() {
