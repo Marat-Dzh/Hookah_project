@@ -18,6 +18,12 @@ enum ErrorType: String{
     case noError
 }
 
+enum PersonType{
+    case unknown
+    case user
+    case admin
+}
+
 protocol LoginData{
     
 }
@@ -39,6 +45,7 @@ struct LoginAndPasswordData: LoginData {
 }
 
 struct AuthContext{
+    let personType: PersonType = .unknown
     let id:String
     let email:String
     init(id:String, email:String) {

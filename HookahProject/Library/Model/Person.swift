@@ -11,9 +11,9 @@ class PersonContext{
 }
 
 class PersonInfo{
-    let fio: String
-    let email: String
-    let userId: String
+    var fio: String
+    var email: String
+    var userId: String
     init(_ fio:String, _ email:String, _ uId: String){
         self.fio=fio
         self.email = email
