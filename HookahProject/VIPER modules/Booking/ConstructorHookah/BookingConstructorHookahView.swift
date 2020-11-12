@@ -10,7 +10,7 @@ import UIKit
 class BookingConstructorHookahView : AutoLayoutView {
     
     private let chooseItemFirst = ["Ягоды", "Цитрусы", "Фрукты", "Десертное"]
-    private let chooseItemSecond = ["Легкая (3-5)", "Средняя (6-7)", "Тяжелая (8-10)"]
+    private let chooseItemSecond = ["Легкая (1-5)", "Средняя (6-7)", "Тяжелая (8-10)"]
     private let chooseItemThird = ["Tangiers", "Darkside", "Duft", "Must Have", "Black Burn", "WTO", "Северный"]
     private let chooseItemFourth = ["Классическая", "Легкая"]
     private let chooseItemFifth = ["Классическая", "Фруктовая"]
@@ -39,11 +39,11 @@ class BookingConstructorHookahView : AutoLayoutView {
     
     var picker : UIDatePicker!
     
-        
+    
     init() {
         super.init(frame: .zero)
         self.setup()
-
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -71,7 +71,7 @@ class BookingConstructorHookahView : AutoLayoutView {
         
         self.buttonToBasket.addTarget(self, action: #selector(onTapButtonToBasketFuncHookah), for: .touchUpInside)
     }
-
+    
     override func setupConstraints() {
         super.setupConstraints()
         
@@ -83,6 +83,14 @@ class BookingConstructorHookahView : AutoLayoutView {
     @objc
     private func onTapButtonToBasketFuncHookah() {
         self.onTapButtonToBasketHookah?()
+    }
+    
+    func isEmptyTF() -> Bool {
+        if firstStepTF.text == "" ||  secondStepTF.text == "" || thirdStepTF.text == "" || fourthStepTF.text == "" || fifthStepTF.text == "" || sixthStepTF.text == "" {
+            return false
+        } else {
+            return true
+        }
     }
 }
 
@@ -100,7 +108,7 @@ extension BookingConstructorHookahView {
         elemPickerfirst.delegate = self
         firstStepTF.inputView = elemPickerfirst
         elemPickerfirst.tag = 1
-
+        
     }
     func settingSecondLabelTF(){
         self.stackView.addArrangedSubview(self.secondStepLabel)
@@ -129,8 +137,8 @@ extension BookingConstructorHookahView {
         elemPickerThird.delegate = self
         thirdStepTF.inputView = elemPickerThird
         elemPickerThird.tag = 3
-
-
+        
+        
     }
     func settingFourthLabelTF(){
         self.stackView.addArrangedSubview(self.fourthStepLabel)
@@ -146,7 +154,7 @@ extension BookingConstructorHookahView {
         fourthStepTF.inputView = elemPickerFourth
         elemPickerFourth.tag = 4
         
-
+        
     }
     func settingFifthLabelTF(){
         self.stackView.addArrangedSubview(self.fifthStepLabel)
@@ -161,7 +169,7 @@ extension BookingConstructorHookahView {
         elemPickerFifth.delegate = self
         fifthStepTF.inputView = elemPickerFifth
         elemPickerFifth.tag = 5
-
+        
     }
     
     func settingSixthLabelTF(){
@@ -185,9 +193,8 @@ extension BookingConstructorHookahView : UIPickerViewDataSource, UIPickerViewDel
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-
         switch pickerView.tag {
         case 1:
             return chooseItemFirst.count
@@ -205,7 +212,7 @@ extension BookingConstructorHookahView : UIPickerViewDataSource, UIPickerViewDel
             return 0
         }
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch pickerView.tag {
         case 1:
@@ -224,7 +231,7 @@ extension BookingConstructorHookahView : UIPickerViewDataSource, UIPickerViewDel
             return "0"
         }
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         switch pickerView.tag {
@@ -251,3 +258,4 @@ extension BookingConstructorHookahView : UIPickerViewDataSource, UIPickerViewDel
         }
     }
 }
+
