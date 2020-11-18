@@ -21,21 +21,26 @@ class BookingCardView: UIView{
         self.addSubview(self.titleLabel)
         self.addSubview(self.shortDescriptionLabel)
 
-//        self.layer.cornerRadius = 10
-        self.layer.masksToBounds = true
+//        self.layer.cornerRadius = 30
+//        self.layer.masksToBounds = true
  
         
-        self.titleLabel.numberOfLines = 3
+        //self.titleLabel.numberOfLines = 3
         self.shortDescriptionLabel.numberOfLines = 1
-        self.infoLabel.numberOfLines = 1
+
+        self.infoLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        self.infoLabel.numberOfLines = 0
+        
         
         self.infoLabel.font = Font.system(ofSize: 20, weight: .bold)
         self.infoLabel.textColor = .white
-        self.titleLabel.font = Font.system(ofSize: 32, weight: .bold)
-        self.titleLabel.textColor = .white
-        self.shortDescriptionLabel.font = Font.system(ofSize: 18, weight: .regular)
+        //self.titleLabel.font = Font.system(ofSize: 32, weight: .bold)
+        //self.titleLabel.textColor = .white
+        self.shortDescriptionLabel.font = Font.system(ofSize: 16, weight: .regular)
         //self.shortDescriptionLabel.textColor = UIColor.rgba(158, 158, 158)
         self.shortDescriptionLabel.textColor = .white
+        
+        //self.imageView.contentMode = .scaleAspectFill
     }
     
 
@@ -46,16 +51,18 @@ class BookingCardView: UIView{
     override func layoutSubviews() {
         super.layoutSubviews()
         let maxLabelWidth = self.frame.width - Constans.margin * 2
-        let maxLabelSize = self.titleLabel.sizeThatFits(CGSize(width: maxLabelWidth, height: .greatestFiniteMagnitude))
+        let maxLabelSize = CGSize(width: maxLabelWidth, height: .greatestFiniteMagnitude)
         
         let infoLabelSize = self.infoLabel.sizeThatFits(maxLabelSize)
-        self.infoLabel.frame.origin = CGPoint(x: self.frame.width - Constans.margin*15, y: Constans.margin)
+        self.infoLabel.frame.origin = CGPoint(x: self.frame.height, y: Constans.margin)
         self.infoLabel.frame.size = infoLabelSize
         
+        
         let shortDescriptionSize = self.shortDescriptionLabel.sizeThatFits(maxLabelSize)
-        let shortDescriptionOrigin = CGPoint(x: Constans.margin*7, y: self.frame.height - Constans.margin - shortDescriptionSize.height)
+        let shortDescriptionOrigin = CGPoint(x: self.frame.height + Constans.margin, y: self.frame.height - Constans.margin - shortDescriptionSize.height)
         self.shortDescriptionLabel.frame.origin = shortDescriptionOrigin
         self.shortDescriptionLabel.frame.size = shortDescriptionSize
+        
         
 //        let titleLabelSize = self.titleLabel.sizeThatFits(maxLabelSize)
 //        let titleLabelOrigin = CGPoint(x: Constans.margin, y: self.shortDescriptionLabel.frame.minY - Constans.margin - titleLabelSize.height)
@@ -65,7 +72,9 @@ class BookingCardView: UIView{
         
 
         //Картинки
-        self.imageView.frame.size = CGSize(width: 100, height: 100)
+        self.imageView.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
+        
+
     }
     
     func update(with viewModel: BookingCardViewModel){

@@ -30,6 +30,7 @@ final class BookingDetailView: AutoLayoutView {
         self.imageView.image = UIImage(named: viewModel.imageName)
         self.infoLabel.text = viewModel.info
         self.shortDescriptionLabel.text = viewModel.shortDescription
+        
     }
     
     private func setup() {
@@ -74,6 +75,7 @@ final class BookingDetailView: AutoLayoutView {
     @objc
     private func onTapButtonToBasketFunc() {
         self.onTapButtonToBasketItem?()
+        
     }
     
 }

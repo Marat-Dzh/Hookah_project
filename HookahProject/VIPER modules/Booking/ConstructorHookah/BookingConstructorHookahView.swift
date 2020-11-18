@@ -12,9 +12,9 @@ class BookingConstructorHookahView : AutoLayoutView {
     private let chooseItemFirst = ["Ягоды", "Цитрусы", "Фрукты", "Десертное"]
     private let chooseItemSecond = ["Легкая (1-5)", "Средняя (6-7)", "Тяжелая (8-10)"]
     private let chooseItemThird = ["Tangiers", "Darkside", "Duft", "Must Have", "Black Burn", "WTO", "Северный"]
-    private let chooseItemFourth = ["Классическая", "Легкая"]
-    private let chooseItemFifth = ["Классическая", "Фруктовая"]
-    private let chooseItemSixth = ["Вода", "Молоко", "Горячий чай", "Сироп"]
+    private let chooseItemFourth = ["Классическая (булькает)", "Легкая (как воздух вдохнуть)"]
+    private let chooseItemFifth = ["Глиняная", "Силиконовая", "Грейпфрут + 200 руб.", "Гранат + 300 руб.", "Ананас один калауд + 300 руб.", "Ананас два калауда + 500 руб."]
+    private let chooseItemSixth = ["Вода", "Молоко + 100 руб.", "Горячий чай + 100 руб.", "Сироп + 100 руб."]
     
     
     var selectedElements: String?
@@ -36,9 +36,6 @@ class BookingConstructorHookahView : AutoLayoutView {
     
     private let buttonToBasket  = ButtonToBasket()
     var onTapButtonToBasketHookah: (() -> Void)?
-    
-    var picker : UIDatePicker!
-    
     
     init() {
         super.init(frame: .zero)
@@ -67,17 +64,13 @@ class BookingConstructorHookahView : AutoLayoutView {
         settingFifthLabelTF()
         settingSixthLabelTF()
         self.stackView.addArrangedSubview(self.buttonToBasket)
-        
-        
         self.buttonToBasket.addTarget(self, action: #selector(onTapButtonToBasketFuncHookah), for: .touchUpInside)
     }
     
     override func setupConstraints() {
         super.setupConstraints()
-        
         self.addSubview(self.stackView)
         self.stackView.pins(UIEdgeInsets(top: 120.0, left: 16.0, bottom: -32.0, right: -16.0))
-        //self.buttonToBasket.attach(to: self)
     }
     
     @objc
@@ -86,7 +79,7 @@ class BookingConstructorHookahView : AutoLayoutView {
     }
     
     func isEmptyTF() -> Bool {
-        if firstStepTF.text == "" ||  secondStepTF.text == "" || thirdStepTF.text == "" || fourthStepTF.text == "" || fifthStepTF.text == "" || sixthStepTF.text == "" {
+        if firstStepTF.text!.isEmpty ||  secondStepTF.text!.isEmpty || thirdStepTF.text!.isEmpty || fourthStepTF.text!.isEmpty || fifthStepTF.text!.isEmpty || sixthStepTF.text!.isEmpty {
             return false
         } else {
             return true
@@ -95,27 +88,30 @@ class BookingConstructorHookahView : AutoLayoutView {
 }
 
 extension BookingConstructorHookahView {
+    
     func settingFirstLabelTF(){
         self.stackView.addArrangedSubview(self.firstStepLabel)
         self.stackView.addArrangedSubview(self.firstStepTF)
         self.firstStepLabel.font = UIFont(name: "Snell Roundhand Bold", size: 30)
         self.firstStepTF.backgroundColor = .white
-        self.firstStepTF.placeholder = "ягоды, цитрусы, фрукты, десертное"
+        self.firstStepTF.placeholder = self.chooseItemFirst.randomElement()
         self.firstStepTF.borderStyle = .roundedRect
         self.firstStepTF.clearButtonMode = .always
         
         let elemPickerfirst = UIPickerView()
         elemPickerfirst.delegate = self
-        firstStepTF.inputView = elemPickerfirst
+        self.firstStepTF.inputView = elemPickerfirst
         elemPickerfirst.tag = 1
         
+        self.createToolBar(self.firstStepTF)
     }
+    
     func settingSecondLabelTF(){
         self.stackView.addArrangedSubview(self.secondStepLabel)
         self.stackView.addArrangedSubview(self.secondStepTF)
         self.secondStepLabel.font = UIFont(name: "Snell Roundhand Bold", size: 30)
         self.secondStepTF.backgroundColor = .white
-        self.secondStepTF.placeholder = "легкая, средняя, тяжелая"
+        self.secondStepTF.placeholder = self.chooseItemSecond.randomElement()
         self.secondStepTF.borderStyle = .roundedRect
         self.secondStepTF.clearButtonMode = .always
         
@@ -123,13 +119,17 @@ extension BookingConstructorHookahView {
         elemPickerSecond.delegate = self
         secondStepTF.inputView = elemPickerSecond
         elemPickerSecond.tag = 2
+        
+        self.createToolBar(self.secondStepTF)
+        
     }
+    
     func settingThirdLabelTF(){
         self.stackView.addArrangedSubview(self.thirdStepLabel)
         self.stackView.addArrangedSubview(self.thirdStepTF)
         self.thirdStepLabel.font = UIFont(name: "Snell Roundhand Bold", size: 30)
         self.thirdStepTF.backgroundColor = .white
-        self.thirdStepTF.placeholder = "Tangiers, Duft, Must Have"
+        self.thirdStepTF.placeholder = self.chooseItemThird.randomElement()
         self.thirdStepTF.borderStyle = .roundedRect
         self.thirdStepTF.clearButtonMode = .always
         
@@ -138,38 +138,41 @@ extension BookingConstructorHookahView {
         thirdStepTF.inputView = elemPickerThird
         elemPickerThird.tag = 3
         
-        
+        self.createToolBar(thirdStepTF)
     }
+    
     func settingFourthLabelTF(){
         self.stackView.addArrangedSubview(self.fourthStepLabel)
         self.stackView.addArrangedSubview(self.fourthStepTF)
         self.fourthStepLabel.font = UIFont(name: "Snell Roundhand Bold", size: 30)
         self.fourthStepTF.backgroundColor = .white
-        self.fourthStepTF.placeholder = "классическая, легкая"
+        self.fourthStepTF.placeholder = self.chooseItemFourth.randomElement()
         self.fourthStepTF.borderStyle = .roundedRect
         self.fourthStepTF.clearButtonMode = .always
         
         let elemPickerFourth = UIPickerView()
         elemPickerFourth.delegate = self
-        fourthStepTF.inputView = elemPickerFourth
+        self.fourthStepTF.inputView = elemPickerFourth
         elemPickerFourth.tag = 4
         
-        
+        self.createToolBar(self.fourthStepTF)
+    
     }
     func settingFifthLabelTF(){
         self.stackView.addArrangedSubview(self.fifthStepLabel)
         self.stackView.addArrangedSubview(self.fifthStepTF)
         self.fifthStepLabel.font = UIFont(name: "Snell Roundhand Bold", size: 30)
         self.fifthStepTF.backgroundColor = .white
-        self.fifthStepTF.placeholder = "классическая, фруктовая"
+        self.fifthStepTF.placeholder = self.chooseItemFifth.randomElement()
         self.fifthStepTF.borderStyle = .roundedRect
         self.fifthStepTF.clearButtonMode = .always
         
         let elemPickerFifth = UIPickerView()
         elemPickerFifth.delegate = self
-        fifthStepTF.inputView = elemPickerFifth
+        self.fifthStepTF.inputView = elemPickerFifth
         elemPickerFifth.tag = 5
         
+        self.createToolBar(self.fifthStepTF)
     }
     
     func settingSixthLabelTF(){
@@ -178,18 +181,20 @@ extension BookingConstructorHookahView {
         self.sixthStepLabel.font = UIFont(name: "Snell Roundhand Bold", size: 30)
         self.sixthStepLabel.numberOfLines = 2
         self.sixthStepTF.backgroundColor = .white
-        self.sixthStepTF.placeholder = "вода, молоко, сироп"
+        self.sixthStepTF.placeholder = self.chooseItemSixth.randomElement()
         self.sixthStepTF.borderStyle = .roundedRect
         self.sixthStepTF.clearButtonMode = .always
         
         let elemPickerSixth = UIPickerView()
         elemPickerSixth.delegate = self
-        sixthStepTF.inputView = elemPickerSixth
+        self.sixthStepTF.inputView = elemPickerSixth
         elemPickerSixth.tag = 6
+        
+        self.createToolBar(self.sixthStepTF)
     }
 }
 
-extension BookingConstructorHookahView : UIPickerViewDataSource, UIPickerViewDelegate{
+extension BookingConstructorHookahView : UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -259,3 +264,41 @@ extension BookingConstructorHookahView : UIPickerViewDataSource, UIPickerViewDel
     }
 }
 
+extension BookingConstructorHookahView {
+    func createToolBar(_ textField : UITextField){
+        // ToolBar
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = .black
+        toolBar.sizeToFit()
+
+        // Adding Button ToolBar
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(BookingConstructorHookahView.doneClick))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(BookingConstructorHookahView.cancelClick))
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        textField.inputAccessoryView = toolBar
+    }
+    
+    @objc
+    func doneClick() {
+        firstStepTF.resignFirstResponder()
+        secondStepTF.resignFirstResponder()
+        thirdStepTF.resignFirstResponder()
+        fourthStepTF.resignFirstResponder()
+        fifthStepTF.resignFirstResponder()
+        sixthStepTF.resignFirstResponder()
+        
+    }
+    @objc
+    func cancelClick() {
+        firstStepTF.resignFirstResponder()
+        secondStepTF.resignFirstResponder()
+        thirdStepTF.resignFirstResponder()
+        fourthStepTF.resignFirstResponder()
+        fifthStepTF.resignFirstResponder()
+        sixthStepTF.resignFirstResponder()
+    }
+}

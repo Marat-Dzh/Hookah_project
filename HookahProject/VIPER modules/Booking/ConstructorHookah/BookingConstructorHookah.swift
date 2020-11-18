@@ -31,23 +31,21 @@ class BookingConstructorHookahVC : UIViewController {
             } else {
                 self!.alertConstructor()
             }
-                
         }
         self.hideKeyboard()
     }
-    
+}
+
+extension BookingConstructorHookahVC {
     func alertConstructor() {
-        let ac = UIAlertController(title: "Внимание", message: "Заполните все поля", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let ac = UIAlertController(title: "ВНИМАНИЕ", message: "Заполните все поля", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Собрать кальян полностью", style: .default, handler: nil)
         ac.addAction(okAction)
         ac.view.backgroundColor = .gray
         ac.view.tintColor = .black
-        
         self.present(ac, animated: true, completion: nil)
     }
-
 }
-
 
 extension UIViewController
 {
@@ -64,5 +62,6 @@ extension UIViewController
     @objc func dismissKeyboard()
     {
         view.endEditing(true)
+        //view.resignFirstResponder() // тоже самое, что и view.endEditing(true)
     }
 }

@@ -24,8 +24,8 @@ extension BookingPresenter: BookingModuleInput{
 }
 
 extension BookingPresenter: BookingInteractorOutput{
-    func makeModels(feedModel: FeedModel) {
-        self.view?.set(viewModels:makeViewModels(news: feedModel.news, stocks: feedModel.stocks))
+    func makeModels() {
+        self.view?.set(viewModels:makeViewModels())
     }
 }
 
@@ -36,7 +36,7 @@ extension BookingPresenter: BookingViewOutput{
 }
 
 private extension BookingPresenter {
-    func makeViewModels(news: [News], stocks: [Stock]) -> [BookingCardViewModel] {
+    func makeViewModels() -> [BookingCardViewModel] {
         return [BookingCardViewModel(info: "Конструкутор кальяна", title: "title 1", shortDescription: "Собери свой кальян", imageName: "Constructor"),
                 BookingCardViewModel(info: "Лимоно-имбирный чай", title: "title 2", shortDescription: "800мл   450 руб.", imageName: "lemontea"),
                 BookingCardViewModel(info: "Ягодный чай", title: "title 3", shortDescription: "800мл   450 руб.", imageName: "berrytea"),

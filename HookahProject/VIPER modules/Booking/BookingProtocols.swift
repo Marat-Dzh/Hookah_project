@@ -25,7 +25,7 @@ protocol BookingInteractorInput{
 }
 
 protocol BookingInteractorOutput: class{
-    func makeModels(feedModel: FeedModel)
+    func makeModels()
 }
 
 protocol BookingRouterInput{

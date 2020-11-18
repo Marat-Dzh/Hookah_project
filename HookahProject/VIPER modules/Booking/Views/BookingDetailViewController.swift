@@ -22,11 +22,13 @@ class BookingDetailViewController : UIViewController {
         
         let bdvc = BookingCardViewModel.makeExample()
         
-        self.bookingDetailView.set(bdvc)
+        self.bookingDetailView.set(bdvc[1])
+        
         self.bookingDetailView.backgroundColor = .black
         
         self.bookingDetailView.onTapButtonToBasketItem = { [weak self] in
             print("Привет, добавил чай в корзину")
+            
         }
     }
     

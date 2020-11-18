@@ -51,10 +51,10 @@ private extension AppCoordinator {
         guard let navController = self.navigationControllers[.basket] else {
             fatalError("can't finid navController")
         }
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .red
-        navController.setViewControllers([viewController], animated: false)
-        viewController.navigationItem.title = NavControllerType.basket.title
+        let basketContext = BasketContext(output: nil)
+        let basketContainer = BasketContainer.assemble(context: basketContext)
+        navController.setViewControllers([basketContainer.viewController], animated: false)
+        basketContainer.viewController.navigationItem.title = NavControllerType.basket.title
     }
     
     func setupFeed(){

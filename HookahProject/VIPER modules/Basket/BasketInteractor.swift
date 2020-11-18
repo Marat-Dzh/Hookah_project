@@ -1,18 +1,18 @@
 //
-//  BookingInteractor.swift
+//  BasketInteractor.swift
 //  HookahProject
 //
-//  Created by Олег Филатов on 02.11.2020.
+//  Created by Олег Филатов on 15.11.2020.
 //
 
 import Foundation
 
-final class BookingInteractor{
-    weak var presenter: BookingInteractorOutput?
+final class BasketInteractor{
+    weak var presenter: BasketInteractorOutput?
     
 }
 
-extension BookingInteractor: BookingInteractorInput{
+extension BasketInteractor: BasketInteractorInput{
     func addToBasket() {
         //
     }

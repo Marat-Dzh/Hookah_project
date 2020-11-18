@@ -8,17 +8,18 @@
 import Foundation
 
 protocol BasketViewInput: class{
-    func displayOrders()
+    func displayOrders(basketViewModels: [BasketCardViewModel])
 }
 
 protocol BasketViewOutput : class{
-    func onHistoryShowTap()
-    func onConfirmOrderTap()
+    func viewDidLoad()
+//    func onHistoryShowTap()
+//    func onConfirmOrderTap()
 }
 
 protocol BasketModuleInput{
     
-    func listOrders()
+    //func listOrders()
 }
 
 protocol BasketModuleOutput: class{
@@ -26,13 +27,13 @@ protocol BasketModuleOutput: class{
 }
 
 protocol BasketInteractorInput{
-    
+    func getCatalog()
 }
 
 protocol BasketInteractorOutput: class{
-    
+    func makeModels()
 }
 
 protocol BasketRouterInput{
-    func openConfirmModule()
+    //func openConfirmModule()
 }
