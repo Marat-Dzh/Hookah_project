@@ -12,7 +12,7 @@ class AppCoordinator {
     private lazy var tabBarController = UITabBarController()
     private lazy var navigationControllers = AppCoordinator.makeNavigationControllers()
     
-    private let userContext: UserContext
+    private let userContext: UserContext?
     
     init(window: UIWindow, context: AuthContext){
         userContext = AppCoordinatorService.getPersonContext(context: context)

@@ -6,12 +6,28 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 class AppCoordinatorService{
-    class func getPersonContext(context: AuthContext) -> UserContext{
-        //perform firebase query to create UserContext
-        //...
-        //...
-        return UserContext(info: UserInfo(id: 0, points: 0, name: "", email: "", uId: ""), history: [], orders: [])
+    
+    class func getPersonContext(context: AuthContext) -> UserContext?{
+        let db = Firestore.firestore()
+        let docRef = db.collection("users").document(context.id)
+        var userInfo = UserInfo()
+        docRef.getDocument {(document, error)  in
+            if let document = document, document.exists {
+                userInfo = UserInfo(doc: document)
+                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                        print("Document data: \(dataDescription)")
+            } else {
+                print("Document does not exist")
+            }
+        }
+        
+        return UserContext(info: userInfo, history: [], orders: [])
+    }
+    init(){
+        
     }
 }
+
