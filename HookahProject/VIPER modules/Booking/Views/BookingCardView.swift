@@ -12,11 +12,11 @@ class BookingCardView: UIView{
     private let infoLabel = UILabel()
     private let titleLabel = UILabel()
     private let shortDescriptionLabel = UILabel()
-    private let imageView = UIImageView()
+    private let cardImageView = UIImageView()
     
     override init(frame: CGRect){
         super.init(frame: frame)
-        self.addSubview(self.imageView)
+        self.addSubview(self.cardImageView)
         self.addSubview(self.infoLabel)
         self.addSubview(self.titleLabel)
         self.addSubview(self.shortDescriptionLabel)
@@ -72,7 +72,7 @@ class BookingCardView: UIView{
         
 
         //Картинки
-        self.imageView.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
+        self.cardImageView.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
         
 
     }
@@ -81,7 +81,7 @@ class BookingCardView: UIView{
         self.infoLabel.text = viewModel.info
         self.titleLabel.text = viewModel.title
         self.shortDescriptionLabel.text = viewModel.shortDescription
-        self.imageView.image = UIImage(named: viewModel.imageName)
+        self.cardImageView.image = UIImage(named: viewModel.imageName)
         self.setNeedsLayout()
     }
 }

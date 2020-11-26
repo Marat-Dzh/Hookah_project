@@ -17,6 +17,8 @@ final class BookingDetailView: AutoLayoutView {
     private let buttonToBasket  = ButtonToBasket()
     var onTapButtonToBasketItem: (() -> Void)?
     
+    
+    
     init() {
         super.init(frame: .zero)
         self.setup()
@@ -26,11 +28,10 @@ final class BookingDetailView: AutoLayoutView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(_ viewModel: BookingCardViewModel){
+    func set(with viewModel: BookingCardViewModel) {
         self.imageView.image = UIImage(named: viewModel.imageName)
         self.infoLabel.text = viewModel.info
         self.shortDescriptionLabel.text = viewModel.shortDescription
-        
     }
     
     private func setup() {
@@ -78,4 +79,5 @@ final class BookingDetailView: AutoLayoutView {
         
     }
     
+
 }

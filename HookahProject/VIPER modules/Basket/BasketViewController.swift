@@ -38,17 +38,14 @@ class BasketViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.output.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "История заказов", style: .done, target: self, action: #selector(self.action(sender:)))
-        //self.output.viewDidLoad()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "История заказов", style: .done, target: self, action: #selector(self.historyAction(sender:)))
         //self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
     
-    @objc func action(sender: UIBarButtonItem) {
-        // Function body goes here
+    @objc func historyAction(sender: UIBarButtonItem) {
+        self.navigationController?.pushViewController(HistoryViewController(), animated: true)
     }
     
-
-
 }
 
 

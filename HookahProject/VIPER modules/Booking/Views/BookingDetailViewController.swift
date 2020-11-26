@@ -9,6 +9,7 @@ import UIKit
 
 class BookingDetailViewController : UIViewController {
     
+    
     private var bookingDetailView: BookingDetailView {
         self.view as! BookingDetailView
     }
@@ -16,22 +17,20 @@ class BookingDetailViewController : UIViewController {
     override func loadView() {
         self.view = BookingDetailView()
     }
-
+    
+    var bookingDetailModel = BookingDetailView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let bdvc = BookingCardViewModel.makeExample()
-        
-        self.bookingDetailView.set(bdvc[1])
-        
         self.bookingDetailView.backgroundColor = .black
         
+        let bdvc = BookingCardViewModel.makeExample()
+        self.bookingDetailView.set(with: bdvc[1])
+    
         self.bookingDetailView.onTapButtonToBasketItem = { [weak self] in
             print("Привет, добавил чай в корзину")
-            
         }
     }
-    
 }
 
 

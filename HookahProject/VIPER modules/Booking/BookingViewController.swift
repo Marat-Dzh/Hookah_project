@@ -13,6 +13,8 @@ final class BookingViewController: UIViewController {
     private let collectionView: UICollectionView
     private var viewModels = [BookingCardViewModel]()
     
+    
+    
     init(_ output:BookingViewOutput){
         self.output = output
         let collectionViewLayout = UICollectionViewFlowLayout()
@@ -39,17 +41,17 @@ final class BookingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.output.viewDidLoad()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        self.navigationItem.rightBarButtonItem?.tintColor = .black
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-            if indexPath.row == 0 {
-                let viewController = BookingConstructorHookahVC() // or your custom view controller
-                self.navigationController?.pushViewController(viewController, animated: true)
-            }else{
-                let viewController = BookingDetailViewController() // or your custom view controller
-                self.navigationController?.pushViewController(viewController, animated: true)
-            }
+        if indexPath.row == 0 {
+            self.navigationController?.pushViewController(BookingConstructorHookahVC(), animated: true)
+        }else{
+            self.navigationController?.pushViewController(BookingDetailViewController(), animated: true)
+                    
+        }
     }
     
 }
@@ -75,7 +77,7 @@ extension BookingViewController: UICollectionViewDataSource {
         return cell
     }
     
-
+    
 }
 
 extension BookingViewController: UICollectionViewDelegateFlowLayout {

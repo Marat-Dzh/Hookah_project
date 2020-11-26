@@ -73,6 +73,7 @@ final class ScrollableStackView: AutoLayoutView {
         self.scrollView.alwaysBounceHorizontal = self.config.scroll.alwaysBounceHorizontal
         self.scrollView.showsHorizontalScrollIndicator = self.config.scroll.showsHorizontalScrollIndicator
         self.scrollView.showsVerticalScrollIndicator = self.config.scroll.showsVerticalScrollIndicator
+        
     }
 
     func removeArrangedSubview(_ view: UIView) {
@@ -138,4 +139,3 @@ extension ScrollableStackView {
         )
     }
 }
-
