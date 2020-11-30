@@ -8,7 +8,7 @@
 import UIKit
 
 final class ReserveViewController : UIViewController {
-    private var output : ReserveViewOutput
+    private var output: ReserveViewOutput
     
     private var reserveView: ReserveView {
         self.view as! ReserveView
@@ -33,7 +33,7 @@ final class ReserveViewController : UIViewController {
     }
 }
 
-extension ReserveViewController : ReserveViewInput {
+extension ReserveViewController: ReserveViewInput {
     
 }
 
@@ -61,13 +61,13 @@ class ReserveView : AutoLayoutView {
     }
     private func setup(){
 
-        setupWhatTimeTitleLabel()
-        setupDatePickerToReserve()
-        setupHowManyGuestTitleLabel()
-        setupMinusGuestButton()
-        setupPlusGuestButton()
-        setupNumberOfGuestsLabel()
-        setupButtonToReserve()
+        self.setupWhatTimeTitleLabel()
+        self.setupDatePickerToReserve()
+        self.setupHowManyGuestTitleLabel()
+        self.setupMinusGuestButton()
+        self.setupPlusGuestButton()
+        self.setupNumberOfGuestsLabel()
+        self.setupButtonToReserve()
 
     }
     
@@ -97,7 +97,7 @@ class ReserveView : AutoLayoutView {
             self.minusGuestButton.heightAnchor.constraint(equalToConstant: 35.0),
             
             self.numberOfGuestsLabel.topAnchor.constraint(equalTo: self.howManyGuestTitleLabel.bottomAnchor, constant: 20.0),
-            self.numberOfGuestsLabel.leadingAnchor.constraint(equalTo: self.minusGuestButton.trailingAnchor, constant: 15.0),
+            self.numberOfGuestsLabel.leadingAnchor.constraint(equalTo: self.minusGuestButton.trailingAnchor, constant: 16.0),
 
             
             self.plusGuestButton.topAnchor.constraint(equalTo: self.howManyGuestTitleLabel.bottomAnchor, constant: 15.0),

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BookingCardView: UIView{
+class BookingCardView: AutoLayoutView{
     
     private let infoLabel = UILabel()
     private let titleLabel = UILabel()
@@ -16,31 +16,7 @@ class BookingCardView: UIView{
     
     override init(frame: CGRect){
         super.init(frame: frame)
-        self.addSubview(self.cardImageView)
-        self.addSubview(self.infoLabel)
-        self.addSubview(self.titleLabel)
-        self.addSubview(self.shortDescriptionLabel)
-
-//        self.layer.cornerRadius = 30
-//        self.layer.masksToBounds = true
- 
-        
-        //self.titleLabel.numberOfLines = 3
-        self.shortDescriptionLabel.numberOfLines = 1
-
-        self.infoLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
-        self.infoLabel.numberOfLines = 0
-        
-        
-        self.infoLabel.font = Font.system(ofSize: 20, weight: .bold)
-        self.infoLabel.textColor = .white
-        //self.titleLabel.font = Font.system(ofSize: 32, weight: .bold)
-        //self.titleLabel.textColor = .white
-        self.shortDescriptionLabel.font = Font.system(ofSize: 16, weight: .regular)
-        //self.shortDescriptionLabel.textColor = UIColor.rgba(158, 158, 158)
-        self.shortDescriptionLabel.textColor = .white
-        
-        //self.imageView.contentMode = .scaleAspectFill
+        self.setup()
     }
     
 
@@ -48,33 +24,29 @@ class BookingCardView: UIView{
         fatalError("unsupported")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let maxLabelWidth = self.frame.width - Constans.margin * 2
-        let maxLabelSize = CGSize(width: maxLabelWidth, height: .greatestFiniteMagnitude)
-        
-        let infoLabelSize = self.infoLabel.sizeThatFits(maxLabelSize)
-        self.infoLabel.frame.origin = CGPoint(x: self.frame.height, y: Constans.margin)
-        self.infoLabel.frame.size = infoLabelSize
-        
-        
-        let shortDescriptionSize = self.shortDescriptionLabel.sizeThatFits(maxLabelSize)
-        let shortDescriptionOrigin = CGPoint(x: self.frame.height + Constans.margin, y: self.frame.height - Constans.margin - shortDescriptionSize.height)
-        self.shortDescriptionLabel.frame.origin = shortDescriptionOrigin
-        self.shortDescriptionLabel.frame.size = shortDescriptionSize
-        
-        
-//        let titleLabelSize = self.titleLabel.sizeThatFits(maxLabelSize)
-//        let titleLabelOrigin = CGPoint(x: Constans.margin, y: self.shortDescriptionLabel.frame.minY - Constans.margin - titleLabelSize.height)
-//        self.titleLabel.frame.origin = titleLabelOrigin
-//        self.titleLabel.frame.size = titleLabelSize
-        //self.titleLabel.sizeToFit()
-        
-
-        //Картинки
-        self.cardImageView.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
-        
-
+    private func setup(){
+        setupCardImageView()
+        setupTitleLabel()
+        setupShortDescriptionLabel()
+    }
+    
+    override func setupConstraints() {
+        super.setupConstraints()
+        [
+            self.cardImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.cardImageView.widthAnchor.constraint(equalToConstant: self.frame.height),
+            self.cardImageView.heightAnchor.constraint(equalToConstant: self.frame.height),
+            
+            self.titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10.0),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.cardImageView.trailingAnchor, constant: 5.0),
+            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0),
+            
+            self.shortDescriptionLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10.0),
+            self.shortDescriptionLabel.leadingAnchor.constraint(equalTo: self.cardImageView.trailingAnchor, constant: 5.0),
+            self.shortDescriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0)
+            
+            
+        ].forEach{$0.isActive = true}
     }
     
     func update(with viewModel: BookingCardViewModel){
@@ -86,7 +58,57 @@ class BookingCardView: UIView{
     }
 }
 
+extension BookingCardView {
+    func setupCardImageView() {
+        self.addSubview(self.cardImageView)
 
-private struct Constans {
-    static let margin: CGFloat = 16
+    }
+    
+    func setupTitleLabel() {
+        self.addSubview(self.titleLabel)
+        self.titleLabel.font = Font.system(ofSize: 20, weight: .bold)
+        self.titleLabel.textColor = .white
+        self.titleLabel.numberOfLines = 1
+        //        self.titleLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        //        self.titleLabel.numberOfLines = 0
+    }
+    
+    func setupShortDescriptionLabel() {
+        self.addSubview(self.shortDescriptionLabel)
+        self.shortDescriptionLabel.font = Font.system(ofSize: 16, weight: .regular)
+        self.shortDescriptionLabel.textColor = .white
+    }
 }
+
+
+
+
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        let maxLabelWidth = self.frame.width - Constans.margin * 2
+//        let maxLabelSize = CGSize(width: maxLabelWidth, height: .greatestFiniteMagnitude)
+//
+//        let infoLabelSize = self.infoLabel.sizeThatFits(maxLabelSize)
+//        self.infoLabel.frame.origin = CGPoint(x: self.frame.height, y: Constans.margin)
+//        self.infoLabel.frame.size = infoLabelSize
+//
+//
+//        let shortDescriptionSize = self.shortDescriptionLabel.sizeThatFits(maxLabelSize)
+//        let shortDescriptionOrigin = CGPoint(x: self.frame.height + Constans.margin, y: self.frame.height - Constans.margin - shortDescriptionSize.height)
+//        self.shortDescriptionLabel.frame.origin = shortDescriptionOrigin
+//        self.shortDescriptionLabel.frame.size = shortDescriptionSize
+
+////        let titleLabelSize = self.titleLabel.sizeThatFits(maxLabelSize)
+////        let titleLabelOrigin = CGPoint(x: Constans.margin, y: self.shortDescriptionLabel.frame.minY - Constans.margin - titleLabelSize.height)
+////        self.titleLabel.frame.origin = titleLabelOrigin
+////        self.titleLabel.frame.size = titleLabelSize
+//        //self.titleLabel.sizeToFit()
+
+//        //Картинки
+//        self.cardImageView.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
+
+//    }
+
+//private struct Constans {
+//    static let margin: CGFloat = 16
+//}

@@ -9,8 +9,6 @@ import UIKit
 
 class BookingConstructorHookahVC : UIViewController {
     
-    private var scrollView: ScrollableStackView?
-    
     private var bookingConstructorHookahView : BookingConstructorHookahView{
         self.view as! BookingConstructorHookahView
     }
