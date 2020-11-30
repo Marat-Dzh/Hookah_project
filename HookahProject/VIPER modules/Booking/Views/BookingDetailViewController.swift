@@ -14,6 +14,8 @@ class BookingDetailViewController : UIViewController {
         self.view as! BookingDetailView
     }
     
+    
+    
     override func loadView() {
         self.view = BookingDetailView()
     }
@@ -26,10 +28,13 @@ class BookingDetailViewController : UIViewController {
         
         let bdvc = BookingCardViewModel.makeExample()
         self.bookingDetailView.set(with: bdvc[1])
+        
+        
     
-        self.bookingDetailView.onTapButtonToBasketItem = { [weak self] in
-            print("Привет, добавил чай в корзину")
-        }
+//        self.bookingDetailView.onTapButtonToBasketItem = { [weak self] in
+//            
+//            print("Привет, добавил чай в корзину")
+//        }
     }
 }
 

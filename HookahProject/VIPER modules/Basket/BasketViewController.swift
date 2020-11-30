@@ -13,6 +13,8 @@ class BasketViewController: UIViewController {
     private let tableView : UITableView
     var basketViewModels = [BasketCardViewModel]()
     
+
+    
     init(_ output:BasketViewOutput){
         self.output = output
         self.tableView = UITableView(frame: .zero, style: .grouped)
@@ -28,6 +30,7 @@ class BasketViewController: UIViewController {
         view.addSubview(self.tableView)
         self.setupTableView()
         self.view = view
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,12 +90,10 @@ extension BasketViewController : UITableViewDataSource {
     
 }
 
+
+
+
 extension BasketViewController : UITableViewDelegate {
-    
-}
-
-
-private extension BasketViewController {
     func setupTableView(){
         self.tableView.delegate = self
         self.tableView.dataSource = self
