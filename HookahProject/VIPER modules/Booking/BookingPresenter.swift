@@ -40,6 +40,8 @@ private extension BookingPresenter {
         return [BookingCardViewModel(info: "info1", title: "Конструкутор кальяна", shortDescription: "Собери свой кальян", imageName: "Constructor"),
                 BookingCardViewModel(info: "info2", title: "Лимоно-имбирный чай", shortDescription: "800мл   450 руб.", imageName: "lemontea"),
                 BookingCardViewModel(info: "info3", title: "Ягодный чай", shortDescription: "800мл   450 руб.", imageName: "berrytea"),
+                BookingCardViewModel(info: "info4", title: "Oблепиховый чай", shortDescription: "800мл   450 руб.", imageName: "seabuckthorntea"),
+                BookingCardViewModel(info: "info4", title: "Oблепиховый чай", shortDescription: "800мл   450 руб.", imageName: "seabuckthorntea"),
                 BookingCardViewModel(info: "info4", title: "Oблепиховый чай", shortDescription: "800мл   450 руб.", imageName: "seabuckthorntea")]
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 enum Localization {
     static let feed = "Новости"
     static let menu = "Меню"
-    static let basket = "Корзина"
+    static let basket = "Забронировать"
     static let account = "Аккаунт"
 
 }

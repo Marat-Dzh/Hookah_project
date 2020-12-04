@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class ReserveContainer{
+final class ReserveContainer {
     let viewController: UIViewController
     weak var moduleInput: ReserveModuleInput?
     
-    static func assemble() -> ReserveContainer{
+    static func assemble() -> ReserveContainer {
         let router = ReserveRouter()
         let interactor = ReserveInteractor()
         let presenter = ReservePresenter(router: router, interactor: interactor)

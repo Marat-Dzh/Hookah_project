@@ -72,6 +72,7 @@ class BookingConstructorHookahView : AutoLayoutView, UITextFieldDelegate {
         settingSixthLabelTF()
         settingSeventhLabelTF()
         setButtonToBasket()
+        self.stackView.setCustomSpacing(40.0, after: seventhStepTF)
     }
     
     override func setupConstraints() {

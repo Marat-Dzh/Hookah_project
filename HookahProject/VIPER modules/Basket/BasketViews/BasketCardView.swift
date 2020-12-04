@@ -11,13 +11,13 @@ class BasketCardView: UIView {
 //    let basketImageName: String
 //    let basketInfofoProduct: String
 //    let basketShortDescription: String
-    private let basketINView = UIImageView()
+    //private let basketINView = UIImageView()
     private let basketIPLabel = UILabel()
     private let basketSDLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(self.basketINView)
+        //self.addSubview(self.basketINView)
         self.addSubview(self.basketIPLabel)
         self.addSubview(self.basketSDLabel)
         
@@ -48,7 +48,7 @@ class BasketCardView: UIView {
         self.basketSDLabel.frame.origin = CGPoint(x: self.frame.width - self.frame.height, y: self.frame.height/2 - 10)
         self.basketSDLabel.frame.size = basketSDLabelSize
         
-        self.basketINView.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
+       // self.basketINView.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
         
     }
     
@@ -56,7 +56,7 @@ class BasketCardView: UIView {
     func update(with viewModel: BasketCardViewModel){
         self.basketIPLabel.text = viewModel.basketInfoProduct
         self.basketSDLabel.text = viewModel.basketShortDescription
-        self.basketINView.image = UIImage(named: viewModel.basketImageName)
+        //self.basketINView.image = UIImage(named: viewModel.basketImageName)
         self.setNeedsLayout()
     }
     

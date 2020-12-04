@@ -15,7 +15,7 @@ protocol ReserveModuleOutput: class {
     
 }
 
-protocol ReserveViewInput {
+protocol ReserveViewInput: class {
     
 }
 

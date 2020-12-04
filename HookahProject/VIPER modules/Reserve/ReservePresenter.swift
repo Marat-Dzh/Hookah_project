@@ -8,7 +8,7 @@
 import UIKit
 
 final class ReservePresenter {
-    weak var view: ReserveViewOutput?
+    weak var view: ReserveViewInput?
     
     private let router: ReserveRouter
     private let interactor: ReserveInteractor
@@ -32,6 +32,6 @@ extension ReservePresenter: ReserveModuleInput {
     
 }
 
-extension ReservePresenter: ReserveRouterOutput{
+extension ReservePresenter: ReserveRouterOutput {
     
 }

@@ -15,7 +15,7 @@ final class BookingViewController: UIViewController {
     
     
     
-    init(_ output:BookingViewOutput){
+    init(_ output: BookingViewOutput){
         self.output = output
         let collectionViewLayout = UICollectionViewFlowLayout()
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)

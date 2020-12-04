@@ -7,12 +7,14 @@
 
 import UIKit
 
-final class ReserveViewController : UIViewController {
+
+class ReserveViewController : UIViewController {
+
     private var output: ReserveViewOutput
-    
     private var reserveView: ReserveView {
         self.view as! ReserveView
     }
+    
     
     init(output: ReserveViewOutput) {
         self.output = output
@@ -22,7 +24,7 @@ final class ReserveViewController : UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func loadView() {
         self.view = ReserveView()
     }
@@ -30,9 +32,12 @@ final class ReserveViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
+        self.reserveView.onTapButtonToReserve = {[weak self] in
+            //Вызвать функцию addTableReserveCell и передать в нее параметры
+        }
     }
+    
 }
-
 extension ReserveViewController: ReserveViewInput {
     
 }
@@ -42,14 +47,17 @@ class ReserveView : AutoLayoutView {
     //private let stackView = UIStackView()
     
     private let whatTimeTitleLabel = UILabel()
-    private let datePickerToReserve = UIDatePicker()
+    fileprivate let datePickerToReserve = UIDatePicker()
     private let howManyGuestTitleLabel = UILabel()
     private let minusGuestButton = UIButton()
     private let plusGuestButton = UIButton()
-    private let numberOfGuestsLabel = UILabel()
+    fileprivate let numberOfGuestsLabel = UILabel()
     let buttonToReserve = ButtonToBasket()
     
-    private var numGuest = 1
+    
+    fileprivate var numGuest = 1
+    
+    var onTapButtonToReserve: (() -> Void)?
     
     init() {
         super.init(frame: .zero)
@@ -59,8 +67,7 @@ class ReserveView : AutoLayoutView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private func setup(){
-
+    private func setup() {
         self.setupWhatTimeTitleLabel()
         self.setupDatePickerToReserve()
         self.setupHowManyGuestTitleLabel()
@@ -68,7 +75,6 @@ class ReserveView : AutoLayoutView {
         self.setupPlusGuestButton()
         self.setupNumberOfGuestsLabel()
         self.setupButtonToReserve()
-
     }
     
     override func setupConstraints(){
@@ -98,11 +104,11 @@ class ReserveView : AutoLayoutView {
             
             self.numberOfGuestsLabel.topAnchor.constraint(equalTo: self.howManyGuestTitleLabel.bottomAnchor, constant: 20.0),
             self.numberOfGuestsLabel.leadingAnchor.constraint(equalTo: self.minusGuestButton.trailingAnchor, constant: 16.0),
-
+            
             
             self.plusGuestButton.topAnchor.constraint(equalTo: self.howManyGuestTitleLabel.bottomAnchor, constant: 15.0),
-            self.plusGuestButton.leadingAnchor.constraint(equalTo: self.numberOfGuestsLabel.trailingAnchor, constant: 16.0),
-
+            self.plusGuestButton.leadingAnchor.constraint(equalTo: self.minusGuestButton.trailingAnchor, constant: 40.0),
+            
             self.plusGuestButton.widthAnchor.constraint(equalToConstant: 35.0),
             self.plusGuestButton.heightAnchor.constraint(equalToConstant: 35.0)
             
@@ -128,20 +134,20 @@ extension ReserveView {
             self.datePickerToReserve.preferredDatePickerStyle = .wheels
             self.datePickerToReserve.datePickerMode = .dateAndTime
             self.datePickerToReserve.locale = Locale(identifier: "ru_RU")
-            self.datePickerToReserve.backgroundColor = .lightGray
+            self.datePickerToReserve.backgroundColor = .gray
             self.datePickerToReserve.setValue(UIColor.white, forKeyPath: "textColor")
             self.datePickerToReserve.layer.cornerRadius = 8.0
             self.datePickerToReserve.layer.masksToBounds = true
-          //  self.datePickerToReserve.addTarget(self, action: #selector(getDataAndTime), for: .valueChanged)
+            //  self.datePickerToReserve.addTarget(self, action: #selector(getDataAndTime), for: .valueChanged)
         } else {
             // Fallback on earlier versions
         }
     }
     
-//    @objc
-//    private func getDataAndTime() {
-//        print(self.datePickerToReserve.date)
-//    }
+    //    @objc
+    //    private func getDataAndTime() {
+    //        print(self.datePickerToReserve.date)
+    //    }
     
     func setupHowManyGuestTitleLabel() {
         self.addSubview(self.howManyGuestTitleLabel)
@@ -180,7 +186,7 @@ extension ReserveView {
     
     @objc
     private func onTapPlus(){
-        guard numGuest < 10 else {
+        guard numGuest < 9 else {
             return
         }
         numGuest += 1
@@ -197,12 +203,13 @@ extension ReserveView {
     func setupButtonToReserve() {
         self.addSubview(self.buttonToReserve)
         self.buttonToReserve.setTitle("Запросить броинрование", for: .normal)
-        self.buttonToReserve.addTarget(self, action: #selector(onTapButtonToReserve), for: .touchUpInside)
+        self.buttonToReserve.addTarget(self, action: #selector(onTapButtonToReserveFunc), for: .touchUpInside)
     }
     
     @objc
-    func onTapButtonToReserve(){
-        print(self.datePickerToReserve.date.addingTimeInterval(3*60*60))
-        print(self.numGuest)
+    func onTapButtonToReserveFunc(){
+        self.onTapButtonToReserve?()
+        //        print(self.datePickerToReserve.date.addingTimeInterval(3*60*60))
+        //        print(self.numGuest)
     }
 }

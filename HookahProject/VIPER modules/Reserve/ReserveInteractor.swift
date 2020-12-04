@@ -11,6 +11,6 @@ final class ReserveInteractor {
     var output: ReserveInteractorOutput?
 }
 
-extension ReserveInteractor: ReserveInteractorInput{
+extension ReserveInteractor: ReserveInteractorInput {
     
 }
