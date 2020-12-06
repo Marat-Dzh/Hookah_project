@@ -9,8 +9,6 @@ import UIKit
 
 class BookingConstructorHookahVC : UIViewController {
     
-    var x = 10
-    
     private var bookingConstructorHookahView : BookingConstructorHookahView{
         self.view as! BookingConstructorHookahView
     }
@@ -23,8 +21,10 @@ class BookingConstructorHookahVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Конструктор кальяна"
+        
         self.bookingConstructorHookahView.set()
         self.bookingConstructorHookahView.backgroundColor = .darkGray
+        self.bookingConstructorHookahView.kbShowHide()
         self.bookingConstructorHookahView.onTapButtonToBasketHookah = { [weak self] in
             if self!.bookingConstructorHookahView.isEmptyTF(){
                 print("Hello")
@@ -34,6 +34,9 @@ class BookingConstructorHookahVC : UIViewController {
         }
         self.hideKeyboard()
     }
+    
+
+
 }
 
 extension BookingConstructorHookahVC {
@@ -47,6 +50,8 @@ extension BookingConstructorHookahVC {
     }
 }
 
+
+
 extension UIViewController
 {
     func hideKeyboard()
@@ -54,11 +59,11 @@ extension UIViewController
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(UIViewController.dismissKeyboard))
-
+        
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
-
+    
     @objc func dismissKeyboard()
     {
         view.endEditing(true)

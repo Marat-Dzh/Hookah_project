@@ -9,26 +9,26 @@ import UIKit
 
 class BasketCardView: UIView {
 //    let basketImageName: String
-//    let basketInfoProduct: String
+//    let basketInfofoProduct: String
 //    let basketShortDescription: String
-    private let basketIN = UIImageView()
-    private let basketIP = UILabel()
-    private let basketSD = UILabel()
+    //private let basketINView = UIImageView()
+    private let basketIPLabel = UILabel()
+    private let basketSDLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(self.basketIN)
-        self.addSubview(self.basketIP)
-        self.addSubview(self.basketSD)
+        //self.addSubview(self.basketINView)
+        self.addSubview(self.basketIPLabel)
+        self.addSubview(self.basketSDLabel)
         
         
-        self.basketIP.numberOfLines = 1
-        self.basketIP.font = Font.system(ofSize: 20, weight: .regular)
-        self.basketIP.textColor = .black
+        self.basketIPLabel.numberOfLines = 1
+        self.basketIPLabel.font = Font.system(ofSize: 20, weight: .regular)
+        self.basketIPLabel.textColor = .black
         
-        self.basketSD.numberOfLines = 1
-        self.basketSD.font = Font.system(ofSize: 20, weight: .regular)
-        self.basketSD.textColor = .black
+        self.basketSDLabel.numberOfLines = 1
+        self.basketSDLabel.font = Font.system(ofSize: 20, weight: .regular)
+        self.basketSDLabel.textColor = .black
     }
     
     required init?(coder aDecoder: NSCoder){
@@ -40,22 +40,23 @@ class BasketCardView: UIView {
         let maxLabelWidth = self.frame.width - 16 * 2
         let maxLabelSize = CGSize(width: maxLabelWidth, height: .greatestFiniteMagnitude)
         
-        let basketIPSize = self.basketIP.sizeThatFits(maxLabelSize)
-        self.basketIP.frame.origin = CGPoint(x: self.frame.height + 10, y: self.frame.height/2 - 10)
-        self.basketIP.frame.size = basketIPSize
+        let basketIPLabelSize = self.basketIPLabel.sizeThatFits(maxLabelSize)
+        self.basketIPLabel.frame.origin = CGPoint(x: self.frame.height + 10, y: self.frame.height/2 - 10)
+        self.basketIPLabel.frame.size = basketIPLabelSize
         
-        let basketSDSize = self.basketSD.sizeThatFits(maxLabelSize)
-        self.basketSD.frame.origin = CGPoint(x: self.frame.width - self.frame.height, y: self.frame.height/2 - 10)
-        self.basketSD.frame.size = basketSDSize
+        let basketSDLabelSize = self.basketSDLabel.sizeThatFits(maxLabelSize)
+        self.basketSDLabel.frame.origin = CGPoint(x: self.frame.width - self.frame.height, y: self.frame.height/2 - 10)
+        self.basketSDLabel.frame.size = basketSDLabelSize
         
-        self.basketIN.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
+       // self.basketINView.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
         
     }
     
+    
     func update(with viewModel: BasketCardViewModel){
-        self.basketIP.text = viewModel.basketInfoProduct
-        self.basketSD.text = viewModel.basketShortDescription
-        self.basketIN.image = UIImage(named: viewModel.basketImageName)
+        self.basketIPLabel.text = viewModel.basketInfoProduct
+        self.basketSDLabel.text = viewModel.basketShortDescription
+        //self.basketINView.image = UIImage(named: viewModel.basketImageName)
         self.setNeedsLayout()
     }
     

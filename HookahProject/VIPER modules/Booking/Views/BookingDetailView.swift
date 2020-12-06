@@ -14,8 +14,10 @@ final class BookingDetailView: AutoLayoutView {
     private let shortDescriptionLabel = UILabel()
     private let imageView = UIImageView()
 
-    private let buttonToBasket  = ButtonToBasket()
-    var onTapButtonToBasketItem: (() -> Void)?
+//    private let buttonToBasket  = ButtonToBasket()
+//    var onTapButtonToBasketItem: (() -> Void)?
+    
+    
     
     init() {
         super.init(frame: .zero)
@@ -26,18 +28,17 @@ final class BookingDetailView: AutoLayoutView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(_ viewModel: BookingCardViewModel){
+    func set(with viewModel: BookingCardViewModel) {
         self.imageView.image = UIImage(named: viewModel.imageName)
         self.infoLabel.text = viewModel.info
         self.shortDescriptionLabel.text = viewModel.shortDescription
-        
     }
     
     private func setup() {
         self.addSubview(self.imageView)
         self.addSubview(self.infoLabel)
         self.addSubview(self.shortDescriptionLabel)
-        self.addSubview(self.buttonToBasket)
+//        self.addSubview(self.buttonToBasket)
         self.imageView.contentMode = .scaleAspectFit
         
         self.infoLabel.textColor = .white
@@ -45,7 +46,7 @@ final class BookingDetailView: AutoLayoutView {
         
         self.backgroundColor = .white
         
-        self.buttonToBasket.addTarget(self, action: #selector(onTapButtonToBasketFunc), for: .touchUpInside)
+//        self.buttonToBasket.addTarget(self, action: #selector(onTapButtonToBasketFunc), for: .touchUpInside)
     }
     
     override func setupConstraints() {
@@ -69,13 +70,14 @@ final class BookingDetailView: AutoLayoutView {
 
         ].forEach { $0.isActive = true }
 
-        self.buttonToBasket.attach(to: self)
+        //self.buttonToBasket.attach(to: self)
     }
     
-    @objc
-    private func onTapButtonToBasketFunc() {
-        self.onTapButtonToBasketItem?()
-        
-    }
+//    @objc
+//    private func onTapButtonToBasketFunc() {
+//        self.onTapButtonToBasketItem?()
+//
+//    }
     
+
 }
