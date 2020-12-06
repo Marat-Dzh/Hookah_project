@@ -47,6 +47,16 @@ private extension AppCoordinator {
         container.viewController.navigationItem.title = NavControllerType.menu.title
     }
     
+    func setupBasket(){
+        guard let navController = self.navigationControllers[.basket] else {
+            fatalError("can't finid navController")
+        }
+        //let basketContext = BasketContext(output: nil)
+        let reserveContainer = ReserveContainer.assemble()
+        navController.setViewControllers([reserveContainer.viewController], animated: false)
+        reserveContainer.viewController.navigationItem.title = NavControllerType.basket.title
+    }
+  
     func setupFeed(){
         guard let navController = self.navigationControllers[.feed] else {
             fatalError("can't finid navController")

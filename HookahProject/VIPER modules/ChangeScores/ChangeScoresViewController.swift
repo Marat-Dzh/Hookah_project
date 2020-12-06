@@ -113,9 +113,13 @@ extension ChangeScoresView {
     func setupCardNumberTF() {
         self.addSubview(self.cardNumberTF)
         self.cardNumberTF.backgroundColor = .white
+        self.cardNumberTF.textColor = .black
         self.cardNumberTF.borderStyle = .roundedRect
-        self.cardNumberTF.clearButtonMode = .always
         self.cardNumberTF.keyboardType = .asciiCapableNumberPad
+        self.cardNumberTF.placeholder = "Номер карты"
+        self.cardNumberTF.clearButtonMode = .always
+        self.cardNumberTF.delegate = self
+        self.cardNumberTF.addTarget(self, action: #selector(textFieldDidChange), for: UIControl.Event.editingChanged)
     }
     
     func setupNumScoresLabel() {
@@ -129,9 +133,11 @@ extension ChangeScoresView {
     func setupNumScoresTF() {
         self.addSubview(self.numScoresTF)
         self.numScoresTF.backgroundColor = .white
+        self.numScoresTF.textColor = .black
         self.numScoresTF.borderStyle = .roundedRect
-        self.numScoresTF.clearButtonMode = .always
         self.numScoresTF.keyboardType = .asciiCapableNumberPad
+        self.numScoresTF.clearButtonMode = .always
+        self.numScoresTF.placeholder = "Количество баллов"
         
     }
     
@@ -159,5 +165,35 @@ extension ChangeScoresView {
     @objc
     func onTapMinusScoresButtonFunc() {
         self.onTapMinusScoresButton?()
+    }
+}
+
+extension ChangeScoresView: UITextFieldDelegate {
+    @objc
+    func textFieldDidChange(textField: UITextField) {
+
+        if textField == self.cardNumberTF {
+
+            if textField.text!.count == 4 {
+
+                self.cardNumberTF.resignFirstResponder()
+            }
+        }
+    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == self.cardNumberTF {
+
+            //if (textField.text?.characters.count)! > 3 {
+            if textField.text!.count > 3 {
+                self.cardNumberTF.resignFirstResponder()
+                return false
+            } else {
+
+                return true
+            }
+        } else {
+
+            return true
+        }
     }
 }

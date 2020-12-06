@@ -26,10 +26,11 @@ class BookingConstructorHookahVC : UIViewController {
         self.bookingConstructorHookahView.backgroundColor = .darkGray
         self.bookingConstructorHookahView.kbShowHide()
         self.bookingConstructorHookahView.onTapButtonToBasketHookah = { [weak self] in
-            if self!.bookingConstructorHookahView.isEmptyTF(){
+            guard let self = self else {return}
+            if self.bookingConstructorHookahView.isEmptyTF(){
                 print("Hello")
             } else {
-                self!.alertConstructor()
+                self.alertConstructor()
             }
         }
         self.hideKeyboard()

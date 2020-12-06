@@ -16,5 +16,4 @@ final class ReserveRouter{
 }
 
 extension ReserveRouter: ReserveRouterInput {
-    
 }

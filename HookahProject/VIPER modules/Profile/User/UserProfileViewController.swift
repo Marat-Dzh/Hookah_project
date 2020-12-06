@@ -30,30 +30,41 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.userProfileView.onTaphotoImage = {[weak self] in
-            self?.alertImage()
-        }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Выйти", style: .done, target: self, action: #selector(self.onTapSignOut(sender: )))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Править", style: .done, target: self, action: nil)
         
 //        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Выйти", style: .done, target: self, action: #selector(self.onTapSignOut(sender: ))), UIBarButtonItem(title: "Править", style: .done, target: self, action: #selector(self.onTapSignOut(sender: )))]
         
+        self.userProfileView.onTaphotoImage = {[weak self] in
+            guard let self = self else {return}
+            self.alertImage()
+        }
         
         self.userProfileView.onTapButtonReserve = {[weak self]  in
+            guard let self = self else {return}
             let tableReserveContainer = TableReserveContainer.assemble()
-            self?.navigationController?.pushViewController(tableReserveContainer.viewController, animated: true)
+            self.navigationController?.pushViewController(tableReserveContainer.viewController, animated: true)
         }
         
         self.userProfileView.onTapBottonChangeScorese = {[weak self]  in
+            guard let self = self else {return}
             let changeScoresContainer = ChangeScoresContainer.assemble()
-            self?.navigationController?.pushViewController(changeScoresContainer.viewController, animated: true)
+            self.navigationController?.pushViewController(changeScoresContainer.viewController, animated: true)
         }
     
+        self.userProfileView.onTapButtonToConnect = { [weak self] in
+            guard let self = self else {return}
+            //self?.alertConnect()
+            self.callNumber()
+        }
     }
     @objc
     func onTapSignOut(sender: UIBarButtonItem) {
         print("Кнопка выйти")
     }
+    
+
+    
 }
 
 
@@ -64,6 +75,14 @@ extension UserProfileViewController: UserProfileViewInput {
     }
     func showNothing() {
         //
+    }
+    
+}
+
+extension UserProfileViewController {
+    func callNumber(){
+        guard let number1 = URL(string: "tel://" + "+74957064148")  else { return }
+        UIApplication.shared.open(number1)
     }
     
 }
@@ -125,6 +144,7 @@ class UserProfileView: AutoLayoutView {
     var onTaphotoImage: (() -> Void)?
     var onTapButtonReserve: (() -> Void)?
     var onTapBottonChangeScorese: (() -> Void)?
+    var onTapButtonToConnect: (() -> Void)?
     
     init(){
         super.init(frame: .zero)
@@ -226,11 +246,11 @@ extension UserProfileView {
     func setupButtonToConnect() {
         self.addSubview(self.buttonToConnect)
         self.buttonToConnect.setTitle("Связаться с Мирчиком", for: .normal)
-        self.buttonToConnect.addTarget(self, action: #selector(onTapButtonToConnect), for: .touchUpInside)
+        self.buttonToConnect.addTarget(self, action: #selector(onTapButtonToConnectFunc), for: .touchUpInside)
     }
     @objc
-    func onTapButtonToConnect() {
-        
+    func onTapButtonToConnectFunc() {
+        self.onTapButtonToConnect?()
     }
     
     func setupButtonReserves() {
