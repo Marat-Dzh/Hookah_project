@@ -15,7 +15,7 @@ final class UserProfileRouter {
     }
 }
 
-extension UserProfilePresenter: UserProfileRouterInput {
+extension UserProfileRouter: UserProfileRouterInput {
     
 }
 

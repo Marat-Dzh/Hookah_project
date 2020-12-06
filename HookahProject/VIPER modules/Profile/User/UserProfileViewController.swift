@@ -57,10 +57,11 @@ class UserProfileViewController: UIViewController {
             //self?.alertConnect()
             self.callNumber()
         }
+        output.showInfo()
     }
     @objc
     func onTapSignOut(sender: UIBarButtonItem) {
-        print("Кнопка выйти")
+        output.onLogoutTapped()
     }
     
 
@@ -71,7 +72,9 @@ class UserProfileViewController: UIViewController {
 
 extension UserProfileViewController: UserProfileViewInput {
     func showUserInfo(info: UserInfo) {
-        //
+        self.userProfileView.nameLabel.text = info.fio
+        self.userProfileView.numberCardLabel.text = String(info.cardId)
+        self.userProfileView.scoresLabel.text = String(info.numberOfPoints)
     }
     func showNothing() {
         //
@@ -133,9 +136,9 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
 
 class UserProfileView: AutoLayoutView {
     var photoImage = UIImageView()
-    private let nameLabel = UILabel()
-    private let numberCardLabel = UILabel()
-    private let scoresLabel = UILabel()
+    fileprivate let nameLabel = UILabel()
+    fileprivate let numberCardLabel = UILabel()
+    fileprivate let scoresLabel = UILabel()
     private let buttonToConnect = ButtonToBasket()
     private let buttonReserves = UIButton()
     private let bottonChangeScorese = UIButton()

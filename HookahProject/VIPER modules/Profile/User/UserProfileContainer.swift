@@ -14,9 +14,11 @@ final class UserProfileContainer{
     class func assemble(userInfo: UserInfo?) -> UserProfileContainer{
         let router = UserProfileRouter()
         let interactor = UserProfileInteractor(info: userInfo)
-        let presenter = UserProfilePresenter(router: router, interactor: interactor)
+        let presenter = UserProfilePresenter(router, interactor)
         let viewController = UserProfileViewController(output: presenter)
         
+        presenter.view = viewController
+
         return UserProfileContainer(viewController: viewController, moduleInput: presenter)
     }
     

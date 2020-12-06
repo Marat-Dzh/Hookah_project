@@ -9,10 +9,10 @@ import  UIKit
 
 final class UserProfilePresenter {
     weak var view: UserProfileViewInput?
-    private let router: UserProfileRouter
-    private let interactor: UserProfileInteractor
+    private let router: UserProfileRouterInput
+    private let interactor: UserProfileInteractorInput
     
-    init(router: UserProfileRouter, interactor: UserProfileInteractor) {
+    init(_ router: UserProfileRouterInput, _ interactor: UserProfileInteractorInput) {
         self.router = router
         self.interactor = interactor
     }

@@ -4,7 +4,7 @@
 //
 //  Created by Олег Филатов on 03.11.2020.
 //
-
+import FirebaseFirestore
 import UIKit
 
 class AppCoordinator {
@@ -45,16 +45,6 @@ private extension AppCoordinator {
         let container = BookingContainer.assemble(context: context)
         navController.setViewControllers([container.viewController], animated: false)
         container.viewController.navigationItem.title = NavControllerType.menu.title
-    }
-    
-    func setupBasket(){
-        guard let navController = self.navigationControllers[.basket] else {
-            fatalError("can't finid navController")
-        }
-        //let basketContext = BasketContext(output: nil)
-        let reserveContainer = ReserveContainer.assemble()
-        navController.setViewControllers([reserveContainer.viewController], animated: false)
-        reserveContainer.viewController.navigationItem.title = NavControllerType.basket.title
     }
   
     func setupFeed(){

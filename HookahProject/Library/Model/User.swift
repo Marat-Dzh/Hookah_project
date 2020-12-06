@@ -56,7 +56,7 @@ final class UserInfo: PersonInfo{
         cardId = data["cardId"] as! Int
         numberOfPoints = data["numberOfPoints"] as! Int
         phoneNumber = data["phoneNumber"] as! Int
-        super.init(data["fio"] as! String, data["email"] as! String,data["uId"] as! String)
+        super.init(data["fio"] as? String ?? "jjj", data["email"] as? String ?? "",data["uId"] as? String ?? "")
         
     }
 }
