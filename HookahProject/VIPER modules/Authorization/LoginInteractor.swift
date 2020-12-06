@@ -24,6 +24,15 @@ final class LoginInteractor{
 }
 
 extension LoginInteractor: LoginInteractorInput{
+    func checkActiveSession() {
+        Auth.auth().addStateDidChangeListener({ [weak self] (auth, user) in
+            if user != nil
+            {
+                self?.presenter?.authorizationCompleted(context: (self?.formContext())!)
+            }
+        })
+    }
+    
     func login(type: AuthType, context: LoginData) {
         switch (type){
         case .loginAndPassword:
@@ -81,7 +90,7 @@ extension LoginInteractor: LoginInteractorInput{
 private extension LoginInteractor{
     func formContext() -> AuthContext {
         let user: User = Auth.auth().currentUser!
-        let context: AuthContext = AuthContext(id: user.uid, email: user.email!)
+        let context: AuthContext = AuthContext(id: user.uid, email: user.email!, type: .user)
         return context
     }
     func processResult(){

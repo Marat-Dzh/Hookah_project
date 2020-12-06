@@ -11,6 +11,9 @@ import FirebaseFirestore
 class AppCoordinatorService{
     
     class func getPersonContext(context: AuthContext) -> UserContext?{
+        if context.personType == .unknown {
+            return nil
+        }
         let db = Firestore.firestore()
         let docRef = db.collection("users").document(context.id)
         var userInfo = UserInfo()

@@ -83,6 +83,12 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         addingUIElements()
+        output.checkSession()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        textFieldView1.textField.text = ""
+        textFieldView2.textField.text = ""
     }
     
 }

@@ -47,16 +47,6 @@ private extension AppCoordinator {
         container.viewController.navigationItem.title = NavControllerType.menu.title
     }
     
-    func setupBasket(){
-        guard let navController = self.navigationControllers[.basket] else {
-            fatalError("can't finid navController")
-        }
-        let basketContext = BasketContext(output: nil)
-        let basketContainer = BasketContainer.assemble(context: basketContext)
-        navController.setViewControllers([basketContainer.viewController], animated: false)
-        basketContainer.viewController.navigationItem.title = NavControllerType.basket.title
-    }
-    
     func setupFeed(){
         guard let navController = self.navigationControllers[.feed] else {
             fatalError("can't finid navController")
@@ -66,14 +56,23 @@ private extension AppCoordinator {
         feedContainer.viewController.navigationItem.title = NavControllerType.feed.title
     }
     
+    func setupBasket(){
+    guard let navController = self.navigationControllers[.basket] else {
+    fatalError("can't finid navController")
+    }
+    //let basketContext = BasketContext(output: nil)
+    let reserveContainer = ReserveContainer.assemble()
+    navController.setViewControllers([reserveContainer.viewController], animated: false)
+    reserveContainer.viewController.navigationItem.title = NavControllerType.basket.title
+    }
+
     func setupAccount(){
-        guard let navController = self.navigationControllers[.account] else {
-            fatalError("can't finid navController")
-        }
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .green
-        navController.setViewControllers([viewController], animated: false)
-        viewController.navigationItem.title = NavControllerType.account.title
+    guard let navController = self.navigationControllers[.account] else {
+    fatalError("can't finid navController")
+    }
+        let userProfileContainer = UserProfileContainer.assemble(userInfo: userContext?.info)
+    navController.setViewControllers([userProfileContainer.viewController], animated: false)
+    userProfileContainer.viewController.navigationItem.title = NavControllerType.account.title
     }
     
     

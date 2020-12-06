@@ -15,24 +15,25 @@ protocol UserProfileModuleOutput: class {
     
 }
 
-protocol UserProfileViewInput {
-    
+protocol UserProfileViewInput: class{
+    func showUserInfo(info: UserInfo)
+    func showNothing()
 }
 
 protocol UserProfileViewOutput : class {
-    
+    func showInfo()
+    func onLogoutTapped()
 }
 
 protocol UserProfileInteractorInput {
-    
+    func getUserInfo() ->UserInfo?
+    func logout()
 }
 
 protocol UserProfileInteractorOutput: class {
-    
 }
 
 protocol UserProfileRouterInput: class {
-    
 }
 
 protocol UserProfileRouterOutput: class {

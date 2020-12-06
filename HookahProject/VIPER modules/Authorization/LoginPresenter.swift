@@ -38,6 +38,9 @@ extension LoginPresenter: LoginViewOutput{
     func register(type: AuthType, data: LoginData) {
         interactor.register(type: type, data: data)
     }
+    func checkSession() {
+        interactor.checkActiveSession()
+    }
 }
 
 extension LoginPresenter: LoginInteractorOutput{

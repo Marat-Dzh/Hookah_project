@@ -59,6 +59,12 @@ class UserProfileViewController: UIViewController {
 
 
 extension UserProfileViewController: UserProfileViewInput {
+    func showUserInfo(info: UserInfo) {
+        //
+    }
+    func showNothing() {
+        //
+    }
     
 }
 
@@ -254,3 +260,4 @@ extension UserProfileView {
     }
     
 }
+
