@@ -7,5 +7,6 @@
 
 import Foundation
 
-final class Stock: Article{
-    }
+final class Stock{
+    
+}

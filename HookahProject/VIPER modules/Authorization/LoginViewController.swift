@@ -241,7 +241,12 @@ private extension LoginViewController{
 
 extension LoginViewController: LoginViewInput{
     func showError(message: String) {
-        //showing error
+        let ac = UIAlertController(title: "ВНИМАНИЕ", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(okAction)
+        ac.view.backgroundColor = .gray
+        ac.view.tintColor = .black
+        self.present(ac, animated: true, completion: nil)
     }
 }
 
