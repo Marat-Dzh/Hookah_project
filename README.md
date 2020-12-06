@@ -16,7 +16,9 @@
 1. Установить Cocoa Pods.
 2. Скачать с диска GoogleInfo.plist и добавить его в проект.
 3. Создать <b>pod file</b>. (<b>pod init</b> в командной строке)
-4. Добавить в него строки <b>pod 'Firebase/Core'</b>, <b>pod 'Firebase/Auth'</b>, <b>pod 'Firebase/Database'</b>
+4. Добавить в него строки <b>pod 'Firebase/Core'</b>, <b>pod 'Firebase/Auth'</b>, <b>pod 'Firebase/Firestore'</b>.
 5. Выполнить команду <b>pod install</b>
-6. Если Xcode пожалуется на несовместимость версий позволить ему исправить это.
-7. С этого момента проект нужно запускать из файла с расширением <em>.xcodeworkspace</em>.
+6. Изменить версию в pod файле на ios 12.0
+7. Выполнить команду <b>pod install</b>
+8. Если Xcode пожалуется на несовместимость версий позволить ему исправить это.
+9. С этого момента проект нужно запускать из файла с расширением <em>.xcodeworkspace</em>.
