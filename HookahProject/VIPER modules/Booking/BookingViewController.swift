@@ -44,16 +44,6 @@ final class BookingViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
         self.navigationItem.rightBarButtonItem?.tintColor = .black
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            self.navigationController?.pushViewController(BookingConstructorHookahVC(), animated: true)
-        }else{
-            self.navigationController?.pushViewController(BookingDetailViewController(), animated: true)
-                    
-        }
-    }
-    
 }
 
 extension BookingViewController: BookingViewInput{
@@ -75,6 +65,20 @@ extension BookingViewController: UICollectionViewDataSource {
         cell.backgroundColor = .gray
         cell.containerView.update(with: viewModel)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        if indexPath.row == 0 {
+//            self.navigationController?.pushViewController(BookingConstructorHookahVC(), animated: true)
+//        }else{
+//            self.navigationController?.pushViewController(BookingDetailViewController(), animated: true)
+//
+//        }
+        let viewController = BookingDetailViewController()
+        let bdvc = BookingCardViewModel.makeExample()
+        viewController.bcvm = bdvc[indexPath.row]
+//        viewController.bookingDetailModel.set(with: bdvc[indexPath.row])
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     
