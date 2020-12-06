@@ -12,7 +12,7 @@ class TableReserveViewController: UIViewController {
     private var output: TableReserveViewOutput
 
     var tableReserveTableView: UITableView
-    var tableReserveModelArray:  [TableReserveModel] = [TableReserveModel(numberGuest: "3", timeReserve: "2020.03.10"), TableReserveModel(numberGuest: "2", timeReserve: "1010.03.50")]
+    var tableReserveModelArray:  [TableReserveModel] = [TableReserveModel(numberGuest: "3", timeReserve: "2020.03.10", phoneNumber: "89031850856"), TableReserveModel(numberGuest: "2", timeReserve: "1010.03.50", phoneNumber: "89990035907")]
 
     
     init(output: TableReserveViewOutput) {
@@ -39,6 +39,7 @@ class TableReserveViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Обновить", style: .done, target: self, action: nil)
         
     }
     //Функция добавление в массив элементов и обновление tableview

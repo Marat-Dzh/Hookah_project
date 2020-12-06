@@ -10,8 +10,8 @@ import UIKit
 final class TableReservePresenter {
     weak var view: TableReserveViewInput?
     
-    private let router: TableReserveRouter
-    private let interactor: TableReserveInteractor
+    private let router: TableReserveRouterInput
+    private let interactor: TableReserveInteractorInput
     
     init(router: TableReserveRouter, interactor: TableReserveInteractor) {
         self.router = router

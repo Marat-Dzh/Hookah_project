@@ -16,7 +16,7 @@ final class FeedContainer{
         let router = FeedRouter(context: context)
         let interactor = FeedInteractor()
         let presenter = FeedPresenter(router, interactor)
-        let viewController = FeedViewController(presenter)
+        let viewController = FeedViewController(output: presenter)
         
         presenter.view = viewController
         presenter.moduleOutput = context.output

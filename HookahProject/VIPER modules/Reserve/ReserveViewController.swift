@@ -33,13 +33,33 @@ class ReserveViewController : UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .black
         self.reserveView.onTapButtonToReserve = {[weak self] in
-            //Вызвать функцию addTableReserveCell и передать в нее параметры
+            guard let self = self else {return}
+            self.output.addReserve()
+            self.suссessReserve()
         }
     }
     
 }
 extension ReserveViewController: ReserveViewInput {
-    
+    func suссessReserve() {
+        let date = self.reserveView.datePickerToReserve.date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.timeZone = TimeZone.current
+        //print(self.datePickerToReserve.date.addingTimeInterval(3*60*60))
+        let acSuccess = UIAlertController(title: "Броинрование успешно", message: dateFormatter.string(from: date) + "\n Количество гостей: " + String(self.reserveView.numGuest), preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        
+        acSuccess.addAction(okAction)
+        acSuccess.view.backgroundColor = .gray
+        acSuccess.view.tintColor = .black
+        self.present(acSuccess, animated: true, completion: nil)
+    }
+    func errorReserve() {
+        // вызов Алерта, если пошло что-то не так
+    }
 }
 
 class ReserveView : AutoLayoutView {
@@ -209,7 +229,14 @@ extension ReserveView {
     @objc
     func onTapButtonToReserveFunc(){
         self.onTapButtonToReserve?()
-        //        print(self.datePickerToReserve.date.addingTimeInterval(3*60*60))
-        //        print(self.numGuest)
+//        let date = self.datePickerToReserve.date
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateStyle = .short
+//        dateFormatter.timeStyle = .short
+//        dateFormatter.locale = Locale(identifier: "ru_RU")
+//        dateFormatter.timeZone = TimeZone.current
+//        print(dateFormatter.string(from: date))
+//        //print(self.datePickerToReserve.date.addingTimeInterval(3*60*60))
+//        print(self.numGuest)
     }
 }

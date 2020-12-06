@@ -9,8 +9,13 @@ import Foundation
 
 final class ReserveInteractor {
     var output: ReserveInteractorOutput?
+    
+    
 }
 
 extension ReserveInteractor: ReserveInteractorInput {
-    
+    func sentReservePresentInteractor() {
+        //принимает данные от резерва в какую-то струкутру
+        //output?.didFinish()
+    }
 }
