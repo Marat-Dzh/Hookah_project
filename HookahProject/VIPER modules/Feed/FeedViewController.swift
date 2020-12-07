@@ -70,7 +70,7 @@ class FeedViewController: UIViewController {
     }
     
     private func setupUI() {
-        navigationItem.title = "News"
+        //navigationItem.title = "News"
         view.backgroundColor = .white
         
         setupAddButton()

@@ -87,7 +87,7 @@ final class AddNewsViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .white
-        title = "Add news"
+        title = "Добавить новость"
         
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
