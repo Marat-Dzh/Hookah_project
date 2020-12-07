@@ -11,12 +11,14 @@ final class UserProfileContainer{
     let viewController: UIViewController
     weak var moduleInput: UserProfileModuleInput?
     
-    static func assemble() -> UserProfileContainer{
+    class func assemble(userInfo: UserInfo?) -> UserProfileContainer{
         let router = UserProfileRouter()
-        let interactor = UserProfileInteractor()
-        let presenter = UserProfilePresenter(router: router, interactor: interactor)
+        let interactor = UserProfileInteractor(info: userInfo)
+        let presenter = UserProfilePresenter(router, interactor)
         let viewController = UserProfileViewController(output: presenter)
         
+        presenter.view = viewController
+
         return UserProfileContainer(viewController: viewController, moduleInput: presenter)
     }
     

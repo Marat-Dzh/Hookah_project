@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestore
 
 final class LoginInteractor{
     weak var presenter: LoginInteractorOutput?
@@ -16,10 +17,22 @@ final class LoginInteractor{
     /*init(_ service: LoginServiceFactory){
         self.serviceFactory = service
     }*/
-    
+    var db: Firestore!
+    init() {
+       
+    }
 }
 
 extension LoginInteractor: LoginInteractorInput{
+    func checkActiveSession() {
+        Auth.auth().addStateDidChangeListener({ [weak self] (auth, user) in
+            if user != nil
+            {
+                self?.presenter?.authorizationCompleted(context: (self?.formContext())!)
+            }
+        })
+    }
+    
     func login(type: AuthType, context: LoginData) {
         switch (type){
         case .loginAndPassword:
@@ -53,7 +66,19 @@ extension LoginInteractor: LoginInteractorInput{
                     self?.presenter?.gotError(.userNotFound)
                     return
                 }
-                self?.presenter?.authorizationCompleted(context: (self?.formContext())!)
+                self?.db = Firestore.firestore()
+                let authContext = self?.formContext()
+                let user = UserContext(info: UserInfo(id: 0, points: 0, name: "user", email: authContext!.email, uId: authContext!.id, phoneNumber: 70000000000), history: [], orders: [])
+                
+                self?.db.collection("users").document(authContext!.id).setData(user.infoDict) { err in
+                    if let err = err {
+                        print("Error adding document: \(err)")
+                    } else {
+                        print("Document added with ID: \(String(describing: authContext?.id))")
+                    }
+                }
+                self?.db=nil
+                self?.presenter?.authorizationCompleted(context: authContext!)
                 }
         case .phoneNumberAndSMS:
             //let data = context as! PhoneData
@@ -65,7 +90,7 @@ extension LoginInteractor: LoginInteractorInput{
 private extension LoginInteractor{
     func formContext() -> AuthContext {
         let user: User = Auth.auth().currentUser!
-        let context: AuthContext = AuthContext(id: user.uid, email: user.email!)
+        let context: AuthContext = AuthContext(id: user.uid, email: user.email!, type: .user)
         return context
     }
     func processResult(){

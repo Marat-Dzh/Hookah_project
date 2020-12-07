@@ -4,7 +4,7 @@
 //
 //  Created by Олег Филатов on 03.11.2020.
 //
-
+import FirebaseFirestore
 import UIKit
 
 class AppCoordinator {
@@ -12,7 +12,7 @@ class AppCoordinator {
     private lazy var tabBarController = UITabBarController()
     private lazy var navigationControllers = AppCoordinator.makeNavigationControllers()
     
-    private let userContext: UserContext
+    private let userContext: UserContext?
     
     init(window: UIWindow, context: AuthContext){
         userContext = AppCoordinatorService.getPersonContext(context: context)
@@ -46,16 +46,7 @@ private extension AppCoordinator {
         navController.setViewControllers([container.viewController], animated: false)
         container.viewController.navigationItem.title = NavControllerType.menu.title
     }
-    
-    func setupBasket(){
-        guard let navController = self.navigationControllers[.basket] else {
-            fatalError("can't finid navController")
-        }
-        //let basketContext = BasketContext(output: nil)
-        let reserveContainer = ReserveContainer.assemble()
-        navController.setViewControllers([reserveContainer.viewController], animated: false)
-        reserveContainer.viewController.navigationItem.title = NavControllerType.basket.title
-    }
+  
     func setupFeed(){
         guard let navController = self.navigationControllers[.feed] else {
             fatalError("can't finid navController")
@@ -65,13 +56,23 @@ private extension AppCoordinator {
         feedContainer.viewController.navigationItem.title = NavControllerType.feed.title
     }
     
+    func setupBasket(){
+    guard let navController = self.navigationControllers[.basket] else {
+    fatalError("can't finid navController")
+    }
+    //let basketContext = BasketContext(output: nil)
+    let reserveContainer = ReserveContainer.assemble()
+    navController.setViewControllers([reserveContainer.viewController], animated: false)
+    reserveContainer.viewController.navigationItem.title = NavControllerType.basket.title
+    }
+
     func setupAccount(){
-        guard let navController = self.navigationControllers[.account] else {
-            fatalError("can't finid navController")
-        }
-        let userProfileContainer = UserProfileContainer.assemble()
-        navController.setViewControllers([userProfileContainer.viewController], animated: false)
-        userProfileContainer.viewController.navigationItem.title = NavControllerType.account.title
+    guard let navController = self.navigationControllers[.account] else {
+    fatalError("can't finid navController")
+    }
+        let userProfileContainer = UserProfileContainer.assemble(userInfo: userContext?.info)
+    navController.setViewControllers([userProfileContainer.viewController], animated: false)
+    userProfileContainer.viewController.navigationItem.title = NavControllerType.account.title
     }
     
     

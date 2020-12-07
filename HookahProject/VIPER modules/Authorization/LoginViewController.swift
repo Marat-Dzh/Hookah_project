@@ -83,6 +83,12 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         addingUIElements()
+        output.checkSession()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        textFieldView1.textField.text = ""
+        textFieldView2.textField.text = ""
     }
     
 }
@@ -235,7 +241,12 @@ private extension LoginViewController{
 
 extension LoginViewController: LoginViewInput{
     func showError(message: String) {
-        //showing error
+        let ac = UIAlertController(title: "ВНИМАНИЕ", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(okAction)
+        ac.view.backgroundColor = .gray
+        ac.view.tintColor = .black
+        self.present(ac, animated: true, completion: nil)
     }
 }
 
