@@ -12,8 +12,9 @@ class TableReserveViewController: UIViewController {
     private var output: TableReserveViewOutput
 
     var tableReserveTableView: UITableView
-    var tableReserveModelArray:  [TableReserveModel] = [TableReserveModel(numberGuest: "3", timeReserve: "2020.03.10", phoneNumber: "89031850856"), TableReserveModel(numberGuest: "2", timeReserve: "1010.03.50", phoneNumber: "89990035907")]
-
+    var tableReserveModelArray:  [TableReserveModel] = [TableReserveModel(numberGuest: "3", timeReserve: "11.12.2020 15:36", phoneNumber: "89031850856", isConfirmation: false), TableReserveModel(numberGuest: "2", timeReserve: "10.12.2020 21:30", phoneNumber: "89990035907", isConfirmation: false)]
+    var personInfoModelArray: [PersonInfo] = [PersonInfo("Иван", "1", "2"), PersonInfo("Василий", "22", "22")]
+    
     
     init(output: TableReserveViewOutput) {
         self.output = output
@@ -39,14 +40,15 @@ class TableReserveViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Обновить", style: .done, target: self, action: nil)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Обновить", style: .done, target: self, action: #selector(onTapUpdate))
         
     }
-    //Функция добавление в массив элементов и обновление tableview
-    func addTableReserveCell(item: TableReserveModel){
-        //пока просто принт
-        print(item)
+    
+    @objc
+    func onTapUpdate() {
+        print("Обновить таблицу")
     }
+    
 }
 
 
@@ -61,13 +63,20 @@ extension TableReserveViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableReserveModel = self.tableReserveModelArray[indexPath.row]
+        let personInfoModel = self.personInfoModelArray[indexPath.row]
         let cell = tableView.dequeueCell(cellType: TableReserveCell<TableReserveCellView>.self, for: indexPath)
         cell.backgroundColor = .systemGray
-        cell.containerView.updateCellTableReserve(with: tableReserveModel)
+        cell.containerView.updateCellTableReserve(with: tableReserveModel, with: personInfoModel)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let phoneFromTableReserveModelArray = tableReserveModelArray[indexPath.row].phoneNumber
+        guard let number1 = URL(string: "tel://" + phoneFromTableReserveModelArray)  else { return }
+        UIApplication.shared.open(number1)
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -81,6 +90,22 @@ extension TableReserveViewController: UITableViewDataSource{
         }
     }
     
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let confirmation = confirmationAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [confirmation])
+    }
+    
+    func confirmationAction(at indexPath: IndexPath) -> UIContextualAction {
+        var objectTableReserveModelArray = tableReserveModelArray[indexPath.row]
+        let action = UIContextualAction(style: .normal, title: "Confirmation") { (action, view, completion) in
+            objectTableReserveModelArray.isConfirmation = !objectTableReserveModelArray.isConfirmation
+            self.tableReserveModelArray[indexPath.row] = objectTableReserveModelArray
+            completion(true)
+        }
+        action.backgroundColor = objectTableReserveModelArray.isConfirmation ? .systemGreen : .systemYellow
+        action.title = "Good"
+        return action
+    }
 }
 
 extension TableReserveViewController: UITableViewDelegate {

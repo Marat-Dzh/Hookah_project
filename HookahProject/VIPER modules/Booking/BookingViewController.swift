@@ -41,8 +41,8 @@ final class BookingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.output.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
-        self.navigationItem.rightBarButtonItem?.tintColor = .black
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+//        self.navigationItem.rightBarButtonItem?.tintColor = .black
     }
 }
 

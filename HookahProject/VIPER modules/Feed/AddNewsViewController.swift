@@ -124,7 +124,7 @@ final class AddNewsViewController: UIViewController {
     }
     
     @objc private func handleDone() {
-        let newsModel = News(newsTitle: titleTextField.text ?? "Empty title", newsImage: UIImage(named: "berrytea")!, newsDescription: descriptionTextField.text ?? "Empty description")
+        let newsModel = News(newsTitle: titleTextField.text ?? "Empty title", newsImage: imageView.image ?? UIImage(named: "hole")!, newsDescription: descriptionTextField.text ?? "Empty description")
         delegate?.didAddNews(newsModel)
         navigationController?.popViewController(animated: true)
     }

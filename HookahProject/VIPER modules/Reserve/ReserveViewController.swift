@@ -34,12 +34,16 @@ class ReserveViewController : UIViewController {
         self.view.backgroundColor = .black
         self.reserveView.onTapButtonToReserve = {[weak self] in
             guard let self = self else {return}
-            self.output.addReserve()
-            self.suссessReserve()
+            if (self.reserveView.datePickerToReserve.date.timeIntervalSince1970 - Date().timeIntervalSince1970 > 45*60) {
+                self.suссessReserve()
+                self.output.addReserve()
+            }else {
+                self.errorReserve()
+            }
         }
     }
-    
 }
+
 extension ReserveViewController: ReserveViewInput {
     func suссessReserve() {
         let date = self.reserveView.datePickerToReserve.date
@@ -50,15 +54,20 @@ extension ReserveViewController: ReserveViewInput {
         dateFormatter.timeZone = TimeZone.current
         //print(self.datePickerToReserve.date.addingTimeInterval(3*60*60))
         let acSuccess = UIAlertController(title: "Броинрование успешно", message: dateFormatter.string(from: date) + "\n Количество гостей: " + String(self.reserveView.numGuest), preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: "Oк", style: .default, handler: nil)
         
         acSuccess.addAction(okAction)
-        acSuccess.view.backgroundColor = .gray
-        acSuccess.view.tintColor = .black
+//        acSuccess.view.backgroundColor = .gray
+//        acSuccess.view.tintColor = .black
         self.present(acSuccess, animated: true, completion: nil)
     }
     func errorReserve() {
-        // вызов Алерта, если пошло что-то не так
+        let acSuccess = UIAlertController(title: "Броинрование невозможно", message: "Столик можно забронировать не меннее, чем за 45 минут", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Oк", style: .cancel, handler: nil)
+        acSuccess.addAction(okAction)
+//        acSuccess.view.backgroundColor = .gray
+//        acSuccess.view.tintColor = .black
+        self.present(acSuccess, animated: true, completion: nil)
     }
 }
 
