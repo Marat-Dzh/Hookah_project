@@ -19,14 +19,15 @@ class AutoLayoutView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func setupConstraints() {
-
+        
     }
 
     override func addSubview(_ view: UIView) {
         super.addSubview(view)
         view.translatesAutoresizingMaskIntoConstraints = false
+        
     }
 
     override func updateConstraints() {

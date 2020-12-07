@@ -5,7 +5,12 @@
 //  Created by Nikita Kuznetsov on 19.10.2020.
 //
 
-import Foundation
+import UIKit
 
-final class Stock: Article{
+final class Stock{
+    let imageStock: UIImage
+    
+    init(imageStock: UIImage) {
+        self.imageStock = imageStock
     }
+}

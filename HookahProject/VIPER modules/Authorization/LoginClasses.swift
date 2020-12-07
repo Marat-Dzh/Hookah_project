@@ -45,11 +45,12 @@ struct LoginAndPasswordData: LoginData {
 }
 
 struct AuthContext{
-    let personType: PersonType = .unknown
+    let personType: PersonType
     let id:String
     let email:String
-    init(id:String, email:String) {
+    init(id:String, email:String, type: PersonType) {
         self.email=email
         self.id=id
+        self.personType = type
     }
 }

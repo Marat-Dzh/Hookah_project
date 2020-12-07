@@ -16,11 +16,11 @@ final class BookingPresenter{
         self.interactor = interactor
         self.router = router
     }
-
+    
 }
 
 extension BookingPresenter: BookingModuleInput{
-
+    
 }
 
 extension BookingPresenter: BookingInteractorOutput{
@@ -37,9 +37,13 @@ extension BookingPresenter: BookingViewOutput{
 
 private extension BookingPresenter {
     func makeViewModels() -> [BookingCardViewModel] {
-        return [BookingCardViewModel(info: "Конструкутор кальяна", title: "title 1", shortDescription: "Собери свой кальян", imageName: "Constructor"),
-                BookingCardViewModel(info: "Лимоно-имбирный чай", title: "title 2", shortDescription: "800мл   450 руб.", imageName: "lemontea"),
-                BookingCardViewModel(info: "Ягодный чай", title: "title 3", shortDescription: "800мл   450 руб.", imageName: "berrytea"),
-                BookingCardViewModel(info: "Облепиховый чай", title: "title 3", shortDescription: "800мл   450 руб.", imageName: "seabuckthorntea")]
+        return [BookingCardViewModel(info: "info1", title: "Кальян на чаше", shortDescription: "800 руб.", imageName: "Constructor"),
+                BookingCardViewModel(info: "info1", title: "Кальян на грейпфруте", shortDescription: "1200 руб.", imageName: "Constructor"),
+                BookingCardViewModel(info: "Лимон, имбирь, мед", title: "Лимоно-имбирный чай", shortDescription: "800мл   450 руб.", imageName: "lemontea"),
+                BookingCardViewModel(info: "малина, чёрная смородина, клюква", title: "Ягодный чай", shortDescription: "800мл   450 руб.", imageName: "berrytea"),
+                BookingCardViewModel(info: "Облепиха, лимон", title: "Oблепиховый чай", shortDescription: "800мл   450 руб.", imageName: "seabuckthorntea"),
+                BookingCardViewModel(info: "Невероятный тандем вкуса проявляется из черного цейлонского чая с кусочками ананаса и клубники, ягодами красной смородины, листьями смородины и лепестками сафлора", title: "Мишки Гамми", shortDescription: "1000мл   300 руб.", imageName: "seabuckthorntea"),
+                BookingCardViewModel(info: "Известный всем зеленый чай с измельченными кусочками жасмина", title: "Зеленый с жасмином", shortDescription: "1000мл   300 руб.", imageName: "seabuckthorntea"),
+                BookingCardViewModel(info: "Полезный и очень освежающий напиток с кусочками мяты и малины", title: "Малина с мятой", shortDescription: "1000мл   300 руб.", imageName: "berrytea")]
     }
 }

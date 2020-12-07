@@ -13,7 +13,9 @@ final class BookingViewController: UIViewController {
     private let collectionView: UICollectionView
     private var viewModels = [BookingCardViewModel]()
     
-    init(_ output:BookingViewOutput){
+    
+    
+    init(_ output: BookingViewOutput){
         self.output = output
         let collectionViewLayout = UICollectionViewFlowLayout()
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
@@ -39,19 +41,9 @@ final class BookingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.output.viewDidLoad()
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+//        self.navigationItem.rightBarButtonItem?.tintColor = .black
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-            if indexPath.row == 0 {
-                let viewController = BookingConstructorHookahVC() // or your custom view controller
-                self.navigationController?.pushViewController(viewController, animated: true)
-            }else{
-                let viewController = BookingDetailViewController() // or your custom view controller
-                self.navigationController?.pushViewController(viewController, animated: true)
-            }
-    }
-    
 }
 
 extension BookingViewController: BookingViewInput{
@@ -75,7 +67,21 @@ extension BookingViewController: UICollectionViewDataSource {
         return cell
     }
     
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        if indexPath.row == 0 {
+//            self.navigationController?.pushViewController(BookingConstructorHookahVC(), animated: true)
+//        }else{
+//            self.navigationController?.pushViewController(BookingDetailViewController(), animated: true)
+//
+//        }
+        let viewController = BookingDetailViewController()
+        let bdvc = BookingCardViewModel.makeExample()
+        viewController.bcvm = bdvc[indexPath.row]
+//        viewController.bookingDetailModel.set(with: bdvc[indexPath.row])
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    
 }
 
 extension BookingViewController: UICollectionViewDelegateFlowLayout {

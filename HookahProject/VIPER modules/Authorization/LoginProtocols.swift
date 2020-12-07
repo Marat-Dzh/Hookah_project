@@ -16,6 +16,7 @@ protocol LoginViewOutput : class{
     func onSkip()
     func login(type: AuthType, data: LoginData)
     func register(type: AuthType, data: LoginData)
+    func checkSession()
 }
 
 protocol LoginModuleInput{
@@ -31,6 +32,7 @@ protocol LoginModuleOutput: class{
 protocol LoginInteractorInput{
     func login(type: AuthType, context: LoginData)
     func register (type: AuthType, data: LoginData)
+    func checkActiveSession()
 }
 
 protocol LoginInteractorOutput: class{

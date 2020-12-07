@@ -9,16 +9,10 @@ import UIKit
 
 class FeedViewController: UIViewController {
     private let output: FeedViewOutput
+    
     var expandedIndexSet: IndexSet = []
     
-    var news = [
-        News(title: "title", description: "description description description description description description description description description description", image: UIImage(named:"logo.jpg")!),
-        News(title: "title", description: "description", image: UIImage(named:"logo.jpg")!),
-        News(title: "title", description: "description", image: UIImage(named:"logo.jpg")!),
-        News(title: "title", description: "description", image: UIImage(named:"logo.jpg")!),
-        News(title: "title", description: "description", image: UIImage(named:"logo.jpg")!),
-    ]
-    init(_ output:FeedViewOutput){
+    init(output: FeedViewOutput) {
         self.output = output
         super.init(nibName: nil, bundle: nil)
     }
@@ -27,11 +21,21 @@ class FeedViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setupTableView()
+    var newsList = [
+        News(newsTitle: "First", newsImage: UIImage(named: "berrytea")!, newsDescription: "longlong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descr"),
+        News(newsTitle: "second", newsImage: UIImage(named: "berrytea")!, newsDescription: "longlong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descr"),
+        News(newsTitle: "third", newsImage: UIImage(named: "berrytea")!, newsDescription: "longlong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descr"),
+        News(newsTitle: "4444444", newsImage: UIImage(named: "berrytea")!, newsDescription: "longlong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descr")
+    ] {
+        didSet {
+            tableView.reloadData()
+        }
     }
+    // изображения для историй
+    var storiesList: [UIImage] = [
+        UIImage(named: "tea")!, UIImage(named: "whitewolf")!, UIImage(named: "lemontea")!, UIImage(named: "logo")!, UIImage(named: "seabuckthorntea")!, UIImage(named: "Constructor")!, UIImage(named: "whitewolf")!, UIImage(named: "whitewolf")!, UIImage(named: "whitewolf")!
+    ]
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -42,9 +46,60 @@ class FeedViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 80, height: 80)
+        layout.minimumInteritemSpacing = 2
+        layout.minimumLineSpacing = 2
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .white
+        collectionView.register(CircleCollectionViewCell.self, forCellWithReuseIdentifier: CircleCollectionViewCell.reuseIdentifier)
+        return collectionView
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupUI()
+    }
+    
+    private func setupUI() {
+        //navigationItem.title = "News"
+        view.backgroundColor = .white
+        
+        setupAddButton()
+        setupStoriesCollectionView()
+        setupTableView()
+    }
+    
+    private func setupAddButton() {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAdd))
+        navigationItem.setRightBarButton(addButton, animated: true)
+    }
+    
+    @objc private func handleAdd() {
+        let addNewsVC = AddNewsViewController()
+        addNewsVC.delegate = self
+        navigationController?.pushViewController(addNewsVC, animated: true)
+    }
+    
+    private func setupStoriesCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        collectionView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+    }
+    
     private func setupTableView() {
         view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 4).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -52,6 +107,16 @@ class FeedViewController: UIViewController {
 }
 
 extension FeedViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            newsList.remove(at: indexPath.row)
+        }
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -64,23 +129,24 @@ extension FeedViewController: UITableViewDelegate {
         }
         
         tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
     }
 }
 
 extension FeedViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        news.count
+        newsList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.reuseIdentifier) as? FeedTableViewCell else { return UITableViewCell() }
         
-        let currentNews = news[indexPath.row]
+        let currentNews = newsList[indexPath.row]
         
-        cell.title.text = currentNews.title
-        cell.newsImage.image = currentNews.image
-        cell.descriptionLabel.text = currentNews.description
+        cell.title.text = currentNews.newsTitle
+        cell.newsImage.image = currentNews.newsImage
+        cell.descriptionLabel.text = currentNews.newsDescription
         
         if expandedIndexSet.contains(indexPath.row) {
             cell.descriptionLabel.numberOfLines = 0
@@ -91,6 +157,38 @@ extension FeedViewController: UITableViewDataSource {
         return cell
     }
 }
+
+extension FeedViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ViewStoryViewController()
+        vc.setImage(storiesList[indexPath.item])
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+}
+
+extension FeedViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        storiesList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CircleCollectionViewCell.reuseIdentifier, for: indexPath) as? CircleCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.configureWith(image: storiesList[indexPath.item])
+        return cell
+    }
+}
+
+extension FeedViewController: AddNewsDelegate {
+
+    func didAddNews(_ news: News) {
+        newsList.insert(news, at: 0)
+    }
+}
+
 
 
 extension FeedViewController: FeedViewInput{

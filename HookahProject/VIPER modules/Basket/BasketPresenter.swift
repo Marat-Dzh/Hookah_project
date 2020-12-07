@@ -12,7 +12,7 @@ final class BasketPresenter{
     private let router: BasketRouterInput
     private let interactor: BasketInteractorInput
     
-    init(_ router:BasketRouterInput,_ interactor:BasketInteractorInput){
+    init(_ router: BasketRouterInput,_ interactor: BasketInteractorInput){
         self.interactor = interactor
         self.router = router
     }

@@ -10,12 +10,12 @@ import UIKit
 class BasketViewController: UIViewController {
     
     private let output: BasketViewOutput
-    private let tableView : UITableView
+    var basketTableView : UITableView
     var basketViewModels = [BasketCardViewModel]()
     
-    init(_ output:BasketViewOutput){
+    init(_ output: BasketViewOutput){
         self.output = output
-        self.tableView = UITableView(frame: .zero, style: .grouped)
+        self.basketTableView = UITableView(frame: .zero, style: .grouped)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -25,41 +25,43 @@ class BasketViewController: UIViewController {
     
     override func loadView() {
         let view = UIView()
-        view.addSubview(self.tableView)
+        view.addSubview(self.basketTableView)
         self.setupTableView()
         self.view = view
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.tableView.frame = self.view.bounds
+        self.basketTableView.frame = self.view.bounds
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.output.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "История заказов", style: .done, target: self, action: #selector(self.action(sender:)))
-        //self.output.viewDidLoad()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "История заказов", style: .done, target: self, action: #selector(self.historyAction(sender:)))
         //self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
     
-    @objc func action(sender: UIBarButtonItem) {
-        // Function body goes here
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
-
-
+    @objc func historyAction(sender: UIBarButtonItem) {
+        self.navigationController?.pushViewController(HistoryViewController(), animated: true)
+    }
+    
 }
 
 
 extension BasketViewController: BasketViewInput{
     func displayOrders(basketViewModels: [BasketCardViewModel]) {
         self.basketViewModels = basketViewModels
-        self.tableView.reloadData()
+        self.basketTableView.reloadData()
     }
 }
 
-extension BasketViewController : UITableViewDataSource {
+extension BasketViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.basketViewModels.count
 
@@ -74,7 +76,7 @@ extension BasketViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60.0
+        return 75.0
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -90,16 +92,14 @@ extension BasketViewController : UITableViewDataSource {
     
 }
 
+
+
+
 extension BasketViewController : UITableViewDelegate {
-    
-}
-
-
-private extension BasketViewController {
     func setupTableView(){
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.register(BasketViewCell<BasketCardView>.self)
-        self.tableView.backgroundColor = .black
+        self.basketTableView.delegate = self
+        self.basketTableView.dataSource = self
+        self.basketTableView.register(BasketViewCell<BasketCardView>.self)
+        self.basketTableView.backgroundColor = .black
     }
 }
