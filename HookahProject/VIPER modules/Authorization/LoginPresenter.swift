@@ -29,7 +29,7 @@ extension LoginPresenter: LoginViewOutput{
     }
     
     func onSkip() {
-        router.loginBySkip()
+        
     }
     
     func login(type: AuthType, data: LoginData) {
@@ -47,8 +47,7 @@ extension LoginPresenter: LoginInteractorOutput{
     func gotError(_ error: ErrorType) {
         view?.showError(message: error.rawValue)
     }
-    
-    func authorizationCompleted(context: AuthContext){
-        router.loginByPhone(context: context)
+    func didSuccessLogin(context: AuthContext) {
+        moduleOutput?.loginByPhone(context: context)
     }
 }

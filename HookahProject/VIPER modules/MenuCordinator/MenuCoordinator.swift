@@ -7,17 +7,22 @@
 import FirebaseFirestore
 import UIKit
 
-class AppCoordinator {
-    private let window: UIWindow
+class MenuCoordinator {
     private lazy var tabBarController = UITabBarController()
-    private lazy var navigationControllers = AppCoordinator.makeNavigationControllers()
+    private lazy var navigationControllers = MenuCoordinator.makeNavigationControllers()
+    private var window: UIWindow
+    private var userContext: UserContext?
     
-    private let userContext: UserContext?
-    
-    init(window: UIWindow, context: AuthContext){
-        userContext = AppCoordinatorService.getPersonContext(context: context)
+    init(context: UserContext? = nil, window: UIWindow){
+        userContext = context
         self.window = window
         self.setupAppearance()
+        
+    }
+    
+    func setUserContext(context: UserContext?){
+        self.userContext = context
+        
     }
     
     func start(){
@@ -35,7 +40,7 @@ class AppCoordinator {
     
 }
 
-private extension AppCoordinator {
+private extension MenuCoordinator {
     
     func setupBooking(){
         guard let navController = self.navigationControllers[.menu] else {
