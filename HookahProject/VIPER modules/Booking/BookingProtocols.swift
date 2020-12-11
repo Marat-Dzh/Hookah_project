@@ -1,5 +1,6 @@
 
 import Foundation
+import UIKit
 
 protocol BookingViewInput: class{
     func set(viewModels: [BookingCardViewModel])
@@ -25,7 +26,7 @@ protocol BookingInteractorInput{
 }
 
 protocol BookingInteractorOutput: class{
-    func makeModels()
+    func makeMenu(arrayDicts: [[String : Any]], image: UIImage)
 }
 
 protocol BookingRouterInput{

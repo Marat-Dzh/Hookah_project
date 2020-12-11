@@ -41,7 +41,7 @@ private extension AppCoordinator {
         guard let navController = self.navigationControllers[.menu] else {
             fatalError("can't finid navController")
         }
-        let context = BookingContext(output: nil)
+        let context = BookingContext(moduleOutput: nil)
         let container = BookingContainer.assemble(context: context)
         navController.setViewControllers([container.viewController], animated: false)
         container.viewController.navigationItem.title = NavControllerType.menu.title

@@ -36,7 +36,8 @@ class ReserveViewController : UIViewController {
             guard let self = self else {return}
             if (self.reserveView.datePickerToReserve.date.timeIntervalSince1970 - Date().timeIntervalSince1970 > 45*60) {
                 self.suссessReserve()
-                self.output.addReserve()
+                self.output.addReserve(date: self.reserveView.datePickerToReserve.date, numGuest: self.reserveView.numGuest)
+                
             }else {
                 self.errorReserve()
             }

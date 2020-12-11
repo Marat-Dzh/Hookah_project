@@ -22,12 +22,12 @@ class BookingDetailViewController : UIViewController {
     
     //var bookingDetailModel = BookingDetailView()
     
-    var bcvm = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: "")
+    var bcvm = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bookingDetailView.backgroundColor = .black
-        self.bookingDetailView.imageView.image = UIImage(named: self.bcvm.imageName)
+        self.bookingDetailView.imageView.image = self.bcvm.imageName
         self.bookingDetailView.titleLabel.text = self.bcvm.title
         self.bookingDetailView.shortDescriptionLabel.text = self.bcvm.shortDescription
         self.bookingDetailView.infoLabel.text = self.bcvm.info

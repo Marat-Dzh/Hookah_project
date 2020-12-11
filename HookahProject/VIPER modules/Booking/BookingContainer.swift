@@ -18,9 +18,9 @@ final class BookingContainer{
         let viewController = BookingViewController(presenter)
         
         presenter.view = viewController
-        presenter.moduleOutput = context.output
+        presenter.moduleOutput = context.moduleOutput
         
-        interactor.presenter = presenter
+        interactor.output = presenter
         
         return BookingContainer(view: viewController, input: presenter)
     }
@@ -32,5 +32,5 @@ final class BookingContainer{
 }
 
 struct BookingContext {
-    weak var output: LoginModuleOutput?
+    weak var moduleOutput: LoginModuleOutput?
 }

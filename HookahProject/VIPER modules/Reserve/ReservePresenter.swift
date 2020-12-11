@@ -23,8 +23,10 @@ final class ReservePresenter {
 
 
 extension ReservePresenter: ReserveViewOutput {
-    func addReserve() {
-        print("AAA")
+    func addReserve(date: Date, numGuest: Int) {
+        print(date)
+        print(numGuest)
+        self.interactor.sentReservePresentInteractor()
     }
 }
 

@@ -17,5 +17,6 @@ extension ReserveInteractor: ReserveInteractorInput {
     func sentReservePresentInteractor() {
         //принимает данные от резерва в какую-то струкутру
         //output?.didFinish()
+        print("Zzzzzzz....")
     }
 }

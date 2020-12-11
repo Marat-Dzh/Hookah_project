@@ -23,9 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let context = LoginContext(output: nil)
         let loginContainer = LoginContainer.assemble(context: context)
         window.rootViewController = loginContainer.viewController
-        do{
-            sleep(2)
-        }
         window.makeKeyAndVisible()
         self.window = window
         

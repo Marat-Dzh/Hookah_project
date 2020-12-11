@@ -6,11 +6,15 @@
 //
 
 import Foundation
+import UIKit
+
 final class BookingPresenter{
     weak var view: BookingViewInput?
     weak var moduleOutput: LoginModuleOutput?
     private let router: BookingRouterInput
     private let interactor: BookingInteractorInput
+    
+    private var arrayBookingModel = [BookingCardViewModel]()
     
     init(_ router:BookingRouterInput,_ interactor:BookingInteractorInput){
         self.interactor = interactor
@@ -24,26 +28,38 @@ extension BookingPresenter: BookingModuleInput{
 }
 
 extension BookingPresenter: BookingInteractorOutput{
-    func makeModels() {
-        self.view?.set(viewModels:makeViewModels())
+    func makeMenu(arrayDicts: [[String : Any]], image: UIImage) {
+        for arrayDict in arrayDicts{
+            var helpArray = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: image)
+            //print("arrayDict: \(arrayDict)")
+            for (key, value) in arrayDict{
+                //print("key: \(key) --- value \(value)")
+                if (key == "info") {
+                    helpArray.info = String(describing: value)
+                } else if (key == "title") {
+                    helpArray.title = String(describing: value)
+                } else if (key == "shortDescription") {
+                    helpArray.shortDescription = String(describing: value)
+                }
+                helpArray.imageName = image
+            }
+            arrayBookingModel.append(helpArray)
+        }
+//        self.view?.set(viewModels:makeViewModels())
+        print("arrayBookingModel: \(arrayBookingModel)")
+        self.view?.set(viewModels: arrayBookingModel)
     }
 }
 
 extension BookingPresenter: BookingViewOutput{
     func viewDidLoad(){
-        interactor.getCatalog()
+        self.interactor.getCatalog()
     }
 }
 
 private extension BookingPresenter {
     func makeViewModels() -> [BookingCardViewModel] {
-        return [BookingCardViewModel(info: "info1", title: "Кальян на чаше", shortDescription: "800 руб.", imageName: "Constructor"),
-                BookingCardViewModel(info: "info1", title: "Кальян на грейпфруте", shortDescription: "1200 руб.", imageName: "Constructor"),
-                BookingCardViewModel(info: "Лимон, имбирь, мед", title: "Лимоно-имбирный чай", shortDescription: "800мл   450 руб.", imageName: "lemontea"),
-                BookingCardViewModel(info: "малина, чёрная смородина, клюква", title: "Ягодный чай", shortDescription: "800мл   450 руб.", imageName: "berrytea"),
-                BookingCardViewModel(info: "Облепиха, лимон", title: "Oблепиховый чай", shortDescription: "800мл   450 руб.", imageName: "seabuckthorntea"),
-                BookingCardViewModel(info: "Невероятный тандем вкуса проявляется из черного цейлонского чая с кусочками ананаса и клубники, ягодами красной смородины, листьями смородины и лепестками сафлора", title: "Мишки Гамми", shortDescription: "1000мл   300 руб.", imageName: "seabuckthorntea"),
-                BookingCardViewModel(info: "Известный всем зеленый чай с измельченными кусочками жасмина", title: "Зеленый с жасмином", shortDescription: "1000мл   300 руб.", imageName: "seabuckthorntea"),
-                BookingCardViewModel(info: "Полезный и очень освежающий напиток с кусочками мяты и малины", title: "Малина с мятой", shortDescription: "1000мл   300 руб.", imageName: "berrytea")]
+        return [BookingCardViewModel(info: "info1", title: "Кальян на чаше", shortDescription: "800 руб.", imageName: UIImage(named: "Constructor")!),
+                BookingCardViewModel(info: "info1", title: "Кальян на грейпфруте", shortDescription: "1200 руб.", imageName: UIImage(named: "Constructor")!)]
     }
 }

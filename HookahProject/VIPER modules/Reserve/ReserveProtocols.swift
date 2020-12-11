@@ -21,7 +21,7 @@ protocol ReserveViewInput: class {
 }
 
 protocol ReserveViewOutput : class {
-    func addReserve()
+    func addReserve(date: Date, numGuest: Int)
 }
 
 protocol ReserveInteractorInput {
