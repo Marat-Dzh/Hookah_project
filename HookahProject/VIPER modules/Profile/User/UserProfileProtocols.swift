@@ -31,6 +31,7 @@ protocol UserProfileInteractorInput {
 }
 
 protocol UserProfileInteractorOutput: class {
+    //func signOut()
 }
 
 protocol UserProfileRouterInput: class {

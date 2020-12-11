@@ -6,29 +6,15 @@
 //
 
 import UIKit
-import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    private lazy var coordinator = AppCoordinator()
 
-    private var appCoordinator: AppCoordinator?
-    var window: UIWindow?
-    
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
         
         
-        let window = UIWindow()
-        let context = LoginContext(output: nil)
-        let loginContainer = LoginContainer.assemble(context: context)
-        window.rootViewController = loginContainer.viewController
-        do{
-            sleep(2)
-        }
-        window.makeKeyAndVisible()
-        self.window = window
-        
+        coordinator.start()
         return true
     }
 }

@@ -24,9 +24,8 @@ protocol LoginModuleInput{
 }
 
 protocol LoginModuleOutput: class{
-    func onClose()
-    func didFinish()
-    
+    func loginByPhone(context: AuthContext)
+    func loginBySkip()
 }
 
 protocol LoginInteractorInput{
@@ -36,11 +35,9 @@ protocol LoginInteractorInput{
 }
 
 protocol LoginInteractorOutput: class{
-    func authorizationCompleted(context: AuthContext)
     func gotError(_ error: ErrorType)
+    func didSuccessLogin(context: AuthContext)
 }
 
 protocol LoginRouterInput{
-    func loginByPhone(context: AuthContext)
-    func loginBySkip()
 }

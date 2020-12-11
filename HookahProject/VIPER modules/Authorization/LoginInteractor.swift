@@ -28,7 +28,7 @@ extension LoginInteractor: LoginInteractorInput{
         Auth.auth().addStateDidChangeListener({ [weak self] (auth, user) in
             if user != nil
             {
-                self?.presenter?.authorizationCompleted(context: (self?.formContext())!)
+                self?.presenter?.didSuccessLogin(context: (self?.formContext())!)
             }
         })
     }
@@ -46,7 +46,7 @@ extension LoginInteractor: LoginInteractorInput{
                     self?.presenter?.gotError(.userNotFound)
                     return
                 }
-                self?.presenter?.authorizationCompleted(context: (self?.formContext())!)
+                self?.presenter?.didSuccessLogin(context: (self?.formContext())!)
                 }
         case .phoneNumberAndSMS:
             //let data = context as! PhoneData
@@ -78,7 +78,7 @@ extension LoginInteractor: LoginInteractorInput{
                     }
                 }
                 self?.db=nil
-                self?.presenter?.authorizationCompleted(context: authContext!)
+                self?.presenter?.didSuccessLogin(context: authContext!)
                 }
         case .phoneNumberAndSMS:
             //let data = context as! PhoneData

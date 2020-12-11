@@ -15,14 +15,8 @@ final class LoginRouter{
 extension LoginRouter: LoginRouterInput{
     func loginByPhone(context: AuthContext) {
         
-        let window = UIApplication.shared.windows[0]
-        let appCoordinator = AppCoordinator(window: window, context: context)
-        appCoordinator.start()
+        /*let window = UIApplication.shared.windows[0]
+        let appCoordinator = MenuCoordinator(window: window, context: context)
+        appCoordinator.start()*/
     }
-    
-    func loginBySkip() {
-        //assemble feed module without user class
-    }
-    
-    
 }
