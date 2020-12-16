@@ -11,7 +11,7 @@ protocol BookingViewOutput : class{
     
 }
 
-protocol BookingModuleInput{
+protocol BookingModuleInput: class{
     
     
 }
@@ -26,9 +26,13 @@ protocol BookingInteractorInput{
 }
 
 protocol BookingInteractorOutput: class{
-    func makeMenu(arrayDicts: [[String : Any]], image: UIImage)
+    func makeMenuArray(arrayDicts: [[String : Any]], images: [String:UIImage])
 }
 
-protocol BookingRouterInput{
+protocol BookingRouterInput: class{
+   
+}
+
+protocol BookingRouterOutput: class{
    
 }

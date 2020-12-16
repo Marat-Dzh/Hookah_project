@@ -32,5 +32,5 @@ final class BookingContainer{
 }
 
 struct BookingContext {
-    weak var moduleOutput: LoginModuleOutput?
+    weak var moduleOutput: BookingModuleOutput?
 }

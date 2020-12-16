@@ -7,7 +7,11 @@
 
 import Foundation
 final class BookingRouter{
+    weak var output: BookingRouterOutput?
     
+    init() {
+        
+    }
 }
 
 extension BookingRouter: BookingRouterInput{

@@ -75,9 +75,7 @@ extension BookingViewController: UICollectionViewDataSource {
 //
 //        }
         let viewController = BookingDetailViewController()
-        let bdvc = BookingCardViewModel.makeExample()
-        viewController.bcvm = bdvc[indexPath.row]
-//        viewController.bookingDetailModel.set(with: bdvc[indexPath.row])
+        viewController.bcvm = self.viewModels[indexPath.row]
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

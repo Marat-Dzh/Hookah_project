@@ -10,11 +10,11 @@ import UIKit
 
 final class BookingPresenter{
     weak var view: BookingViewInput?
-    weak var moduleOutput: LoginModuleOutput?
+    weak var moduleOutput: BookingModuleOutput?
     private let router: BookingRouterInput
     private let interactor: BookingInteractorInput
     
-    private var arrayBookingModel = [BookingCardViewModel]()
+    private var arrayBookingModels = [BookingCardViewModel]()
     
     init(_ router:BookingRouterInput,_ interactor:BookingInteractorInput){
         self.interactor = interactor
@@ -28,27 +28,29 @@ extension BookingPresenter: BookingModuleInput{
 }
 
 extension BookingPresenter: BookingInteractorOutput{
-    func makeMenu(arrayDicts: [[String : Any]], image: UIImage) {
+    func makeMenuArray(arrayDicts: [[String : Any]], images: [String:UIImage]) {
+        print("arrayDicts COUNT: \(arrayDicts.count)")
+        print("IMAGES: \(images.count)")
         for arrayDict in arrayDicts{
-            var helpArray = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: image)
-            //print("arrayDict: \(arrayDict)")
+            var helpArray = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: UIImage(named: "hole")!)
             for (key, value) in arrayDict{
-                //print("key: \(key) --- value \(value)")
                 if (key == "info") {
                     helpArray.info = String(describing: value)
                 } else if (key == "title") {
                     helpArray.title = String(describing: value)
                 } else if (key == "shortDescription") {
                     helpArray.shortDescription = String(describing: value)
+                } else if (key == "imageName"){
+                    helpArray.imageName = images[String(describing: value)]!
                 }
-                helpArray.imageName = image
             }
-            arrayBookingModel.append(helpArray)
+            arrayBookingModels.append(helpArray)
         }
 //        self.view?.set(viewModels:makeViewModels())
-        print("arrayBookingModel: \(arrayBookingModel)")
-        self.view?.set(viewModels: arrayBookingModel)
+        print("arrayBookingModel: \(arrayBookingModels)")
+        self.view?.set(viewModels: arrayBookingModels)
     }
+    
 }
 
 extension BookingPresenter: BookingViewOutput{
@@ -58,8 +60,6 @@ extension BookingPresenter: BookingViewOutput{
 }
 
 private extension BookingPresenter {
-    func makeViewModels() -> [BookingCardViewModel] {
-        return [BookingCardViewModel(info: "info1", title: "Кальян на чаше", shortDescription: "800 руб.", imageName: UIImage(named: "Constructor")!),
-                BookingCardViewModel(info: "info1", title: "Кальян на грейпфруте", shortDescription: "1200 руб.", imageName: UIImage(named: "Constructor")!)]
-    }
+
 }
+

@@ -22,7 +22,7 @@ class BookingDetailViewController : UIViewController {
     
     //var bookingDetailModel = BookingDetailView()
     
-    var bcvm = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: nil)
+    var bcvm = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: UIImage(named: "hole")!)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +35,6 @@ class BookingDetailViewController : UIViewController {
      
 //        let bdvc = BookingCardViewModel.makeExample()
 //        self.bookingDetailView.set(with: bdvc[1])
-        
-        
-    
 //        self.bookingDetailView.onTapButtonToBasketItem = { [weak self] in
 //            
 //            print("Привет, добавил чай в корзину")
