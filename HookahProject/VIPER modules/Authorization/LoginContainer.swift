@@ -16,7 +16,7 @@ final class LoginContainer{
         let router = LoginRouter()
         let interactor = LoginInteractor()
         let presenter = LoginPresenter(router, interactor)
-        let viewController = LoginViewController(presenter)
+        let viewController = LoginViewController_v(output: presenter)
         
         presenter.view = viewController
         presenter.moduleOutput = context.output

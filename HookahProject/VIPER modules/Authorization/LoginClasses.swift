@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum AuthType{
-    case loginAndPassword
-    case phoneNumberAndSMS
+enum AuthType : String{
+    case loginAndPassword = "By Email"
+    case phoneNumberAndSMS = "By Phone"
 }
 
 enum ErrorType: String{
