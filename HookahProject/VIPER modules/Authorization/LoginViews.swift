@@ -9,6 +9,7 @@ import UIKit
 
 protocol ViewExtractable {
     func extractData() -> LoginData
+    func checkValidation() -> Bool
 }
 
 class BaseLoginView: UIView{
@@ -28,6 +29,13 @@ class BaseLoginView: UIView{
 }
 
 class EmailView : BaseLoginView, ViewExtractable{
+    
+    weak var parentView: ViewToController?
+
+    func checkValidation() -> Bool {
+        return emailFieldView.textField.hasText && passwordFieldView.textField.hasText
+    }
+    
     func extractData() -> LoginData {
         return LoginAndPasswordData(login: getEmail(), password: getPassword())
     }
@@ -63,6 +71,7 @@ class EmailView : BaseLoginView, ViewExtractable{
         let attributesDictionary = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         emailFieldView.textField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: attributesDictionary)
         emailFieldView.textField.textColor = templateColor
+        emailFieldView.textField.addTarget(self, action: #selector(valueChange), for: .allEditingEvents)
         
         self.addSubview(passwordFieldView)
         passwordFieldView.topAnchor.constraint(equalTo: emailFieldView.bottomAnchor, constant: 0.0).isActive = true
@@ -73,6 +82,7 @@ class EmailView : BaseLoginView, ViewExtractable{
         passwordFieldView.textField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: attributesDictionary)
         passwordFieldView.textField.isSecureTextEntry = true
         passwordFieldView.textField.textColor = templateColor
+        passwordFieldView.textField.addTarget(self, action: #selector(valueChange), for: .allEditingEvents)
     }
     func getEmail() -> String {
         return emailFieldView.textField.text ?? ""
@@ -80,9 +90,23 @@ class EmailView : BaseLoginView, ViewExtractable{
     func getPassword() -> String {
         return passwordFieldView.textField.text ?? ""
     }
+    
+    @objc
+    func valueChange(){
+        parentView?.updateButtonsStatus()
+    }
 }
 
+
+
 class PhoneView : BaseLoginView, ViewExtractable{
+    
+    weak var parentView: ViewToController?
+    
+    func checkValidation() -> Bool {
+        return phoneFieldView.textField.hasText
+    }
+    
     func extractData() -> LoginData {
         return PhoneData(getPhoneNumber())
     }
@@ -114,6 +138,12 @@ class PhoneView : BaseLoginView, ViewExtractable{
         let attributesDictionary = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         phoneFieldView.textField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: attributesDictionary)
         phoneFieldView.textField.textColor = templateColor
+        phoneFieldView.textField.addTarget(self, action: #selector(valueChange), for: .allEditingEvents)
+    }
+    
+    @objc
+    func valueChange(){
+        parentView?.updateButtonsStatus()
     }
 }
 
@@ -169,11 +199,16 @@ class InputFieldView: UIView {
 }
 
 class SegmentView: UIView{
+    
+    weak var parentController: ViewToController?
+    
     private var loginDict: [String:BaseLoginView] = [
         AuthType.loginAndPassword.rawValue:EmailView(),
         AuthType.phoneNumberAndSMS.rawValue:PhoneView()
     ]
-    private var viewToExtract: ViewExtractable? = nil
+    
+    private var viewToExtract: ViewExtractable
+    
     private let items = [AuthType.loginAndPassword.rawValue, AuthType.phoneNumberAndSMS.rawValue]
     private let emailView :EmailView = {
         let baseView = EmailView()
@@ -194,13 +229,14 @@ class SegmentView: UIView{
     }()
     
     override init(frame: CGRect) {
+        viewToExtract = emailView
         super.init(frame: frame)
         setupView()
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func setupView(){
+    private func setupView(){
         //blockView = loginDict[AuthType.loginAndPassword.rawValue]!
         
         self.addSubview(customSegment)
@@ -214,6 +250,7 @@ class SegmentView: UIView{
         emailView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0.0).isActive = true
         emailView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0).isActive = true
         emailView.heightAnchor.constraint(equalToConstant: emailView.inputViewHeight*2.5).isActive = true
+        emailView.parentView = self
         
         self.addSubview(phoneView)
         phoneView.topAnchor.constraint(equalTo: customSegment.bottomAnchor, constant: 0.0).isActive = true
@@ -221,9 +258,18 @@ class SegmentView: UIView{
         phoneView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0).isActive = true
         phoneView.heightAnchor.constraint(equalToConstant: phoneView.inputViewHeight).isActive = true
         phoneView.isHidden = true
+        viewToExtract = emailView
+        phoneView.parentView = self
     }
-    func getInfo()-> PhoneData{
-        return viewToExtract?.extractData() as! PhoneData
+}
+
+extension SegmentView : ViewExtractable{
+    func extractData() -> LoginData {
+        return viewToExtract.extractData()
+    }
+    
+    func checkValidation() -> Bool {
+        return viewToExtract.checkValidation()
     }
 }
 
@@ -234,11 +280,18 @@ private extension SegmentView{
             emailView.isHidden = false
             phoneView.isHidden = true
             viewToExtract = emailView
+            updateButtonsStatus()
         }else{
             emailView.isHidden = true
             phoneView.isHidden = false
             viewToExtract = phoneView
+            updateButtonsStatus()
         }
-        print("index= \(customSegment.selectedSegmentIndex)")
+    }
+}
+
+extension SegmentView: ViewToController{
+    func updateButtonsStatus() {
+        parentController?.updateButtonsStatus()
     }
 }

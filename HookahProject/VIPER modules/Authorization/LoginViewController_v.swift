@@ -105,6 +105,7 @@ class LoginViewController_v: UIViewController {
         segmentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
         segmentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
         segmentView.heightAnchor.constraint(equalToConstant: 150.0).isActive = true
+        segmentView.parentController = self
         
         view.insertSubview(signInButton, aboveSubview: bgView)
         signInButton.topAnchor.constraint(equalTo: segmentView.bottomAnchor, constant: 10.0).isActive = true
@@ -119,7 +120,7 @@ class LoginViewController_v: UIViewController {
         signInButton.backgroundColor = UIColor.gray
         signInButton.setAttributedTitle(NSAttributedString(string: "SIGN IN", attributes: buttonAttributesDictionary), for: .normal)
         signInButton.isEnabled = true
-        //signInButton.addTarget(self, action: #selector(onSubmitTap), for: .touchUpInside)
+        signInButton.addTarget(self, action: #selector(onSubmitTap), for: .touchUpInside)
         
         // Forgot Password Button
         view.insertSubview(forgotPassword, aboveSubview: bgView)
@@ -130,13 +131,13 @@ class LoginViewController_v: UIViewController {
         forgotPassword.setTitle("Forgot password?", for: .normal)
         forgotPassword.setTitleColor(templateColor, for: .normal)
         forgotPassword.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
-        //forgotPassword.addTarget(self, action: #selector(onForgorPassTap), for: .touchUpInside)
+        forgotPassword.addTarget(self, action: #selector(onForgorPassTap), for: .touchUpInside)
         
         view.insertSubview(signUpButton, aboveSubview: bgView)
         signUpButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10.0).isActive = true
         signUpButton.leadingAnchor.constraint(equalTo: segmentView.leadingAnchor, constant: 0.0).isActive = true
         signUpButton.trailingAnchor.constraint(equalTo: segmentView.trailingAnchor, constant: 0.0).isActive = true
-        //signUpButton.addTarget(self, action: #selector(onRegisterTap), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(onRegisterTap), for: .touchUpInside)
         
         let text = "Don't have an account? Sign Up"
         let attributedString = NSMutableAttributedString.init(string: text)
@@ -159,7 +160,7 @@ class LoginViewController_v: UIViewController {
         attributedString.addAttributes(linkAttributes1, range: linkRange1)
         
         signUpButton.setAttributedTitle(attributedString, for: .normal)
-
+        
     }
 }
 
@@ -171,5 +172,51 @@ extension LoginViewController_v: LoginViewInput{
         ac.view.backgroundColor = .gray
         ac.view.tintColor = .black
         self.present(ac, animated: true, completion: nil)
+    }
+}
+
+private extension LoginViewController_v{
+    @objc
+    func onSubmitTap(){
+        let data = segmentView.extractData()
+        if data is LoginAndPasswordData{
+            presenter.login(type: .loginAndPassword, data: data)
+        }else if data is PhoneData{
+            presenter.login(type: .phoneNumberAndSMS, data: data)
+        }
+    }
+    @objc
+    func onRegisterTap(){
+        let data = segmentView.extractData()
+        if data is LoginAndPasswordData{
+            presenter.register(type: .loginAndPassword, data: data)
+        }else if data is PhoneData{
+            presenter.register(type: .phoneNumberAndSMS, data: data)
+        }
+    }
+    @objc
+    func onForgorPassTap(){
+        //do something...
+    }
+}
+
+protocol ViewToController: class{
+    func updateButtonsStatus()
+}
+
+extension LoginViewController_v: ViewToController{
+    func updateButtonsStatus() {
+        if segmentView.checkValidation(){
+            signInButton.alpha = 1
+            signInButton.isEnabled = true
+            signUpButton.alpha = 1
+            signUpButton.isEnabled = true
+        }
+        else{
+            signInButton.alpha = 0.4
+            signInButton.isEnabled = false
+            signUpButton.alpha = 0.4
+            signUpButton.isEnabled = false
+        }
     }
 }
