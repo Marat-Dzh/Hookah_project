@@ -17,6 +17,10 @@ final class TableReserveContainer{
         let presenter = TableReservePresenter(router: router, interactor: interactor)
         let viewController = TableReserveViewController(output: presenter)
         
+        presenter.view = viewController
+        
+        interactor.output = presenter
+        
         return TableReserveContainer(viewController: viewController, moduleInput: presenter)
     }
     

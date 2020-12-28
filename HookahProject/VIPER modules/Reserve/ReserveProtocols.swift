@@ -16,8 +16,8 @@ protocol ReserveModuleOutput: class {
 }
 
 protocol ReserveViewInput: class {
-    func suссessReserve() 
-    func errorReserve()
+    
+    
 }
 
 protocol ReserveViewOutput : class {
@@ -25,7 +25,7 @@ protocol ReserveViewOutput : class {
 }
 
 protocol ReserveInteractorInput {
-    func sentReservePresentInteractor()
+    func reserveTime(dateString: String, numGuest: String)
 }
 
 protocol ReserveInteractorOutput: class {

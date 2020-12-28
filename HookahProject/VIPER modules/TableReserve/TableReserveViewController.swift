@@ -12,8 +12,10 @@ class TableReserveViewController: UIViewController {
     private var output: TableReserveViewOutput
 
     var tableReserveTableView: UITableView
-    var tableReserveModelArray:  [TableReserveModel] = [TableReserveModel(numberGuest: "3", timeReserve: "11.12.2020 15:36", phoneNumber: "89031850856", isConfirmation: false), TableReserveModel(numberGuest: "2", timeReserve: "10.12.2020 21:30", phoneNumber: "89990035907", isConfirmation: false)]
-    var personInfoModelArray: [PersonInfo] = [PersonInfo("Иван", "1", "2"), PersonInfo("Василий", "22", "22")]
+//    var tableReserveModelArray:  [TableReserveModel] = [TableReserveModel(numberGuest: "3", timeReserve: "11.12.2020 15:36", phoneNumber: "89031850856", isConfirmation: false), TableReserveModel(numberGuest: "2", timeReserve: "10.12.2020 21:30", phoneNumber: "89990035907", isConfirmation: false)]
+    //var personInfoModelArray: [PersonInfo] = [PersonInfo("Иван 1", "1", "2"), PersonInfo("Василий3", "22", "22"), PersonInfo("Иван2", "1", "2"), PersonInfo("Василий4", "22", "22")]
+    var tableReserveModelArray = [TableReserveModel]()
+    var personInfoModelArray = [PersonInfo]()
     
     
     init(output: TableReserveViewOutput) {
@@ -47,13 +49,17 @@ class TableReserveViewController: UIViewController {
     @objc
     func onTapUpdate() {
         print("Обновить таблицу")
+        self.output.viewDidLoad()
     }
-    
 }
 
 
 extension TableReserveViewController: TableReserveViewInput{
-    
+    func set(viewModelsReserve: [TableReserveModel], viewModelsInfo : [PersonInfo]){
+        self.tableReserveModelArray = viewModelsReserve
+        self.personInfoModelArray = viewModelsInfo
+        self.tableReserveTableView.reloadData()
+    }
 }
 
 extension TableReserveViewController: UITableViewDataSource{
@@ -87,6 +93,7 @@ extension TableReserveViewController: UITableViewDataSource{
         if editingStyle == .delete{
             tableReserveModelArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)//удаление элементов
+            self.output.deleteReserve()
         }
     }
     
@@ -101,9 +108,10 @@ extension TableReserveViewController: UITableViewDataSource{
             objectTableReserveModelArray.isConfirmation = !objectTableReserveModelArray.isConfirmation
             self.tableReserveModelArray[indexPath.row] = objectTableReserveModelArray
             completion(true)
+            self.output.changeConfirmation()
         }
         action.backgroundColor = objectTableReserveModelArray.isConfirmation ? .systemGreen : .systemYellow
-        action.title = "Good"
+        action.title = objectTableReserveModelArray.isConfirmation ? "♥️" : "☠️"
         return action
     }
 }

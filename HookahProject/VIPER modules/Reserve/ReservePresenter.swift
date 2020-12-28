@@ -24,9 +24,10 @@ final class ReservePresenter {
 
 extension ReservePresenter: ReserveViewOutput {
     func addReserve(date: Date, numGuest: Int) {
-        print(date)
-        print(numGuest)
-        self.interactor.sentReservePresentInteractor()
+        var dateString = String(describing: date)
+        dateString = String(dateString.dropLast(5))
+        let numGuest = String(describing: numGuest)
+        self.interactor.reserveTime(dateString: dateString, numGuest: numGuest)
     }
 }
 

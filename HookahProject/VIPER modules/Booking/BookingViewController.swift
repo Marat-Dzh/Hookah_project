@@ -41,8 +41,8 @@ final class BookingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.output.viewDidLoad()
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
-//        self.navigationItem.rightBarButtonItem?.tintColor = .black
+        //        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        //        self.navigationItem.rightBarButtonItem?.tintColor = .black
     }
 }
 
@@ -68,12 +68,12 @@ extension BookingViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if indexPath.row == 0 {
-//            self.navigationController?.pushViewController(BookingConstructorHookahVC(), animated: true)
-//        }else{
-//            self.navigationController?.pushViewController(BookingDetailViewController(), animated: true)
-//
-//        }
+        //        if indexPath.row == 0 {
+        //            self.navigationController?.pushViewController(BookingConstructorHookahVC(), animated: true)
+        //        }else{
+        //            self.navigationController?.pushViewController(BookingDetailViewController(), animated: true)
+        //
+        //        }
         let viewController = BookingDetailViewController()
         viewController.bcvm = self.viewModels[indexPath.row]
         self.navigationController?.pushViewController(viewController, animated: true)

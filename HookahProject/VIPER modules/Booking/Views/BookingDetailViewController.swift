@@ -22,12 +22,13 @@ class BookingDetailViewController : UIViewController {
     
     //var bookingDetailModel = BookingDetailView()
     
-    var bcvm = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: UIImage(named: "hole")!)
+    var bcvm = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: URL.init(string: ""))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bookingDetailView.backgroundColor = .black
-        self.bookingDetailView.imageView.image = self.bcvm.imageName
+        //self.bookingDetailView.imageView.image = self.bcvm.imageName
+        self.bookingDetailView.imageView.load(url: self.bcvm.imageName!)
         self.bookingDetailView.titleLabel.text = self.bcvm.title
         self.bookingDetailView.shortDescriptionLabel.text = self.bcvm.shortDescription
         self.bookingDetailView.infoLabel.text = self.bcvm.info
@@ -43,3 +44,16 @@ class BookingDetailViewController : UIViewController {
 }
 
 
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
+}

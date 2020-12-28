@@ -12,58 +12,55 @@ import FirebaseStorage
 
 final class BookingInteractor{
     weak var output: BookingInteractorOutput?
-    let db = Firestore.firestore()
-    let storageImage = Storage.storage()
-    var arrayDictsMenuItem = [[String : Any]]()
-    var arrayMenuPictures = [String : UIImage]()
+    private let db = Firestore.firestore()
+    private let storageImage = Storage.storage()
+    private var arrayDictsMenuItem = [[String : Any]]()
+    private var arrayMenuPictures = [String : URL]()
 }
 
 extension BookingInteractor: BookingInteractorInput{
     func addToBasket() {}
-    fileprivate func delay(_ delay: Int, clouser: @escaping () ->()) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+    fileprivate func delay(_ delay: Double, clouser: @escaping () ->()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(600)) {
             clouser()
         }
     }
     func getCatalog() {
         //getting catalog from firebase database
-            let docRef = self.db.collection("products").document("teas").collection("brandTea")
-            let gsReference = self.storageImage.reference(forURL: "gs://hookahproject.appspot.com/images")
-            let imageFolderRef = gsReference.child("teas")
-            //        let imageRef = gsReference.child("teas/lemontea.jpg")
-            
-            imageFolderRef.listAll { (StorageListResult, Error) in
-                if let error = Error{
-                    print(error)
-                } else {
-                    for ref in StorageListResult.items{
-                        ref.getData(maxSize: 1*1024*1024) { (data, error) in
-                            if let error = error{
-                                print(error)
-                            } else {
-                                let pic = UIImage(data: data!)
-                                self.arrayMenuPictures[ref.name] = pic!
-                            }
+        let docRef = self.db.collection("products").document("teas").collection("brandTea")
+        let gsReference = self.storageImage.reference(forURL: "gs://hookahproject.appspot.com/images")
+        let imageFolderRef = gsReference.child("teas")
+        //        let imageRef = gsReference.child("teas/lemontea.jpg")
+        imageFolderRef.listAll { (StorageListResult, Error) in
+            if let error = Error{
+                print(error)
+            } else {
+                for ref in StorageListResult.items{
+                    ref.downloadURL { (URL, Error) in
+                        if let error = Error {
+                            print("URL problem: \(error)")
+                        } else {
+                            self.arrayMenuPictures[ref.name] = URL
                         }
                     }
                 }
             }
-            docRef.getDocuments() {(querySnapshot, err) in
-                //var arrayDictsMenuItem1 = [[String : Any]]()
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        self.arrayDictsMenuItem.append(document.data())
-                    }
+        }
+        docRef.getDocuments() {(querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    self.arrayDictsMenuItem.append(document.data())
                 }
             }
-        delay(1){
-        print("arrayMenuPictures:   \(self.arrayMenuPictures)")
-        print("arrayMenuPictures COUNT:   \(self.arrayMenuPictures.count)")
-        //print("arrayDictsMenuItem: \(self.arrayDictsMenuItem.count)")
-        self.output?.makeMenuArray(arrayDicts: self.arrayDictsMenuItem, images: self.arrayMenuPictures)
         }
+        delay(0.1){
+            print("arrayMenuPictures:   \(self.arrayMenuPictures)")
+            print("arrayMenuPictures COUNT:   \(self.arrayMenuPictures.count)")
+            self.output?.makeMenuArray(arrayDicts: self.arrayDictsMenuItem, images: self.arrayMenuPictures)
+        }
+
     }
 }
 

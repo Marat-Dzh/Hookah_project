@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class BookingCardView: AutoLayoutView{
     
@@ -53,7 +54,8 @@ class BookingCardView: AutoLayoutView{
         self.infoLabel.text = viewModel.info
         self.titleLabel.text = viewModel.title
         self.shortDescriptionLabel.text = viewModel.shortDescription
-        self.cardImageView.image =  viewModel.imageName
+        //self.cardImageView.image =  viewModel.imageName
+        self.cardImageView.load(url: (viewModel.imageName!))
         self.setNeedsLayout()
     }
 }

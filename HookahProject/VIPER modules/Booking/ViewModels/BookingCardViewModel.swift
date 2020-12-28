@@ -11,12 +11,11 @@ struct BookingCardViewModel {
     var info: String
     var title: String
     var shortDescription: String
-    var imageName: UIImage
+    var imageName: URL?
     
-    static func makeExample() -> [BookingCardViewModel] {
-        return [BookingCardViewModel(info: "info1", title: "Кальян на чаше", shortDescription: "800 руб.", imageName: UIImage(named: "news")!),
-                BookingCardViewModel(info: "info1", title: "Кальян на грейпфруте", shortDescription: "1200 руб.", imageName: UIImage(named: "news")!)]
-    }
+//    static func makeExample() -> [BookingCardViewModel] {
+//        return [BookingCardViewModel(info: "info1", title: "Кальян на чаше", shortDescription: "800 руб.", imageName: ),
+//                BookingCardViewModel(info: "info1", title: "Кальян на грейпфруте", shortDescription: "1200 руб.", imageName: ]
 }
 
 //BookingCardViewModel(info: "Лимон, имбирь, мед", title: "Лимоно-имбирный чай", shortDescription: "800мл   450 руб.", imageName: "lemontea"),

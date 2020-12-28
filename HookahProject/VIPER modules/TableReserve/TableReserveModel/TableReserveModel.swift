@@ -8,8 +8,8 @@
 import UIKit
 
 struct TableReserveModel {
-    let numberGuest: String
-    let timeReserve: String
-    let phoneNumber: String
+    var numberGuest: String
+    var timeReserve: String
+    var phoneNumber: String
     var isConfirmation: Bool
 }

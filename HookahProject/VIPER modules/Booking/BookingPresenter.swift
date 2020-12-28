@@ -28,11 +28,11 @@ extension BookingPresenter: BookingModuleInput{
 }
 
 extension BookingPresenter: BookingInteractorOutput{
-    func makeMenuArray(arrayDicts: [[String : Any]], images: [String:UIImage]) {
+    func makeMenuArray(arrayDicts: [[String : Any]], images: [String:URL]) {
         print("arrayDicts COUNT: \(arrayDicts.count)")
         print("IMAGES: \(images.count)")
         for arrayDict in arrayDicts{
-            var helpArray = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: UIImage(named: "hole")!)
+            var helpArray = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: URL.init(string: ""))
             for (key, value) in arrayDict{
                 if (key == "info") {
                     helpArray.info = String(describing: value)
@@ -41,10 +41,10 @@ extension BookingPresenter: BookingInteractorOutput{
                 } else if (key == "shortDescription") {
                     helpArray.shortDescription = String(describing: value)
                 } else if (key == "imageName"){
-                    helpArray.imageName = images[String(describing: value)]!
+                    helpArray.imageName = images[String(describing: value)]
                 }
             }
-            arrayBookingModels.append(helpArray)
+            self.arrayBookingModels.append(helpArray)
         }
 //        self.view?.set(viewModels:makeViewModels())
         print("arrayBookingModel: \(arrayBookingModels)")
