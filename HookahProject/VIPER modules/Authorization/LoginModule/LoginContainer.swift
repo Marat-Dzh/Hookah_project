@@ -23,6 +23,9 @@ final class LoginContainer{
         
         interactor.presenter = presenter
         
+        router.navigationControllerProvider = { [weak viewController] in
+            viewController?.navigationController
+        }()
         return LoginContainer(view: viewController, input: presenter)
     }
     

@@ -70,9 +70,9 @@ class LoginViewController_v: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.checkSession()
         view.backgroundColor = .white
         setupSubViews()
-        //output.checkSession()
     }
     
     func setupSubViews(){
@@ -118,7 +118,7 @@ class LoginViewController_v: UIViewController {
        signInButton.alpha = 0.4
        signInButton.isEnabled = false
         signInButton.backgroundColor = UIColor.gray
-        signInButton.setAttributedTitle(NSAttributedString(string: "SIGN IN", attributes: buttonAttributesDictionary), for: .normal)
+        signInButton.setAttributedTitle(NSAttributedString(string: "ВОЙТИ", attributes: buttonAttributesDictionary), for: .normal)
         signInButton.isEnabled = true
         signInButton.addTarget(self, action: #selector(onSubmitTap), for: .touchUpInside)
         
@@ -128,7 +128,7 @@ class LoginViewController_v: UIViewController {
         forgotPassword.leadingAnchor.constraint(equalTo: segmentView.leadingAnchor, constant: 0.0).isActive = true
         forgotPassword.trailingAnchor.constraint(equalTo: segmentView.trailingAnchor, constant: 0.0).isActive = true
         
-        forgotPassword.setTitle("Forgot password?", for: .normal)
+        forgotPassword.setTitle("Забыли пароль?", for: .normal)
         forgotPassword.setTitleColor(templateColor, for: .normal)
         forgotPassword.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
         forgotPassword.addTarget(self, action: #selector(onForgorPassTap), for: .touchUpInside)
@@ -139,7 +139,7 @@ class LoginViewController_v: UIViewController {
         signUpButton.trailingAnchor.constraint(equalTo: segmentView.trailingAnchor, constant: 0.0).isActive = true
         signUpButton.addTarget(self, action: #selector(onRegisterTap), for: .touchUpInside)
         
-        let text = "Don't have an account? Sign Up"
+        let text = "Ещё нет аккаунта? Зарегистрируйтесь"
         let attributedString = NSMutableAttributedString.init(string: text)
         let style = NSMutableParagraphStyle()
         style.alignment = NSTextAlignment.center
@@ -150,7 +150,7 @@ class LoginViewController_v: UIViewController {
         attributedString.addAttributes(detailAttributes, range: NSMakeRange(0, attributedString.length))
         
         
-        let sampleLinkRange1 = text.range(of: "Sign Up")!
+        let sampleLinkRange1 = text.range(of: "Зарегистрируйтесь")!
         let startPos1 = text.distance(from: text.startIndex, to: sampleLinkRange1.lowerBound)
         let endPos1 = text.distance(from: text.startIndex, to: sampleLinkRange1.upperBound)
         let linkRange1 = NSMakeRange(startPos1, endPos1 - startPos1)
@@ -179,11 +179,7 @@ private extension LoginViewController_v{
     @objc
     func onSubmitTap(){
         let data = segmentView.extractData()
-        if data is LoginAndPasswordData{
-            presenter.login(type: .loginAndPassword, data: data)
-        }else if data is PhoneData{
-            presenter.login(type: .phoneNumberAndSMS, data: data)
-        }
+        presenter.login(data: data)
     }
     @objc
     func onRegisterTap(){

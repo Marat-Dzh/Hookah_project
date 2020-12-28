@@ -11,12 +11,6 @@ import FirebaseFirestore
 
 final class LoginInteractor{
     weak var presenter: LoginInteractorOutput?
-    //private let serviceFactory: LoginServiceFactory
-    //private var loginService: BaseLoginService?
-    
-    /*init(_ service: LoginServiceFactory){
-        self.serviceFactory = service
-    }*/
     var db: Firestore!
     init() {
        
@@ -24,6 +18,19 @@ final class LoginInteractor{
 }
 
 extension LoginInteractor: LoginInteractorInput{
+    func getVerificationID(phoneNumber: String){ 
+        PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] (verificationID, error) in
+          if error != nil {
+            print(" --- \(error?.localizedDescription ?? "None") --- ")
+            self?.presenter?.gotError(.error)
+            return
+          } else{
+            UserDefaults.standard.set(verificationID, forKey: "VerificationID")
+            print("VerificationID")
+          }
+        }
+    }
+    
     func checkActiveSession() {
         Auth.auth().addStateDidChangeListener({ [weak self] (auth, user) in
             if user != nil
@@ -49,7 +56,8 @@ extension LoginInteractor: LoginInteractorInput{
                 self?.presenter?.didSuccessLogin(context: (self?.formContext())!)
                 }
         case .phoneNumberAndSMS:
-            //let data = context as! PhoneData
+            //let phoneData = context as! PhoneData
+            
             return
         }
     }
@@ -81,7 +89,7 @@ extension LoginInteractor: LoginInteractorInput{
                 self?.presenter?.didSuccessLogin(context: authContext!)
                 }
         case .phoneNumberAndSMS:
-            //let data = context as! PhoneData
+            
             return
         }
     }
@@ -92,8 +100,5 @@ private extension LoginInteractor{
         let user: User = Auth.auth().currentUser!
         let context: AuthContext = AuthContext(id: user.uid, email: user.email!, type: .user)
         return context
-    }
-    func processResult(){
-        
     }
 }

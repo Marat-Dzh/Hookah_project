@@ -12,7 +12,7 @@ protocol UserProfileModuleInput: class {
 }
 
 protocol UserProfileModuleOutput: class {
-    
+    func signOut()
 }
 
 protocol UserProfileViewInput: class{
@@ -31,7 +31,7 @@ protocol UserProfileInteractorInput {
 }
 
 protocol UserProfileInteractorOutput: class {
-    //func signOut()
+    func userSignedOut()
 }
 
 protocol UserProfileRouterInput: class {

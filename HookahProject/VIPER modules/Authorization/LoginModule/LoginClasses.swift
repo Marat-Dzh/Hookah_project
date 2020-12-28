@@ -30,8 +30,12 @@ protocol LoginData{
 
 struct PhoneData : LoginData{
     let phoneNumber: String
-    init(_ phoneNumber:String){
+    let verificationCode: String?
+    let verificationId: String?
+    init(_ phoneNumber:String, _ verID: String? = nil, _ verCode: String? = nil){
         self.phoneNumber = phoneNumber
+        verificationId = verID
+        verificationCode = verCode
     }
 }
 

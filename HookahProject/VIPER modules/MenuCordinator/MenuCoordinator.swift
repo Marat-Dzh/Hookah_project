@@ -7,14 +7,20 @@
 import FirebaseFirestore
 import UIKit
 
+protocol MenuCoordinatorOutput: class{
+    func displayLoginModule()
+}
+
 class MenuCoordinator {
     private lazy var tabBarController = UITabBarController()
     private lazy var navigationControllers = MenuCoordinator.makeNavigationControllers()
     private var window: UIWindow
     private var userContext: UserContext?
+    private weak var appCoordinator: MenuCoordinatorOutput?
     
-    init(context: UserContext? = nil, window: UIWindow){
+    init(context: UserContext? = nil, window: UIWindow, appParent: MenuCoordinatorOutput?){
         userContext = context
+        self.appCoordinator = appParent
         self.window = window
         self.setupAppearance()
         
@@ -75,7 +81,8 @@ private extension MenuCoordinator {
     guard let navController = self.navigationControllers[.account] else {
     fatalError("can't finid navController")
     }
-        let userProfileContainer = UserProfileContainer.assemble(userInfo: userContext?.info)
+        let context = UserProfileContext(userInfo: userContext?.info, output: self)
+        let userProfileContainer = UserProfileContainer.assemble(userInfo: context)
     navController.setViewControllers([userProfileContainer.viewController], animated: false)
     userProfileContainer.viewController.navigationItem.title = NavControllerType.account.title
     }
@@ -149,5 +156,11 @@ fileprivate enum NavControllerType: Int, CaseIterable {
         case .account:
             return UIImage(named: "account")
         }
+    }
+}
+
+extension MenuCoordinator: UserProfileModuleOutput{
+    func signOut(){
+        appCoordinator?.displayLoginModule()
     }
 }

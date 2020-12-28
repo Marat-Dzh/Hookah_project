@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 final class UserProfileInteractor {
-    var output: ReserveInteractorOutput?
+    var output: UserProfileInteractorOutput?
     var userInfo: UserInfo?
     init(info: UserInfo?) {
         userInfo = info
@@ -23,9 +23,12 @@ extension UserProfileInteractor: UserProfileInteractorInput{
     func logout() {
         do{
             try Auth.auth().signOut()
-        } catch{
-            //nothing
         }
-        
+        catch
+        {
+            print("Error is --- \(error.localizedDescription)")
+            return
+        }
+        output?.userSignedOut()
     }
 }
