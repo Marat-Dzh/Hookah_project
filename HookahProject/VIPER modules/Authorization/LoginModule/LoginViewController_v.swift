@@ -205,14 +205,10 @@ extension LoginViewController_v: ViewToController{
         if segmentView.checkValidation(){
             signInButton.alpha = 1
             signInButton.isEnabled = true
-            signUpButton.alpha = 1
-            signUpButton.isEnabled = true
         }
         else{
             signInButton.alpha = 0.4
             signInButton.isEnabled = false
-            signUpButton.alpha = 0.4
-            signUpButton.isEnabled = false
         }
     }
 }

@@ -10,8 +10,7 @@ protocol BookingViewOutput : class{
     
 }
 
-protocol BookingModuleInput{
-    
+protocol BookingModuleInput: class{
     
 }
 

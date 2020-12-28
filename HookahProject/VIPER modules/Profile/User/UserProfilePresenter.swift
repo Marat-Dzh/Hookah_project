@@ -21,14 +21,6 @@ final class UserProfilePresenter {
 }
 
 extension UserProfilePresenter: UserProfileViewOutput {
-    func showInfo() {
-        let info = interactor.getUserInfo()
-        if info != nil {
-            view?.showUserInfo(info: info!)
-        } else {
-            view?.showNothing()
-        }
-    }
     func onLogoutTapped() {
         interactor.logout()
     }
@@ -41,7 +33,14 @@ extension UserProfilePresenter: UserProfileInteractorOutput {
 }
 
 extension UserProfilePresenter: UserProfileModuleInput {
-    
+    func setInfo(info: UserInfo?) {
+        if info != nil {
+            interactor.setInfoEntity(info: info!)
+            view?.showUserInfo(info: info!)
+        } else {
+            view?.showNothing()
+        }
+    }
 }
 
 extension UserProfilePresenter: UserProfileRouterOutput {

@@ -17,6 +17,10 @@ final class UserProfileInteractor {
 }
 
 extension UserProfileInteractor: UserProfileInteractorInput{
+    func setInfoEntity(info: UserInfo) {
+        userInfo = info
+    }
+    
     func getUserInfo() -> UserInfo? {
         return userInfo
     }
