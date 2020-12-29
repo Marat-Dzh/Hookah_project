@@ -8,11 +8,11 @@
 import Foundation
 
 protocol UserProfileModuleInput: class {
-    
+    func setInfo(info: UserInfo?)
 }
 
 protocol UserProfileModuleOutput: class {
-    
+    func signOut()
 }
 
 protocol UserProfileViewInput: class{
@@ -21,17 +21,17 @@ protocol UserProfileViewInput: class{
 }
 
 protocol UserProfileViewOutput : class {
-    func showInfo()
     func onLogoutTapped()
 }
 
 protocol UserProfileInteractorInput {
     func getUserInfo() ->UserInfo?
+    func setInfoEntity(info: UserInfo)
     func logout()
 }
 
 protocol UserProfileInteractorOutput: class {
-    //func signOut()
+    func userSignedOut()
 }
 
 protocol UserProfileRouterInput: class {

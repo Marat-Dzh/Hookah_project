@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum AuthType{
-    case loginAndPassword
-    case phoneNumberAndSMS
+enum AuthType : String{
+    case loginAndPassword = "By Email"
+    case phoneNumberAndSMS = "By Phone"
 }
 
 enum ErrorType: String{
@@ -30,8 +30,12 @@ protocol LoginData{
 
 struct PhoneData : LoginData{
     let phoneNumber: String
-    init(_ phoneNumber:String){
+    let verificationCode: String?
+    let verificationId: String?
+    init(_ phoneNumber:String, _ verID: String? = nil, _ verCode: String? = nil){
         self.phoneNumber = phoneNumber
+        verificationId = verID
+        verificationCode = verCode
     }
 }
 
@@ -48,9 +52,17 @@ struct AuthContext{
     let personType: PersonType
     let id:String
     let email:String
+    let phoneNumber: Int
     init(id:String, email:String, type: PersonType) {
         self.email=email
         self.id=id
         self.personType = type
+        phoneNumber=Int()
+    }
+    init(id:String, number: Int, type: PersonType ){
+        self.email=String()
+        self.id=id
+        self.personType = type
+        phoneNumber=number
     }
 }

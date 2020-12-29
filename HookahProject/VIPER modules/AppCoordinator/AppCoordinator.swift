@@ -15,19 +15,13 @@ final class AppCoordinator{
     var menuCoordinator: MenuCoordinator?
     func start() {
         FirebaseApp.configure()
-        let context = LoginContext(output: self)
-        let loginContainer = LoginContainer.assemble(context: context)
-        self.window.rootViewController = loginContainer.viewController
-        do{
-            sleep(2)
-        }
-        self.window.makeKeyAndVisible()
+        displayLoginModule()
     }
 }
 
 extension AppCoordinator: LoginModuleOutput{
     func loginByPhone(context: AuthContext) {
-        menuCoordinator = MenuCoordinator(window: window)
+        menuCoordinator = MenuCoordinator(window: window, appParent: self)
         getPersonContext(context: context)
         menuCoordinator?.start()
     }
@@ -54,5 +48,14 @@ private extension AppCoordinator{
                 print("Document does not exist")
             }
         }
+    }
+}
+
+extension AppCoordinator: MenuCoordinatorOutput{
+    func displayLoginModule() {
+        let context = LoginContext(output: self)
+        let loginContainer = LoginContainer.assemble(context: context)
+        self.window.rootViewController = loginContainer.viewController
+        self.window.makeKeyAndVisible()
     }
 }

@@ -7,14 +7,25 @@
 import FirebaseFirestore
 import UIKit
 
+protocol MenuCoordinatorOutput: class{
+    func displayLoginModule()
+}
+
 class MenuCoordinator {
     private lazy var tabBarController = UITabBarController()
     private lazy var navigationControllers = MenuCoordinator.makeNavigationControllers()
     private var window: UIWindow
     private var userContext: UserContext?
+    private weak var appCoordinator: MenuCoordinatorOutput?
     
-    init(context: UserContext? = nil, window: UIWindow){
+    private weak var account: UserProfileModuleInput?
+    private weak var feed: FeedModuleInput?
+    private weak var booking: BookingModuleInput?
+    
+    
+    init(context: UserContext? = nil, window: UIWindow, appParent: MenuCoordinatorOutput?){
         userContext = context
+        self.appCoordinator = appParent
         self.window = window
         self.setupAppearance()
         
@@ -22,7 +33,7 @@ class MenuCoordinator {
     
     func setUserContext(context: UserContext?){
         self.userContext = context
-        
+        account?.setInfo(info: context?.info)
     }
     
     func start(){
@@ -48,6 +59,7 @@ private extension MenuCoordinator {
         }
         let context = BookingContext(moduleOutput: nil)
         let container = BookingContainer.assemble(context: context)
+        booking = container.input
         navController.setViewControllers([container.viewController], animated: false)
         container.viewController.navigationItem.title = NavControllerType.menu.title
     }
@@ -57,6 +69,7 @@ private extension MenuCoordinator {
             fatalError("can't finid navController")
         }
         let feedContainer = FeedContainer.assemble(context: FeedContext(output: nil))
+        feed = feedContainer.input
         navController.setViewControllers([feedContainer.viewController], animated: false)
         feedContainer.viewController.navigationItem.title = NavControllerType.feed.title
     }
@@ -75,7 +88,9 @@ private extension MenuCoordinator {
     guard let navController = self.navigationControllers[.account] else {
     fatalError("can't finid navController")
     }
-        let userProfileContainer = UserProfileContainer.assemble(userInfo: userContext?.info)
+        let context = UserProfileContext(userInfo: userContext?.info, output: self)
+        let userProfileContainer = UserProfileContainer.assemble(userInfo: context)
+        account = userProfileContainer.moduleInput
     navController.setViewControllers([userProfileContainer.viewController], animated: false)
     userProfileContainer.viewController.navigationItem.title = NavControllerType.account.title
     }
@@ -149,5 +164,11 @@ fileprivate enum NavControllerType: Int, CaseIterable {
         case .account:
             return UIImage(named: "account")
         }
+    }
+}
+
+extension MenuCoordinator: UserProfileModuleOutput{
+    func signOut(){
+        appCoordinator?.displayLoginModule()
     }
 }

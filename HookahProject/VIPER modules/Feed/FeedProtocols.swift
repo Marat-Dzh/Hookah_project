@@ -16,7 +16,7 @@ protocol FeedViewOutput : class{
     
 }
 
-protocol FeedModuleInput{
+protocol FeedModuleInput: class{
     func getNews()
     func getStocks()
 }

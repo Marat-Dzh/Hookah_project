@@ -12,7 +12,10 @@ protocol BookingViewOutput : class{
 }
 
 protocol BookingModuleInput: class{
+<<<<<<< HEAD
     
+=======
+>>>>>>> fd0d6b1d6ddc58a959911a4f21d8cafdae217459
     
 }
 
