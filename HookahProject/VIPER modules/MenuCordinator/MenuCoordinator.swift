@@ -21,7 +21,7 @@ class MenuCoordinator {
     private weak var account: UserProfileModuleInput?
     private weak var feed: FeedModuleInput?
     private weak var booking: BookingModuleInput?
-    
+    private weak var reserve: ReserveModuleInput?
     
     init(context: UserContext? = nil, window: UIWindow, appParent: MenuCoordinatorOutput?){
         userContext = context
@@ -34,6 +34,7 @@ class MenuCoordinator {
     func setUserContext(context: UserContext?){
         self.userContext = context
         account?.setInfo(info: context?.info)
+        
     }
     
     func start(){
@@ -45,6 +46,12 @@ class MenuCoordinator {
             self.navigationControllers[$0]
         }
         self.tabBarController.setViewControllers(navigationControllers, animated: true)
+        let vc = self.window.rootViewController?.children
+        if vc != nil || vc?.count ?? 0 > 1{
+            for item in vc!{
+                item.dismiss(animated: true, completion: nil)
+            }
+        }
         self.window.rootViewController = self.tabBarController
         window.makeKeyAndVisible()
     }
@@ -82,6 +89,7 @@ private extension MenuCoordinator {
     let reserveContainer = ReserveContainer.assemble()
     navController.setViewControllers([reserveContainer.viewController], animated: false)
     reserveContainer.viewController.navigationItem.title = NavControllerType.basket.title
+        reserve = reserveContainer.moduleInput
     }
 
     func setupAccount(){

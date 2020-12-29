@@ -71,7 +71,6 @@ class LoginViewController_v: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.checkSession()
-        view.backgroundColor = .white
         setupSubViews()
     }
     
@@ -183,12 +182,7 @@ private extension LoginViewController_v{
     }
     @objc
     func onRegisterTap(){
-        let data = segmentView.extractData()
-        if data is LoginAndPasswordData{
-            presenter.register(type: .loginAndPassword, data: data)
-        }else if data is PhoneData{
-            presenter.register(type: .phoneNumberAndSMS, data: data)
-        }
+        presenter.register()
     }
     @objc
     func onForgorPassTap(){
