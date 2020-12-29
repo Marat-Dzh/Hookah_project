@@ -97,12 +97,12 @@ private extension LoginViewController{
     @objc
     func onSubmitTap(){
         let data: LoginAndPasswordData = getLoginData()
-        output.login(type: .loginAndPassword, data: data)
+        output.login(data: data)
     }
     @objc
     func onRegisterTap(){
-        let data: LoginAndPasswordData = getLoginData()
-        output.register(type: .loginAndPassword, data: data)
+        //let data: LoginAndPasswordData = getLoginData()
+        //output.register(type: .loginAndPassword, data: data)
     }
     @objc
     func onForgorPassTap(){

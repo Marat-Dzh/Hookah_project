@@ -14,8 +14,8 @@ protocol LoginViewInput: class{
 protocol LoginViewOutput : class{
     func onClose()
     func onSkip()
-    func login(type: AuthType, data: LoginData)
-    func register(type: AuthType, data: LoginData)
+    func login(data: LoginData)
+    func register()
     func checkSession()
 }
 
@@ -30,14 +30,22 @@ protocol LoginModuleOutput: class{
 
 protocol LoginInteractorInput{
     func login(type: AuthType, context: LoginData)
-    func register (type: AuthType, data: LoginData)
+    func register (data: RegisterData)
     func checkActiveSession()
+    func getVerificationID(phoneNumber: String)
 }
 
 protocol LoginInteractorOutput: class{
     func gotError(_ error: ErrorType)
     func didSuccessLogin(context: AuthContext)
+    func didSuccessCaptcha(phoneNumber: String)
 }
 
 protocol LoginRouterInput{
+    func assembleConfirmModule(_ phoneNumber: String,  _ module:ConfirmModuleOutput)
+    func assembleRegisterModule()
+}
+
+protocol LoginRouterOutput: class{
+    func registerUser(data: RegisterData)
 }

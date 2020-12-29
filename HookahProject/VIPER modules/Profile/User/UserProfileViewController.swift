@@ -57,7 +57,6 @@ class UserProfileViewController: UIViewController {
             //self?.alertConnect()
             self.callNumber()
         }
-        output.showInfo()
     }
     @objc
     func onTapSignOut(sender: UIBarButtonItem) {

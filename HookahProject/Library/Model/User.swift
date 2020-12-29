@@ -36,16 +36,16 @@ final class UserContext{
 final class UserInfo: PersonInfo{
     let cardId: Int
     let numberOfPoints: Int
-    let phoneNumber: Int
+    let phoneNumber: String
     
     init(){
         self.cardId=0
         self.numberOfPoints=0
-        self.phoneNumber = 0
+        self.phoneNumber = ""
         super.init("","","")
     }
     
-    init(id:Int, points:Int, name:String, email:String, uId:String, phoneNumber: Int){
+    init(id:Int, points:Int, name:String, email:String, uId:String, phoneNumber: String){
         self.cardId=id
         self.numberOfPoints=points
         self.phoneNumber = phoneNumber
@@ -55,8 +55,8 @@ final class UserInfo: PersonInfo{
         let data = doc.data()!
         cardId = data["cardId"] as! Int
         numberOfPoints = data["numberOfPoints"] as! Int
-        phoneNumber = data["phoneNumber"] as! Int
-        super.init(data["fio"] as? String ?? "jjj", data["email"] as? String ?? "",data["uId"] as? String ?? "")
+        phoneNumber = data["phoneNumber"] as! String
+        super.init(data["fio"] as? String ?? "user", data["email"] as? String ?? "",data["uId"] as? String ?? "")
         
     }
 }

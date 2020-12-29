@@ -9,6 +9,7 @@ import  UIKit
 
 final class UserProfilePresenter {
     weak var view: UserProfileViewInput?
+    weak var moduleOutput: UserProfileModuleOutput?
     private let router: UserProfileRouterInput
     private let interactor: UserProfileInteractorInput
     
@@ -20,25 +21,26 @@ final class UserProfilePresenter {
 }
 
 extension UserProfilePresenter: UserProfileViewOutput {
-    func showInfo() {
-        let info = interactor.getUserInfo()
-        if info != nil {
-            view?.showUserInfo(info: info!)
-        } else {
-            view?.showNothing()
-        }
-    }
     func onLogoutTapped() {
         interactor.logout()
     }
 }
 
 extension UserProfilePresenter: UserProfileInteractorOutput {
-    
+    func userSignedOut(){
+        moduleOutput?.signOut()
+    }
 }
 
 extension UserProfilePresenter: UserProfileModuleInput {
-    
+    func setInfo(info: UserInfo?) {
+        if info != nil {
+            interactor.setInfoEntity(info: info!)
+            view?.showUserInfo(info: info!)
+        } else {
+            view?.showNothing()
+        }
+    }
 }
 
 extension UserProfilePresenter: UserProfileRouterOutput {
