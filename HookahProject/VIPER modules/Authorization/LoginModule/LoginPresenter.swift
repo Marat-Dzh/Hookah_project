@@ -24,6 +24,10 @@ extension LoginPresenter: LoginModuleInput{
 }
 
 extension LoginPresenter: LoginViewOutput{
+    func register() {
+        router.assembleRegisterModule()
+    }
+    
     func login(data: LoginData) {
         if data is LoginAndPasswordData{
             interactor.login(type: .loginAndPassword, context: data)
@@ -39,9 +43,6 @@ extension LoginPresenter: LoginViewOutput{
     
     func onSkip() {
         
-    }
-    func register(type: AuthType, data: LoginData) {
-        interactor.register(type: type, data: data)
     }
     func checkSession() {
         interactor.checkActiveSession()
@@ -63,5 +64,11 @@ extension LoginPresenter: LoginInteractorOutput{
 extension LoginPresenter: ConfirmModuleOutput{
     func loginBySMS(context: PhoneData) {
         interactor.login(type: .phoneNumberAndSMS, context: context)
+    }
+}
+
+extension LoginPresenter: LoginRouterOutput{
+    func registerUser(data: RegisterData){
+        interactor.register(data: data)
     }
 }

@@ -15,7 +15,6 @@ final class ReserveInteractor {
     
     private let db = Firestore.firestore()
     
-    
 }
 
 extension ReserveInteractor: ReserveInteractorInput {

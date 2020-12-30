@@ -8,11 +8,12 @@
 import Foundation
 
 protocol RegisterViewInput: class{
-    func showError(message: String)
+    func showError(errorResults: [FailureResult])
+    func getDataFromView() -> RegisterData
 }
 
 protocol RegisterViewOutput : class{
-    func onConfirmTapped(context: PhoneData)
+    func onRegisterTapped(data: [InputSource])
 }
 
 protocol RegisterModuleInput{
@@ -20,18 +21,16 @@ protocol RegisterModuleInput{
 }
 
 protocol RegisterModuleOutput: class{
-    func loginBySMS(context: PhoneData)
+    func registerUser(data: RegisterData)
 }
 
 protocol RegisterInteractorInput{
-    func login(type: AuthType, context: LoginData)
-    func register (type: AuthType, data: LoginData)
-    func checkActiveSession()
-    func getVerificationID(phoneNumber: String)
+    func checkUnique(dict: [String: InputSource], data: RegisterData)
 }
 
 protocol RegisterInteractorOutput: class{
-    func gotError(_ error: String)
+    func checkDidSucceeded(data: RegisterData)
+    func checkFailed(errorResults: [FailureResult])
 }
 
 protocol RegisterRouterInput{
