@@ -73,7 +73,14 @@ extension UserProfileViewController: UserProfileViewInput {
     func showUserInfo(info: UserInfo) {
         self.userProfileView.nameLabel.text = info.fio
         self.userProfileView.numberCardLabel.text = String(info.cardId)
-        self.userProfileView.scoresLabel.text = String(info.numberOfPoints)
+        if (info.numberOfPoints % 10 == 1) {
+            self.userProfileView.scoresLabel.text = String(info.numberOfPoints) + " балл"
+        } else if (info.numberOfPoints % 10 == 2 || info.numberOfPoints % 10 == 3 || info.numberOfPoints % 10 == 4) {
+            self.userProfileView.scoresLabel.text = String(info.numberOfPoints) + " балла"
+        } else {
+            self.userProfileView.scoresLabel.text = String(info.numberOfPoints) + " баллов"
+        }
+        
     }
     func showNothing() {
         //

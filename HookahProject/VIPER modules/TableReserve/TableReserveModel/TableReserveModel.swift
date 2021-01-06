@@ -12,4 +12,5 @@ struct TableReserveModel {
     var timeReserve: String
     var phoneNumber: String
     var isConfirmation: Bool
+    var uid: String
 }

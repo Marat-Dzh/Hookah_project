@@ -68,8 +68,9 @@ class EmailView : BaseLoginView, ViewExtractable{
         emailFieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0).isActive = true
         emailFieldView.heightAnchor.constraint(equalToConstant: inputViewHeight).isActive = true
         emailFieldView.imgView.image = UIImage(named: "mail")
+        emailFieldView.imgView.tintColor = UIColor.white
         let attributesDictionary = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
-        emailFieldView.textField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: attributesDictionary)
+        emailFieldView.textField.attributedPlaceholder = NSAttributedString(string: "E-mail", attributes: attributesDictionary)
         emailFieldView.textField.textColor = templateColor
         emailFieldView.textField.addTarget(self, action: #selector(valueChange), for: .allEditingEvents)
         
@@ -79,7 +80,8 @@ class EmailView : BaseLoginView, ViewExtractable{
         passwordFieldView.trailingAnchor.constraint(equalTo: emailFieldView.trailingAnchor, constant: 0.0).isActive = true
         passwordFieldView.heightAnchor.constraint(equalTo: emailFieldView.heightAnchor, constant: 0.0).isActive = true
         passwordFieldView.imgView.image = UIImage(named: "lock")
-        passwordFieldView.textField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: attributesDictionary)
+        passwordFieldView.imgView.tintColor = UIColor.white
+        passwordFieldView.textField.attributedPlaceholder = NSAttributedString(string: "Пароль", attributes: attributesDictionary)
         passwordFieldView.textField.isSecureTextEntry = true
         passwordFieldView.textField.textColor = templateColor
         passwordFieldView.textField.addTarget(self, action: #selector(valueChange), for: .allEditingEvents)
@@ -115,6 +117,7 @@ class PhoneView : BaseLoginView, ViewExtractable{
         let textFieldView = InputFieldView()
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
         textFieldView.backgroundColor = UIColor.clear
+        textFieldView.textField.keyboardType = .phonePad
         return textFieldView
     }()
     override init(frame: CGRect) {
@@ -135,8 +138,9 @@ class PhoneView : BaseLoginView, ViewExtractable{
         phoneFieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0).isActive = true
         phoneFieldView.heightAnchor.constraint(equalToConstant: inputViewHeight).isActive = true
         phoneFieldView.imgView.image = UIImage(named: "phone")
+        phoneFieldView.imgView.tintColor = UIColor.white
         let attributesDictionary = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
-        phoneFieldView.textField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: attributesDictionary)
+        phoneFieldView.textField.attributedPlaceholder = NSAttributedString(string: "Телефон", attributes: attributesDictionary)
         phoneFieldView.textField.textColor = templateColor
         phoneFieldView.textField.addTarget(self, action: #selector(valueChange), for: .allEditingEvents)
     }
@@ -223,6 +227,7 @@ class SegmentView: UIView{
     private var customSegment :UISegmentedControl = {
         let control = UISegmentedControl(items: [AuthType.loginAndPassword.rawValue, AuthType.phoneNumberAndSMS.rawValue])
         control.selectedSegmentIndex = 0
+        control.backgroundColor = .gray
         control.translatesAutoresizingMaskIntoConstraints = false
         control.addTarget(self, action: #selector(changeView), for: .valueChanged)
         return control
@@ -295,3 +300,4 @@ extension SegmentView: ViewToController{
         parentController?.updateButtonsStatus()
     }
 }
+

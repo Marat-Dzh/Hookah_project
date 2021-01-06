@@ -71,3 +71,5 @@ extension UIViewController
         //view.resignFirstResponder() // тоже самое, что и view.endEditing(true)
     }
 }
+
+

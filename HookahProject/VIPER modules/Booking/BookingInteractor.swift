@@ -20,14 +20,38 @@ final class BookingInteractor{
 
 extension BookingInteractor: BookingInteractorInput{
     func addToBasket() {}
-    fileprivate func delay(_ delay: Double, clouser: @escaping () ->()) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(600)) {
+    fileprivate func delay(delay: Double, clouser: @escaping () ->()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             clouser()
         }
     }
     func getCatalog() {
         //getting catalog from firebase database
+        self.fetchDocumentsMenu()
+        self.fetchImageMenu()
+        delay(delay: 1.5) {
+            print("arrayMenuPictures:   \(self.arrayMenuPictures)")
+            print("arrayMenuPictures COUNT:   \(self.arrayMenuPictures.count)")
+            self.output?.makeMenuArray(arrayDicts: self.arrayDictsMenuItem, images: self.arrayMenuPictures)
+        }
+    }
+}
+
+extension BookingInteractor {
+    func fetchDocumentsMenu() {
         let docRef = self.db.collection("products").document("teas").collection("brandTea")
+        docRef.getDocuments() {(querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    self.arrayDictsMenuItem.append(document.data())
+                }
+            }
+        }
+    }
+    
+    func fetchImageMenu() {
         let gsReference = self.storageImage.reference(forURL: "gs://hookahproject.appspot.com/images")
         let imageFolderRef = gsReference.child("teas")
         //        let imageRef = gsReference.child("teas/lemontea.jpg")
@@ -46,21 +70,6 @@ extension BookingInteractor: BookingInteractorInput{
                 }
             }
         }
-        docRef.getDocuments() {(querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    self.arrayDictsMenuItem.append(document.data())
-                }
-            }
-        }
-        delay(0.1){
-            print("arrayMenuPictures:   \(self.arrayMenuPictures)")
-            print("arrayMenuPictures COUNT:   \(self.arrayMenuPictures.count)")
-            self.output?.makeMenuArray(arrayDicts: self.arrayDictsMenuItem, images: self.arrayMenuPictures)
-        }
-
     }
 }
 

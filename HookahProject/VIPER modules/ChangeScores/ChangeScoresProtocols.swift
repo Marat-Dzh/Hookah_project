@@ -20,11 +20,13 @@ protocol ChangeScoresViewInput: class {
 }
 
 protocol ChangeScoresViewOutput: class {
-    
+    func minusScores(card: String, scores: String)
+    func plusScorese(card: String, scores: String)
 }
 
 protocol ChangeScoresInteractorInput {
-    
+    func minusScoresInFB(cardInt: Int, scoresInt: Int)
+    func plusScoresInFB(cardInt: Int, scoresInt: Int)
 }
 
 protocol ChangeScoresInteractorOutput: class {

@@ -12,7 +12,8 @@ final class BookingViewController: UIViewController {
     private let output: BookingViewOutput
     private let collectionView: UICollectionView
     private var viewModels = [BookingCardViewModel]()
-    
+    private let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
+    private var flag = true
     
     
     init(_ output: BookingViewOutput){
@@ -40,17 +41,37 @@ final class BookingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.output.viewDidLoad()
+        DispatchQueue.global(qos: .utility).async {
+            self.output.viewDidLoad()
+        }
         //        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
         //        self.navigationItem.rightBarButtonItem?.tintColor = .black
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.view.addSubview(activityIndicator)
+        self.activityIndicator.hidesWhenStopped = true
+        self.activityIndicator.center = self.view.center
+        if flag {
+            self.activityIndicator.startAnimating()
+            flag = false
+        }
+        
+    }
+    
+    
 }
 
 extension BookingViewController: BookingViewInput{
-    func set(viewModels: [BookingCardViewModel]){
-        self.viewModels = viewModels
-        self.collectionView.reloadData()
-    }
+        func set(viewModels: [BookingCardViewModel]){
+          DispatchQueue.main.async {
+                self.viewModels = viewModels
+                self.collectionView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.removeFromSuperview()
+           }
+        }
 }
 
 extension BookingViewController: UICollectionViewDataSource {

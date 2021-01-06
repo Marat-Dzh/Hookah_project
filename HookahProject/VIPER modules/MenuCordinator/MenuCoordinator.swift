@@ -168,7 +168,7 @@ fileprivate enum NavControllerType: Int, CaseIterable {
         case .menu:
             return UIImage(named: "catalog")
         case .basket:
-            return UIImage(named: "basket")
+            return UIImage(named: "reserve")
         case .account:
             return UIImage(named: "account")
         }

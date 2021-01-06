@@ -27,7 +27,7 @@ extension TableReservePresenter: TableReserveInteractorOutput {
     func makeReserve(arrayDicts: [[String : Any]]) {
         print("array Dicts reserve \(arrayDicts)")
         for arrayDict in arrayDicts {
-            var helpArrayReserve = TableReserveModel(numberGuest: "", timeReserve: "", phoneNumber: "", isConfirmation: false)
+            var helpArrayReserve = TableReserveModel(numberGuest: "", timeReserve: "", phoneNumber: "", isConfirmation: false, uid: "")
             let helpArrayPersonInfo = PersonInfo("", "mail@.ru", "123")
             for (key, value) in arrayDict{
                 if (key == "guests") {
@@ -36,6 +36,10 @@ extension TableReservePresenter: TableReserveInteractorOutput {
                     helpArrayReserve.timeReserve = String(describing: value)
                 } else if (key == "phone") {
                     helpArrayReserve.phoneNumber = String(describing: value)
+                } else if (key == "confirmation") {
+                    helpArrayReserve.isConfirmation = value as! Bool
+                } else if (key == "uid") {
+                    helpArrayReserve.uid = String(describing: value)
                 } else if (key == "name") {
                     helpArrayPersonInfo.fio = String(describing: value)
                 }
@@ -48,16 +52,16 @@ extension TableReservePresenter: TableReserveInteractorOutput {
 }
 
 extension TableReservePresenter: TableReserveViewOutput {
-    func deleteReserve() {
-        self.interactor.deleteReserveFromFB()
+    func deleteReserve(uid: String) {
+        self.interactor.deleteReserveFromFB(uid: uid)
     }
     
     func viewDidLoad() {
         self.interactor.getReserve()
     }
     
-    func changeConfirmation() {
-        self.interactor.changeConfirmationInFB()
+    func changeConfirmation(uid: String, confirmation: Bool) {
+        self.interactor.changeConfirmationInFB(uid: uid, confirmation: confirmation)
     }
     
 }

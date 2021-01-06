@@ -8,7 +8,7 @@
 import UIKit
 
 final class BookingContainer{
-    let input: BookingModuleInput
+    weak var input: BookingModuleInput?
     let viewController: UIViewController
     
     class func assemble(context: BookingContext) -> BookingContainer{

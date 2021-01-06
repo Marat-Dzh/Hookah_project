@@ -31,6 +31,13 @@ class ChangeScoresViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.title = "Изменить баллы"
         self.view.backgroundColor = UIColor.black
+        self.changeScoresView.onTapMinusScoresButton = {[weak self] in
+//            print("card-1 \(String(describing: card))")
+            guard let self = self else {return}
+            guard let card = self.changeScoresView.cardNumberTF.text else {return}
+            guard let scores = self.changeScoresView.numScoresTF.text else {return}
+            self.output.minusScores(card: card, scores: scores)
+        }
         
         self.hideKeyboard()
     }
@@ -42,13 +49,11 @@ extension ChangeScoresViewController: ChangeScoresViewInput {
 
 class ChangeScoresView: AutoLayoutView {
     private let cardNumberLabel = UILabel()
-    private let cardNumberTF = UITextField()
+    fileprivate let cardNumberTF = UITextField()
     private let numScoresLabel = UILabel()
-    private let numScoresTF = UITextField()
-    private let plusScoresButton = UIButton()
+    fileprivate let numScoresTF = UITextField()
     private let minusScoresButton = UIButton()
     
-    var onTapPlusScoresButton: (() -> Void)?
     var onTapMinusScoresButton: (() -> Void)?
     
     init() {
@@ -66,7 +71,6 @@ class ChangeScoresView: AutoLayoutView {
         setupNumScoresLabel()
         setupNumScoresTF()
         setupMinusScoresButton()
-        setupPlusScoresButton()
     }
     
     override func setupConstraints() {
@@ -89,13 +93,10 @@ class ChangeScoresView: AutoLayoutView {
             self.numScoresTF.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16.0),
             self.numScoresTF.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0),
             
-            self.minusScoresButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -10.0),
-            self.minusScoresButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16.0),
-            self.minusScoresButton.widthAnchor.constraint(equalToConstant: self.frame.width/2 - 32),
+            self.minusScoresButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -16.0),
+            self.minusScoresButton.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor, constant: 0.0),
+            self.minusScoresButton.widthAnchor.constraint(equalToConstant: self.frame.width/2),
             
-            self.plusScoresButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -10.0),
-            self.plusScoresButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0),
-            self.plusScoresButton.widthAnchor.constraint(equalToConstant: self.frame.width/2 - 32)
             
         ].forEach{$0.isActive = true}
     }
@@ -141,22 +142,10 @@ extension ChangeScoresView {
         
     }
     
-    func setupPlusScoresButton() {
-        self.addSubview(self.plusScoresButton)
-        self.plusScoresButton.setTitle("Добавить", for: .normal)
-        self.plusScoresButton.backgroundColor = .systemOrange
-        self.plusScoresButton.layer.cornerRadius = 8.0
-        self.plusScoresButton.addTarget(self, action: #selector(onTapPlusScoresButtonFunc), for: .touchUpInside)
-    }
-    
-    @objc
-    func onTapPlusScoresButtonFunc() {
-        self.onTapPlusScoresButton?()
-    }
     
     func setupMinusScoresButton() {
         self.addSubview(self.minusScoresButton)
-        self.minusScoresButton.setTitle("Снять", for: .normal)
+        self.minusScoresButton.setTitle("Обновить баллы", for: .normal)
         self.minusScoresButton.backgroundColor = .systemOrange
         self.minusScoresButton.layer.cornerRadius = 8.0
         self.minusScoresButton.addTarget(self, action: #selector(onTapMinusScoresButtonFunc), for: .touchUpInside)

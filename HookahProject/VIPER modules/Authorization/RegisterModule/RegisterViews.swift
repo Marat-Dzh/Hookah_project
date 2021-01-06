@@ -57,6 +57,7 @@ class RegisterFieldView: UIView{
     func setInputAttrs(imageName: String, placeholderText: String){
         let attributesDictionary = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         textFieldView.imgView.image = UIImage(named: imageName)
+        textFieldView.imgView.tintColor = UIColor.white
         textFieldView.textField.attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributesDictionary)
     }
 }

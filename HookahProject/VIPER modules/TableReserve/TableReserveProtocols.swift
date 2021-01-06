@@ -21,14 +21,14 @@ protocol TableReserveViewInput: class {
 
 protocol TableReserveViewOutput : class {
     func viewDidLoad()
-    func deleteReserve()
-    func changeConfirmation()
+    func deleteReserve(uid: String)
+    func changeConfirmation(uid: String, confirmation: Bool)
 }
 
 protocol TableReserveInteractorInput {
     func getReserve()
-    func deleteReserveFromFB()
-    func changeConfirmationInFB()
+    func deleteReserveFromFB(uid: String)
+    func changeConfirmationInFB(uid: String,  confirmation: Bool)
 }
 
 protocol TableReserveInteractorOutput: class {

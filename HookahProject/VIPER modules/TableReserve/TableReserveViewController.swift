@@ -12,8 +12,6 @@ class TableReserveViewController: UIViewController {
     private var output: TableReserveViewOutput
 
     var tableReserveTableView: UITableView
-//    var tableReserveModelArray:  [TableReserveModel] = [TableReserveModel(numberGuest: "3", timeReserve: "11.12.2020 15:36", phoneNumber: "89031850856", isConfirmation: false), TableReserveModel(numberGuest: "2", timeReserve: "10.12.2020 21:30", phoneNumber: "89990035907", isConfirmation: false)]
-    //var personInfoModelArray: [PersonInfo] = [PersonInfo("Иван 1", "1", "2"), PersonInfo("Василий3", "22", "22"), PersonInfo("Иван2", "1", "2"), PersonInfo("Василий4", "22", "22")]
     var tableReserveModelArray = [TableReserveModel]()
     var personInfoModelArray = [PersonInfo]()
     
@@ -42,7 +40,9 @@ class TableReserveViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Обновить", style: .done, target: self, action: #selector(onTapUpdate))
+        self.navigationItem.title = "Бронирования"
+        self.output.viewDidLoad()
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Обновить", style: .done, target: self, action: #selector(onTapUpdate))
         
     }
     
@@ -80,7 +80,7 @@ extension TableReserveViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let phoneFromTableReserveModelArray = tableReserveModelArray[indexPath.row].phoneNumber
+        let phoneFromTableReserveModelArray = self.tableReserveModelArray[indexPath.row].phoneNumber
         guard let number1 = URL(string: "tel://" + phoneFromTableReserveModelArray)  else { return }
         UIApplication.shared.open(number1)
     }
@@ -91,9 +91,10 @@ extension TableReserveViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
-            tableReserveModelArray.remove(at: indexPath.row)
+            let uidTableReserve = self.tableReserveModelArray[indexPath.row].uid
+            self.tableReserveModelArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)//удаление элементов
-            self.output.deleteReserve()
+            self.output.deleteReserve(uid: uidTableReserve)
         }
     }
     
@@ -104,11 +105,12 @@ extension TableReserveViewController: UITableViewDataSource{
     
     func confirmationAction(at indexPath: IndexPath) -> UIContextualAction {
         var objectTableReserveModelArray = tableReserveModelArray[indexPath.row]
+        let uidTableReserve = self.tableReserveModelArray[indexPath.row].uid
         let action = UIContextualAction(style: .normal, title: "Confirmation") { (action, view, completion) in
             objectTableReserveModelArray.isConfirmation = !objectTableReserveModelArray.isConfirmation
             self.tableReserveModelArray[indexPath.row] = objectTableReserveModelArray
             completion(true)
-            self.output.changeConfirmation()
+            self.output.changeConfirmation(uid: uidTableReserve, confirmation: objectTableReserveModelArray.isConfirmation)
         }
         action.backgroundColor = objectTableReserveModelArray.isConfirmation ? .systemGreen : .systemYellow
         action.title = objectTableReserveModelArray.isConfirmation ? "♥️" : "☠️"

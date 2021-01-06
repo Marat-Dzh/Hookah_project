@@ -14,7 +14,7 @@ final class LoginViewController: UIViewController {
     let bgImageView : UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "backgroundLogin.png")
+        imageView.image = UIImage(named: "black.jpg")
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -31,7 +31,8 @@ final class LoginViewController: UIViewController {
     let bgView : UIView = {
         let bgView = UIView()
         bgView.translatesAutoresizingMaskIntoConstraints = false
-        bgView.backgroundColor = UIColor(displayP3Red: 9.0/255.0, green: 33.0/255.0, blue: 47.0/255.0, alpha: 1.0).withAlphaComponent(0.7)
+//        bgView.backgroundColor = UIColor(displayP3Red: 9.0/255.0, green: 33.0/255.0, blue: 47.0/255.0, alpha: 1.0).withAlphaComponent(0.7)
+        bgView.backgroundColor = .black
         return bgView
     }()
     

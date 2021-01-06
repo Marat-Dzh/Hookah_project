@@ -17,6 +17,10 @@ class ChangeScoresContainer {
         let presenter = ChangeScoresPresenter(router: router, interactor: interactor)
         let viewController = ChangeScoresViewController(output: presenter)
         
+        presenter.view = viewController
+        
+        interactor.output = presenter
+        
         return ChangeScoresContainer(viewController: viewController, moduleInput: presenter)
     }
     

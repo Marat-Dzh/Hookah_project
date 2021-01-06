@@ -19,7 +19,8 @@ final class TableReserveInteractor {
 
 extension TableReserveInteractor: TableReserveInteractorInput{
     func getReserve(){
-        let docRef = self.db.collection("reserves").whereField("confirmation", isEqualTo: false)
+//        let docRef = self.db.collection("reserves").whereField("confirmation", isEqualTo: false)
+        let docRef = self.db.collection("reserves")
         docRef.getDocuments() {(querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -30,11 +31,12 @@ extension TableReserveInteractor: TableReserveInteractorInput{
             }
             print("self.arrayDictsReserve ===> \(self.arrayDictsReserve)")
             self.output?.makeReserve(arrayDicts: self.arrayDictsReserve)
+            self.arrayDictsReserve.removeAll()
         }
     }
-    func deleteReserveFromFB() {
+    func deleteReserveFromFB(uid: String) {
         let docRef = self.db.collection("reserves")
-        docRef.document("User").delete() { err in
+        docRef.document(uid).delete() { err in
             if let err = err {
                 print("Error removing document: \(err)")
             } else {
@@ -42,9 +44,9 @@ extension TableReserveInteractor: TableReserveInteractorInput{
             }
         }
     }
-    func changeConfirmationInFB() {
+    func changeConfirmationInFB(uid: String,  confirmation: Bool) {
         let docRef = self.db.collection("reserves")
-        docRef.document("User").updateData(["confirmation" : true])  { err in
+        docRef.document(uid).updateData(confirmation ? ["confirmation" : true] : ["confirmation" : false])  { err in
             if let err = err {
                 print("Error updating document: \(err)")
             } else {

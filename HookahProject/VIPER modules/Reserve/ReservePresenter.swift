@@ -13,7 +13,7 @@ final class ReservePresenter {
     private let router: ReserveRouterInput
     private let interactor: ReserveInteractorInput
     
-    init(router: ReserveRouter, interactor: ReserveInteractor) {
+    init(router: ReserveRouterInput, interactor: ReserveInteractorInput) {
         self.router = router
         self.interactor = interactor
     }
