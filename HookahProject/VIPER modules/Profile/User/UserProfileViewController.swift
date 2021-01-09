@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class UserProfileViewController: UIViewController {
     private var output: UserProfileViewOutput
@@ -30,11 +31,16 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Выйти", style: .done, target: self, action: #selector(self.onTapSignOut(sender: )))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Править", style: .done, target: self, action: nil)
+        if (Auth.auth().currentUser?.uid == "Z3trLdPJxpcYSdUXNmb1DqZaSko2") {
+            self.userProfileView.buttonReserves.isHidden = false
+            self.userProfileView.buttonChangeScorese.isHidden = false
+        }
+        self.output.dowloadImageProfile()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Выйти", style: .done, target: self, action: #selector(self.onTapSignOut(sender: )))
+       // self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Править", style: .done, target: self, action: nil)
         
 //        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Выйти", style: .done, target: self, action: #selector(self.onTapSignOut(sender: ))), UIBarButtonItem(title: "Править", style: .done, target: self, action: #selector(self.onTapSignOut(sender: )))]
-        
+
         self.userProfileView.onTaphotoImage = {[weak self] in
             guard let self = self else {return}
             self.alertImage()
@@ -46,7 +52,7 @@ class UserProfileViewController: UIViewController {
             self.navigationController?.pushViewController(tableReserveContainer.viewController, animated: true)
         }
         
-        self.userProfileView.onTapBottonChangeScorese = {[weak self]  in
+        self.userProfileView.onTapbuttonChangeScorese = {[weak self]  in
             guard let self = self else {return}
             let changeScoresContainer = ChangeScoresContainer.assemble()
             self.navigationController?.pushViewController(changeScoresContainer.viewController, animated: true)
@@ -72,7 +78,7 @@ class UserProfileViewController: UIViewController {
 extension UserProfileViewController: UserProfileViewInput {
     func showUserInfo(info: UserInfo) {
         self.userProfileView.nameLabel.text = info.fio
-        self.userProfileView.numberCardLabel.text = String(info.cardId)
+        self.userProfileView.numberCardLabel.text = "Карта: " + String(info.cardId)
         if (info.numberOfPoints % 10 == 1) {
             self.userProfileView.scoresLabel.text = String(info.numberOfPoints) + " балл"
         } else if (info.numberOfPoints % 10 == 2 || info.numberOfPoints % 10 == 3 || info.numberOfPoints % 10 == 4) {
@@ -82,6 +88,14 @@ extension UserProfileViewController: UserProfileViewInput {
         }
         
     }
+    
+    func downloadImageProfile(url: URL) {
+        self.userProfileView.photoImage.load(url: url)
+        self.userProfileView.photoImage.contentMode = .scaleAspectFill
+        self.userProfileView.photoImage.layer.cornerRadius = self.userProfileView.photoImage.frame.height / 2
+        self.userProfileView.photoImage.clipsToBounds = true
+    }
+    
     func showNothing() {
         //
     }
@@ -118,7 +132,7 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
         self.present(acImage, animated: true, completion: nil)
     }
     func chooseImagePicker(source: UIImagePickerController.SourceType) {
-        
+    
         if UIImagePickerController.isSourceTypeAvailable(source) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
@@ -129,14 +143,14 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
     }
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        userProfileView.photoImage.image = info[.editedImage] as? UIImage
-        userProfileView.photoImage.contentMode = .scaleAspectFill
-        userProfileView.photoImage.clipsToBounds = true
-        
         //imageIsChanged = true
-        
+        self.userProfileView.photoImage.image = info[.editedImage] as? UIImage
+        self.userProfileView.photoImage.contentMode = .scaleAspectFill
+        self.userProfileView.photoImage.layer.cornerRadius = self.userProfileView.photoImage.frame.height / 2
+        self.userProfileView.photoImage.clipsToBounds = true
         dismiss(animated: true)
+        
+        self.output.uploadImage(image: info[.editedImage] as! UIImage)
     }
 }
 
@@ -145,14 +159,14 @@ class UserProfileView: AutoLayoutView {
     fileprivate let nameLabel = UILabel()
     fileprivate let numberCardLabel = UILabel()
     fileprivate let scoresLabel = UILabel()
-    private let buttonToConnect = ButtonToBasket()
-    private let buttonReserves = UIButton()
-    private let bottonChangeScorese = UIButton()
+    fileprivate let buttonToConnect = ButtonToBasket()
+    fileprivate let buttonReserves = UIButton()
+    fileprivate let buttonChangeScorese = UIButton()
     
     
     var onTaphotoImage: (() -> Void)?
     var onTapButtonReserve: (() -> Void)?
-    var onTapBottonChangeScorese: (() -> Void)?
+    var onTapbuttonChangeScorese: (() -> Void)?
     var onTapButtonToConnect: (() -> Void)?
     
     init(){
@@ -170,7 +184,7 @@ class UserProfileView: AutoLayoutView {
         self.setupNumberCardLabel()
         self.setupScoresLabel()
         self.setupButtonReserves()
-        self.setupBottonChangeScorese()
+        self.setupbuttonChangeScorese()
         self.setupButtonToConnect()
         
         
@@ -201,10 +215,10 @@ class UserProfileView: AutoLayoutView {
             self.buttonReserves.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0),
             self.buttonReserves.heightAnchor.constraint(equalToConstant: 44.0),
             
-            self.bottonChangeScorese.topAnchor.constraint(equalTo: self.buttonReserves.bottomAnchor, constant: 16.0),
-            self.bottonChangeScorese.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16.0),
-            self.bottonChangeScorese.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0),
-            self.bottonChangeScorese.heightAnchor.constraint(equalToConstant: 44.0),
+            self.buttonChangeScorese.topAnchor.constraint(equalTo: self.buttonReserves.bottomAnchor, constant: 16.0),
+            self.buttonChangeScorese.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16.0),
+            self.buttonChangeScorese.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0),
+            self.buttonChangeScorese.heightAnchor.constraint(equalToConstant: 44.0),
             
 
         ].forEach{$0.isActive = true}
@@ -216,9 +230,9 @@ class UserProfileView: AutoLayoutView {
 extension UserProfileView {
     func setupPhotoImage() {
         self.addSubview(self.photoImage)
-        self.photoImage.image = UIImage(named: "Constructor")
-        self.photoImage.layer.cornerRadius = 50.0
-        self.photoImage.layer.masksToBounds = true
+        self.photoImage.image = UIImage(named: "account")
+        self.photoImage.layer.cornerRadius = self.photoImage.frame.height / 2
+        self.photoImage.clipsToBounds = true
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapPhotoImageFunc(tapGestureRecognizer:)))
         self.photoImage.isUserInteractionEnabled = true
@@ -254,7 +268,7 @@ extension UserProfileView {
     
     func setupButtonToConnect() {
         self.addSubview(self.buttonToConnect)
-        self.buttonToConnect.setTitle("Связаться с Мирчиком", for: .normal)
+        self.buttonToConnect.setTitle("Связаться с хостесом", for: .normal)
         self.buttonToConnect.addTarget(self, action: #selector(onTapButtonToConnectFunc), for: .touchUpInside)
     }
     @objc
@@ -264,7 +278,8 @@ extension UserProfileView {
     
     func setupButtonReserves() {
         self.addSubview(self.buttonReserves)
-        self.buttonReserves.backgroundColor = .systemOrange
+        self.buttonReserves.isHidden = true
+        self.buttonReserves.backgroundColor = .darkGray
         self.buttonReserves.setTitle("Таблица бронирования", for: .normal)
         self.buttonReserves.layer.cornerRadius = 8.0
         self.buttonReserves.addTarget(self, action: #selector(onTapButtonReserveFunc), for: .touchUpInside)
@@ -275,17 +290,18 @@ extension UserProfileView {
         self.onTapButtonReserve?()
     }
     
-    func setupBottonChangeScorese(){
-        self.addSubview(self.bottonChangeScorese)
-        self.bottonChangeScorese.backgroundColor = .systemOrange
-        self.bottonChangeScorese.setTitle("Изменить баллы", for: .normal)
-        self.bottonChangeScorese.layer.cornerRadius = 8.0
-        self.bottonChangeScorese.addTarget(self, action: #selector(onTapBottonChangeScoreseFunc), for: .touchUpInside)
+    func setupbuttonChangeScorese(){
+        self.addSubview(self.buttonChangeScorese)
+        self.buttonChangeScorese.isHidden = true
+        self.buttonChangeScorese.backgroundColor = .darkGray
+        self.buttonChangeScorese.setTitle("Изменить баллы", for: .normal)
+        self.buttonChangeScorese.layer.cornerRadius = 8.0
+        self.buttonChangeScorese.addTarget(self, action: #selector(onTapbuttonChangeScoreseFunc), for: .touchUpInside)
     }
     
     @objc
-    func onTapBottonChangeScoreseFunc() {
-        self.onTapBottonChangeScorese?()
+    func onTapbuttonChangeScoreseFunc() {
+        self.onTapbuttonChangeScorese?()
     }
     
 }

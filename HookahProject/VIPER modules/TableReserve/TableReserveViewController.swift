@@ -113,7 +113,7 @@ extension TableReserveViewController: UITableViewDataSource{
             self.output.changeConfirmation(uid: uidTableReserve, confirmation: objectTableReserveModelArray.isConfirmation)
         }
         action.backgroundColor = objectTableReserveModelArray.isConfirmation ? .systemGreen : .systemYellow
-        action.title = objectTableReserveModelArray.isConfirmation ? "♥️" : "☠️"
+        action.title = objectTableReserveModelArray.isConfirmation ? "🐺" : "❓"
         return action
     }
 }

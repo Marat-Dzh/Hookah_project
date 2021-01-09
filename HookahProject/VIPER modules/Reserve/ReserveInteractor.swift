@@ -31,20 +31,17 @@ extension ReserveInteractor: ReserveInteractorInput {
         let docRef = self.db.collection("users").document(uid!)
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                //print("ALOXA ==>> Document data: \(dataDescription)")
                 self.user.append(document.data()!)
             } else {
                 print("Document does not exist")
             }
         }
-        delay(delay: 1) {
-            print("USER =>>>>>> \(self.user)")
+        delay(delay: 3) {
             self.db.collection("reserves").document(uid!).setData([
                 "date": dateString,
                 "guests": numGuest,
-                "name": self.user.first!["fio"] ?? "Zhopa",
-                "phone": self.user.first!["phoneNumber"] ?? "ZHOPA-2",
+                "name": self.user.first!["fio"] ?? "no name",
+                "phone": self.user.first!["phoneNumber"] ?? "no phone",
                 "confirmation": false,
                 "uid": uid!
             ]) { err in
@@ -55,6 +52,5 @@ extension ReserveInteractor: ReserveInteractorInput {
                 }
             }
         }
-        print("dateString: \(dateString)")
     }
 }

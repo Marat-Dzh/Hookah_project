@@ -104,30 +104,35 @@ private extension MenuCoordinator {
     }
     
     
-    func setupAppearance(){
-        UINavigationBar.appearance().barTintColor = .gray
-        UINavigationBar.appearance().tintColor = .black
+    func setupAppearance() {
+        UINavigationBar.appearance().barTintColor = .black
+        UINavigationBar.appearance().tintColor = .white
 
         if #available(iOS 13.0, *) {
             let appearance = UINavigationBarAppearance()
-            appearance.backgroundColor = .gray
+            appearance.backgroundColor = .black
+            appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 
             UINavigationBar.appearance().tintColor = .white
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().compactAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         } else {
-            UINavigationBar.appearance().tintColor = .gray
+            UINavigationBar.appearance().tintColor = .white
             UINavigationBar.appearance().barTintColor = .purple
             UINavigationBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         }
         UINavigationBar.appearance().shadowImage = UIImage()
+    
 
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
 
-        UITabBar.appearance().barTintColor = .gray
-        UITabBar.appearance().tintColor = .black
-        UITabBar.appearance().unselectedItemTintColor = .white
+        UITabBar.appearance().barTintColor = .black
+        UITabBar.appearance().tintColor = .white
+        UITabBar.appearance().unselectedItemTintColor = .gray
     }
     
     static func makeNavigationControllers() -> [NavControllerType : UINavigationController] {
@@ -139,6 +144,7 @@ private extension MenuCoordinator {
                                            tag: NavControllerType.rawValue)
             navigationController.tabBarItem = tabBarItem
             navigationController.navigationBar.prefersLargeTitles = true // большой титульник, если возомжно
+            
             result[NavControllerType] = navigationController
         }
         return result

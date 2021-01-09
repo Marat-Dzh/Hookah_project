@@ -11,6 +11,6 @@ enum Localization {
     static let feed = "Новости"
     static let menu = "Меню"
     static let basket = "Забронировать"
-    static let account = "Аккаунт"
+    static let account = "Профиль"
 
 }

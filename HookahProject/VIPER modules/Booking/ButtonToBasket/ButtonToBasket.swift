@@ -27,7 +27,7 @@ final class ButtonToBasket: UIButton {
     }
 
     private func setup() {
-        self.backgroundColor = .systemOrange
+        self.backgroundColor = .darkGray
         self.layer.cornerRadius = 8.0
         //self.setTitle("Добавить в корзину", for: .normal)
     }

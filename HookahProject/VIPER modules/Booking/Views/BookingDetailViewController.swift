@@ -32,14 +32,6 @@ class BookingDetailViewController : UIViewController {
         self.bookingDetailView.titleLabel.text = self.bcvm.title
         self.bookingDetailView.shortDescriptionLabel.text = self.bcvm.shortDescription
         self.bookingDetailView.infoLabel.text = self.bcvm.info
-
-     
-//        let bdvc = BookingCardViewModel.makeExample()
-//        self.bookingDetailView.set(with: bdvc[1])
-//        self.bookingDetailView.onTapButtonToBasketItem = { [weak self] in
-//            
-//            print("Привет, добавил чай в корзину")
-//        }
     }
 }
 

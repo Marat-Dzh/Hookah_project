@@ -33,7 +33,7 @@ class FeedViewController: UIViewController {
     }
     // изображения для историй
     var storiesList: [UIImage] = [
-        UIImage(named: "tea")!, UIImage(named: "whitewolf")!, UIImage(named: "lemontea")!, UIImage(named: "logo")!, UIImage(named: "lemontea")!, UIImage(named: "Constructor")!, UIImage(named: "whitewolf")!, UIImage(named: "whitewolf")!, UIImage(named: "whitewolf")!
+        UIImage(named: "tea")!, UIImage(named: "whitewolf-1")!, UIImage(named: "lemontea")!, UIImage(named: "logo")!, UIImage(named: "lemontea")!, UIImage(named: "Constructor")!, UIImage(named: "whitewolf-1")!, UIImage(named: "whitewolf-1")!, UIImage(named: "whitewolf-1")!
     ]
     
     private lazy var tableView: UITableView = {
@@ -71,7 +71,7 @@ class FeedViewController: UIViewController {
     
     private func setupUI() {
         //navigationItem.title = "News"
-        view.backgroundColor = .white
+        //view.backgroundColor = .white
         
         setupAddButton()
         setupStoriesCollectionView()

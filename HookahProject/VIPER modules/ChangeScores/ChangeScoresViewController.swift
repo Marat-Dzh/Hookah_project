@@ -32,11 +32,11 @@ class ChangeScoresViewController: UIViewController {
         self.navigationItem.title = "Изменить баллы"
         self.view.backgroundColor = UIColor.black
         self.changeScoresView.onTapMinusScoresButton = {[weak self] in
-//            print("card-1 \(String(describing: card))")
             guard let self = self else {return}
             guard let card = self.changeScoresView.cardNumberTF.text else {return}
             guard let scores = self.changeScoresView.numScoresTF.text else {return}
             self.output.minusScores(card: card, scores: scores)
+            self.acChangeScores()
         }
         
         self.hideKeyboard()
@@ -45,6 +45,17 @@ class ChangeScoresViewController: UIViewController {
 
 extension ChangeScoresViewController: ChangeScoresViewInput {
     
+}
+
+extension ChangeScoresViewController {
+    func acChangeScores() {
+        guard let card = self.changeScoresView.cardNumberTF.text else {return}
+        guard let scores = self.changeScoresView.numScoresTF.text else {return}
+        let acCS = UIAlertController(title: "Изменил баллы", message: "Номер карты: \(card) \n Количество баллов: \(scores)", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Oк", style: .default, handler: nil)
+        acCS.addAction(okAction)
+        self.present(acCS, animated: true, completion: nil)
+    }
 }
 
 class ChangeScoresView: AutoLayoutView {
@@ -146,7 +157,7 @@ extension ChangeScoresView {
     func setupMinusScoresButton() {
         self.addSubview(self.minusScoresButton)
         self.minusScoresButton.setTitle("Обновить баллы", for: .normal)
-        self.minusScoresButton.backgroundColor = .systemOrange
+        self.minusScoresButton.backgroundColor = .darkGray
         self.minusScoresButton.layer.cornerRadius = 8.0
         self.minusScoresButton.addTarget(self, action: #selector(onTapMinusScoresButtonFunc), for: .touchUpInside)
     }

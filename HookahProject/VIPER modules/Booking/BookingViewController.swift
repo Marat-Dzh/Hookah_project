@@ -83,7 +83,7 @@ extension BookingViewController: UICollectionViewDataSource {
         let viewModel = self.viewModels[indexPath.item]
         let cell = collectionView.dequeueCell(cellType: BookingViewCell<BookingCardView>.self, for: indexPath)
         //let viewModel = BookingCardViewModel(title: "card cell \(indexPath.item)", imageName: "car3")
-        cell.backgroundColor = .gray
+        cell.backgroundColor = .darkGray
         cell.containerView.update(with: viewModel)
         return cell
     }

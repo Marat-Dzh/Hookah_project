@@ -21,8 +21,17 @@ final class UserProfilePresenter {
 }
 
 extension UserProfilePresenter: UserProfileViewOutput {
+    func uploadImage(image: UIImage) {
+        let imageData = image.jpegData(compressionQuality: 0.6)
+        self.interactor.uploadImageInFB(image: imageData!)
+    }
+    
+    func dowloadImageProfile() {
+        self.interactor.downloadImageFromFB()
+    }
+    
     func onLogoutTapped() {
-        interactor.logout()
+        self.interactor.logout()
     }
 }
 
@@ -30,15 +39,20 @@ extension UserProfilePresenter: UserProfileInteractorOutput {
     func userSignedOut(){
         moduleOutput?.signOut()
     }
+    
+    func downloadURLImageProfile(url: URL) {
+        print("url: \(url)")
+        self.view?.downloadImageProfile(url: url)
+    }
 }
 
 extension UserProfilePresenter: UserProfileModuleInput {
     func setInfo(info: UserInfo?) {
         if info != nil {
-            interactor.setInfoEntity(info: info!)
-            view?.showUserInfo(info: info!)
+            self.interactor.setInfoEntity(info: info!)
+            self.view?.showUserInfo(info: info!)
         } else {
-            view?.showNothing()
+            self.view?.showNothing()
         }
     }
 }

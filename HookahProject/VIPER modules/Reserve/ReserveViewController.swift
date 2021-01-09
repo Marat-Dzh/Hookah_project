@@ -167,7 +167,8 @@ extension ReserveView {
             self.datePickerToReserve.preferredDatePickerStyle = .wheels
             self.datePickerToReserve.datePickerMode = .dateAndTime
             self.datePickerToReserve.locale = Locale(identifier: "ru_RU")
-            self.datePickerToReserve.backgroundColor = .gray
+            self.datePickerToReserve.tintColor = .white
+            self.datePickerToReserve.backgroundColor = .darkGray
             self.datePickerToReserve.setValue(UIColor.white, forKeyPath: "textColor")
             self.datePickerToReserve.layer.cornerRadius = 8.0
             self.datePickerToReserve.layer.masksToBounds = true
@@ -191,7 +192,7 @@ extension ReserveView {
     
     func setupMinusGuestButton() {
         self.addSubview(self.minusGuestButton)
-        self.minusGuestButton.backgroundColor = .systemOrange
+        self.minusGuestButton.backgroundColor = .darkGray
         self.minusGuestButton.layer.cornerRadius = 8.0
         self.minusGuestButton.setTitle("-", for: .normal)
         
@@ -211,7 +212,7 @@ extension ReserveView {
     
     func setupPlusGuestButton() {
         self.addSubview(self.plusGuestButton)
-        self.plusGuestButton.backgroundColor = .systemOrange
+        self.plusGuestButton.backgroundColor = .darkGray
         self.plusGuestButton.layer.cornerRadius = 8.0
         self.plusGuestButton.setTitle("+", for: .normal)
         self.plusGuestButton.addTarget(self, action: #selector(onTapPlus), for: .touchUpInside)
@@ -242,14 +243,5 @@ extension ReserveView {
     @objc
     func onTapButtonToReserveFunc(){
         self.onTapButtonToReserve?()
-//        let date = self.datePickerToReserve.date
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .short
-//        dateFormatter.timeStyle = .short
-//        dateFormatter.locale = Locale(identifier: "ru_RU")
-//        dateFormatter.timeZone = TimeZone.current
-//        print(dateFormatter.string(from: date))
-//        //print(self.datePickerToReserve.date.addingTimeInterval(3*60*60))
-//        print(self.numGuest)
     }
 }
