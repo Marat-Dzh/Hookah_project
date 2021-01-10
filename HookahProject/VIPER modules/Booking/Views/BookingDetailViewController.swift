@@ -31,7 +31,7 @@ class BookingDetailViewController : UIViewController {
         self.bookingDetailView.imageView.load(url: self.bcvm.imageName!)
         self.bookingDetailView.titleLabel.text = self.bcvm.title
         self.bookingDetailView.shortDescriptionLabel.text = self.bcvm.shortDescription
-        self.bookingDetailView.infoLabel.text = self.bcvm.info
+        self.bookingDetailView.infoLabel.set(text: self.bcvm.info)
     }
 }
 

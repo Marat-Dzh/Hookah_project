@@ -9,7 +9,7 @@ import UIKit
 
 final class BookingDetailView: AutoLayoutView {
     
-    var infoLabel = UILabel()
+    var infoLabel = FullDescriptionView()
     var titleLabel = UILabel()
     var shortDescriptionLabel = UILabel()
     var imageView = UIImageView()
@@ -44,12 +44,11 @@ final class BookingDetailView: AutoLayoutView {
         self.imageView.contentMode = .scaleAspectFit
         
         self.titleLabel.textColor = .white
-        self.infoLabel.textColor = .white
-        self.infoLabel.numberOfLines = 10
+//        self.infoLabel.textColor = .white
+//        self.infoLabel.numberOfLines = 10
         self.shortDescriptionLabel.textColor = .white
-        
+        self.infoLabel.autoresizingMask = [.flexibleHeight]
         //self.backgroundColor = .white
-        
         
 //        self.buttonToBasket.addTarget(self, action: #selector(onTapButtonToBasketFunc), for: .touchUpInside)
     }
@@ -67,13 +66,18 @@ final class BookingDetailView: AutoLayoutView {
             self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16.0),
             self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0),
             
-            self.shortDescriptionLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 4.0),
+            self.shortDescriptionLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 14.0),
             self.shortDescriptionLabel.leadingAnchor.constraint(equalTo: self.infoLabel.leadingAnchor),
             self.shortDescriptionLabel.trailingAnchor.constraint(equalTo: self.infoLabel.trailingAnchor),
             
-            self.infoLabel.topAnchor.constraint(equalTo: self.shortDescriptionLabel.bottomAnchor, constant: 24.0),
+            self.infoLabel.topAnchor.constraint(equalTo: self.shortDescriptionLabel.bottomAnchor, constant: 26.0),
             self.infoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16.0),
-            self.infoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0),
+            self.infoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0)
+            
+            
+//            self.infoLabel.topAnchor.constraint(equalTo: self.shortDescriptionLabel.bottomAnchor, constant: 24.0),
+//            self.infoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16.0),
+//            self.infoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0),
 //            self.infoLabel.bottomAnchor.constraint(equalTo: self.shortDescriptionLabel.topAnchor, constant: -4.0),
             
         ].forEach { $0.isActive = true }
