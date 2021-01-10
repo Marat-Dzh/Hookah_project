@@ -47,7 +47,6 @@ extension BookingPresenter: BookingInteractorOutput{
             self.arrayBookingModels.append(helpArray)
         }
 //        self.view?.set(viewModels:makeViewModels())
-        print("arrayBookingModel: \(arrayBookingModels)")
         self.view?.set(viewModels: arrayBookingModels)
     }
     

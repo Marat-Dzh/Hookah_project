@@ -56,7 +56,6 @@ extension ReserveViewController {
         dateFormatter.timeStyle = .short
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.timeZone = TimeZone.current
-        //print(self.datePickerToReserve.date.addingTimeInterval(3*60*60))
         let acSuccess = UIAlertController(title: "Броинрование успешно", message: dateFormatter.string(from: date) + "\n Количество гостей: " + String(self.reserveView.numGuest), preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Oк", style: .default, handler: nil)
         

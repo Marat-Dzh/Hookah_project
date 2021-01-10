@@ -92,7 +92,7 @@ extension UserProfileViewController: UserProfileViewInput {
     func downloadImageProfile(url: URL) {
         self.userProfileView.photoImage.load(url: url)
         self.userProfileView.photoImage.contentMode = .scaleAspectFill
-        self.userProfileView.photoImage.layer.cornerRadius = self.userProfileView.photoImage.frame.height / 2
+        self.userProfileView.photoImage.layer.cornerRadius = 65.0
         self.userProfileView.photoImage.clipsToBounds = true
     }
     

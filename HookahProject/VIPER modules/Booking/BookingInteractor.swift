@@ -30,8 +30,8 @@ extension BookingInteractor: BookingInteractorInput{
         self.fetchDocumentsMenu()
         self.fetchImageMenu()
         delay(delay: 1.5) {
-            print("arrayMenuPictures:   \(self.arrayMenuPictures)")
-            print("arrayMenuPictures COUNT:   \(self.arrayMenuPictures.count)")
+//            print("arrayMenuPictures:   \(self.arrayMenuPictures)")
+//            print("arrayMenuPictures COUNT:   \(self.arrayMenuPictures.count)")
             self.output?.makeMenuArray(arrayDicts: self.arrayDictsMenuItem, images: self.arrayMenuPictures)
         }
     }

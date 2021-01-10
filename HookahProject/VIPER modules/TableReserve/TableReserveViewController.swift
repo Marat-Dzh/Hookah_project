@@ -48,7 +48,6 @@ class TableReserveViewController: UIViewController {
     
     @objc
     func onTapUpdate() {
-        print("Обновить таблицу")
         self.output.viewDidLoad()
     }
 }

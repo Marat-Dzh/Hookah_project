@@ -41,7 +41,6 @@ extension UserProfilePresenter: UserProfileInteractorOutput {
     }
     
     func downloadURLImageProfile(url: URL) {
-        print("url: \(url)")
         self.view?.downloadImageProfile(url: url)
     }
 }
