@@ -54,7 +54,7 @@ extension BookingPresenter: BookingInteractorOutput{
 
 extension BookingPresenter: BookingViewOutput{
     func viewDidLoad(){
-        self.interactor.getCatalog()
+        self.interactor.fetchCatalog()
     }
 }
 

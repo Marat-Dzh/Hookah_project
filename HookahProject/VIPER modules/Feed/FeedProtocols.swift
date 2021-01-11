@@ -6,14 +6,16 @@
 //
 
 import Foundation
+import UIKit
 
 protocol FeedViewInput: class{
-    func displayNews()
-    func displayStocks()
+    func setStories(storiesList: [UIImage])
+    func setNews(newsList: [News])
 }
 
 protocol FeedViewOutput : class{
-    
+    func fetchImageStories()
+    func fetchNews()
 }
 
 protocol FeedModuleInput: class{
@@ -26,12 +28,12 @@ protocol FeedModuleOutput: class{
 }
 
 protocol FeedInteractorInput{
-    func getNewsFromServer()
-    func getStocksFromServer()
+    func fetchNewsFromFB()
+    func fetchStoriesFromFB()
 }
 
 protocol FeedInteractorOutput: class{
-    func updateStocks()
+    func updateStories(images: [URL])
     func updateNews()
 }
 

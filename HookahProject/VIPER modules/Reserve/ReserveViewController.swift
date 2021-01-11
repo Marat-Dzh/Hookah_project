@@ -235,7 +235,7 @@ extension ReserveView {
     
     func setupButtonToReserve() {
         self.addSubview(self.buttonToReserve)
-        self.buttonToReserve.setTitle("Запросить броинрование", for: .normal)
+        self.buttonToReserve.setTitle("Запросить бронирование", for: .normal)
         self.buttonToReserve.addTarget(self, action: #selector(onTapButtonToReserveFunc), for: .touchUpInside)
     }
     

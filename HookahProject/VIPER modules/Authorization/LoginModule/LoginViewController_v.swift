@@ -77,7 +77,7 @@ class LoginViewController_v: UIViewController {
     }
     
     func setupSubViews(){
-        let padding: CGFloat = 40.0
+        let padding: CGFloat = 30.0
         let signInButtonHeight: CGFloat = 50.0
         
         // Background imageview
@@ -135,7 +135,7 @@ class LoginViewController_v: UIViewController {
         forgotPassword.addTarget(self, action: #selector(onForgorPassTap), for: .touchUpInside)
         
         view.insertSubview(signUpButton, aboveSubview: bgView)
-        signUpButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10.0).isActive = true
+        signUpButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -22.0).isActive = true
         signUpButton.leadingAnchor.constraint(equalTo: segmentView.leadingAnchor, constant: 0.0).isActive = true
         signUpButton.trailingAnchor.constraint(equalTo: segmentView.trailingAnchor, constant: 0.0).isActive = true
         signUpButton.addTarget(self, action: #selector(onRegisterTap), for: .touchUpInside)

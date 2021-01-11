@@ -31,7 +31,7 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (Auth.auth().currentUser?.uid == "Z3trLdPJxpcYSdUXNmb1DqZaSko2") {
+        if (Auth.auth().currentUser?.uid == "1w5vI62f4Kg0WfLnHFqcW9FuRbv2") {
             self.userProfileView.buttonReserves.isHidden = false
             self.userProfileView.buttonChangeScorese.isHidden = false
         }

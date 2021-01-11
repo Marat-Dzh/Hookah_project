@@ -22,7 +22,7 @@ final class CircleCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 3
-        imageView.layer.borderColor = UIColor.blue.cgColor
+        imageView.layer.borderColor = UIColor.white.cgColor
         return imageView
     }()
     

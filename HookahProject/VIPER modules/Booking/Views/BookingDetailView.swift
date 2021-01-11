@@ -70,7 +70,7 @@ final class BookingDetailView: AutoLayoutView {
             self.shortDescriptionLabel.leadingAnchor.constraint(equalTo: self.infoLabel.leadingAnchor),
             self.shortDescriptionLabel.trailingAnchor.constraint(equalTo: self.infoLabel.trailingAnchor),
             
-            self.infoLabel.topAnchor.constraint(equalTo: self.shortDescriptionLabel.bottomAnchor, constant: 26.0),
+            self.infoLabel.topAnchor.constraint(equalTo: self.shortDescriptionLabel.bottomAnchor, constant: 16.0),
             self.infoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16.0),
             self.infoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0)
             

@@ -25,7 +25,7 @@ extension BookingInteractor: BookingInteractorInput{
             clouser()
         }
     }
-    func getCatalog() {
+    func fetchCatalog() {
         //getting catalog from firebase database
         self.fetchDocumentsMenu()
         self.fetchImageMenu()

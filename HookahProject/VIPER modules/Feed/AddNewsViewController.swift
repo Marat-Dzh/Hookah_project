@@ -15,7 +15,7 @@ final class AddNewsViewController: UIViewController {
     
     private let containerView = UIView()
     private var containerYConstraint: NSLayoutConstraint?
-    private let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDone))
+    private let doneButton = UIBarButtonItem(title: "Добавить", style: .done, target: self, action: #selector(handleDone))
     private var didChangeImage = false
 
     private lazy var imageView: UIImageView = {
@@ -23,16 +23,18 @@ final class AddNewsViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "hole")!
+        imageView.backgroundColor = .white
         imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.black.cgColor
+        imageView.layer.borderColor = UIColor.white.cgColor
         return imageView
     }()
     
     private lazy var titleTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.backgroundColor = .white
         textField.borderStyle = .roundedRect
-        textField.placeholder = "Title"
+        textField.attributedPlaceholder = NSAttributedString(string: "Заголовок", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         textField.delegate = self
         return textField
     }()
@@ -40,8 +42,9 @@ final class AddNewsViewController: UIViewController {
     private lazy var descriptionTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.backgroundColor = .white
         textField.borderStyle = .roundedRect
-        textField.placeholder = "Description"
+        textField.attributedPlaceholder = NSAttributedString(string: "Описание", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         textField.delegate = self
         return textField
     }()
@@ -86,7 +89,7 @@ final class AddNewsViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         title = "Добавить новость"
         
         containerView.translatesAutoresizingMaskIntoConstraints = false

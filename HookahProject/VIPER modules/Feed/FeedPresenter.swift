@@ -6,12 +6,15 @@
 //
 
 import Foundation
+import UIKit
 
 final class FeedPresenter{
     weak var view: FeedViewInput?
     weak var moduleOutput: LoginModuleOutput?
     private let router: FeedRouterInput
     private let interactor: FeedInteractorInput
+    
+    private var arrayImageStories = [UIImage]()
     
     init(_ router:FeedRouterInput,_ interactor:FeedInteractorInput){
         self.interactor = interactor
@@ -30,30 +33,26 @@ extension FeedPresenter: FeedModuleInput{
     
     
 }
-extension FeedPresenter: FeedViewInput{
-    func displayNews() {
-         
-    }
-    
-    func displayStocks() {
-         
-    }
-    
-    
-}
 
 extension FeedPresenter: FeedViewOutput{
+    func fetchImageStories() {
+        
+    }
     
+    func fetchNews() {
+        
+    }
 }
 
 extension FeedPresenter: FeedInteractorOutput{
-    func updateStocks() {
-         
+    func updateStories(images: [URL]) {
+//        for image in images {
+//
+//        }
+        //self.view?.setStories(storiesList: images)
     }
     
     func updateNews() {
          
     }
-    
-    
 }

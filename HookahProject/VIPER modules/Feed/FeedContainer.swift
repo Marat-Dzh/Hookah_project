@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 final class FeedContainer{
-    let input: FeedModuleInput
+    weak var input: FeedModuleInput?
     let viewController: UIViewController
     
     class func assemble(context: FeedContext)-> FeedContainer{
@@ -21,7 +21,7 @@ final class FeedContainer{
         presenter.view = viewController
         presenter.moduleOutput = context.output
         
-        interactor.presenter = presenter
+        interactor.output = presenter
         
         return FeedContainer(view: viewController, input: presenter)
     }

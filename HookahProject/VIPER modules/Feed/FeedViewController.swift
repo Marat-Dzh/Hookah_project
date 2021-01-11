@@ -6,9 +6,14 @@
 //
 
 import UIKit
+import Firebase
 
 class FeedViewController: UIViewController {
     private let output: FeedViewOutput
+    
+    //    fileprivate var newsList = [News]()
+    //    // изображения для историй
+    //    fileprivate var storiesList: [UIImage] = [UIImage(named: "add")!]
     
     var expandedIndexSet: IndexSet = []
     
@@ -22,19 +27,15 @@ class FeedViewController: UIViewController {
     }
     
     var newsList = [
-        News(newsTitle: "First", newsImage: UIImage(named: "berrytea")!, newsDescription: "longlong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descr"),
-        News(newsTitle: "second", newsImage: UIImage(named: "berrytea")!, newsDescription: "longlong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descr"),
-        News(newsTitle: "third", newsImage: UIImage(named: "berrytea")!, newsDescription: "longlong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descr"),
-        News(newsTitle: "4444444", newsImage: UIImage(named: "berrytea")!, newsDescription: "longlong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descrlonglong descr")
+        News(newsTitle: "Новый год продолжается", newsImage: UIImage(named: "sale")!, newsDescription: "Задаете крепость, а вкус будет для вас приятным сюрпризом! Акция будет действовать до конца января."),
+        News(newsTitle: "Чай в подарок", newsImage: UIImage(named: "berrytea")!, newsDescription: "При получении карты лояльности заведения - чай в подарок.")
     ] {
         didSet {
             tableView.reloadData()
         }
     }
     // изображения для историй
-    var storiesList: [UIImage] = [
-        UIImage(named: "tea")!, UIImage(named: "whitewolf-1")!, UIImage(named: "lemontea")!, UIImage(named: "logo")!, UIImage(named: "lemontea")!, UIImage(named: "Constructor")!, UIImage(named: "whitewolf-1")!, UIImage(named: "whitewolf-1")!, UIImage(named: "whitewolf-1")!
-    ]
+    var storiesList: [UIImage] = [UIImage(named: "add")!, UIImage(named: "Menu_02")!, UIImage(named: "Menu_15")!]
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -58,22 +59,24 @@ class FeedViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .black
         collectionView.register(CircleCollectionViewCell.self, forCellWithReuseIdentifier: CircleCollectionViewCell.reuseIdentifier)
         return collectionView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = .black
         setupUI()
     }
     
     private func setupUI() {
         //navigationItem.title = "News"
         //view.backgroundColor = .white
-        
-        setupAddButton()
+        if (Auth.auth().currentUser?.uid == "1w5vI62f4Kg0WfLnHFqcW9FuRbv2") {
+            setupAddButton()
+            setupLongGestureRecognizerOnCollectionView()
+        }
         setupStoriesCollectionView()
         setupTableView()
     }
@@ -89,6 +92,33 @@ class FeedViewController: UIViewController {
         navigationController?.pushViewController(addNewsVC, animated: true)
     }
     
+    private func setupLongGestureRecognizerOnCollectionView() {
+        let lpgr = UILongPressGestureRecognizer(target: self,
+                                                action: #selector(handleLongPress(gestureRecognizer:)))
+        lpgr.minimumPressDuration = 0.5
+        lpgr.delaysTouchesBegan = true
+        collectionView.addGestureRecognizer(lpgr)
+    }
+    
+    @objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
+        switch gestureRecognizer.state {
+        case .began:
+            let point = gestureRecognizer.location(in: collectionView)
+            
+            if let indexPath = collectionView.indexPathForItem(at: point), indexPath.item != 0 {
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (_) in
+                    self.storiesList.remove(at: indexPath.item)
+                    self.collectionView.deleteItems(at: [indexPath])
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                present(alert, animated: true)
+            }
+        default:
+            break
+        }
+    }
+    
     private func setupStoriesCollectionView() {
         view.addSubview(collectionView)
         collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4).isActive = true
@@ -99,6 +129,7 @@ class FeedViewController: UIViewController {
     
     private func setupTableView() {
         view.addSubview(tableView)
+        tableView.backgroundColor = .black
         tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 4).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -109,7 +140,11 @@ class FeedViewController: UIViewController {
 extension FeedViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        true
+        if (Auth.auth().currentUser?.uid == "1w5vI62f4Kg0WfLnHFqcW9FuRbv2") {
+            return true
+        } else {
+            return false
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -161,17 +196,58 @@ extension FeedViewController: UITableViewDataSource {
 extension FeedViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = ViewStoryViewController()
-        vc.setImage(storiesList[indexPath.item])
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        if (Auth.auth().currentUser?.uid == "1w5vI62f4Kg0WfLnHFqcW9FuRbv2") {
+            if indexPath.item == 0 {
+                handleImagePicker()
+            } else {
+                let vc = ViewStoryViewController()
+                vc.setImage(storiesList[indexPath.item])
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true, completion: nil)
+            }
+        } else {
+            let vc = ViewStoryViewController()
+            vc.setImage(storiesList[indexPath.item])
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
+        }
+
+    }
+    
+    private func handleImagePicker() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        
+        present(imagePickerController, animated: true)
+    }
+}
+
+extension FeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.originalImage] as? UIImage else { return }
+        
+        storiesList.insert(image, at: 1)
+        collectionView.reloadData()
+        dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
     }
 }
 
 extension FeedViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        storiesList.count
+        if (Auth.auth().currentUser?.uid == "1w5vI62f4Kg0WfLnHFqcW9FuRbv2") {
+            return self.storiesList.count
+        } else {
+            self.storiesList.remove(at: 0)
+            return self.storiesList.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -183,7 +259,7 @@ extension FeedViewController: UICollectionViewDataSource {
 }
 
 extension FeedViewController: AddNewsDelegate {
-
+    
     func didAddNews(_ news: News) {
         newsList.insert(news, at: 0)
     }
@@ -192,14 +268,14 @@ extension FeedViewController: AddNewsDelegate {
 
 
 extension FeedViewController: FeedViewInput{
-    func displayNews() {
-        //
+    func setStories(storiesList: [UIImage]){
+        //        self.storiesList = storiesList
+        //        self.collectionView.reloadData()
     }
     
-    func displayStocks() {
-        //
+    func setNews(newsList: [News]) {
+        //        self.newsList = newsList
+        //        self.tableView.reloadData()
     }
-    
-    
 }
 

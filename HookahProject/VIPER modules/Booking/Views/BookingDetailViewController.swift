@@ -28,7 +28,7 @@ class BookingDetailViewController : UIViewController {
         super.viewDidLoad()
         self.bookingDetailView.backgroundColor = .black
         //self.bookingDetailView.imageView.image = self.bcvm.imageName
-        self.bookingDetailView.imageView.load(url: self.bcvm.imageName!)
+        self.bookingDetailView.imageView.load(url: self.bcvm.imageName ?? URL.init(string: "https://pbs.twimg.com/profile_images/1186126408055173120/8RN3221B_400x400.jpg")!)
         self.bookingDetailView.titleLabel.text = self.bcvm.title
         self.bookingDetailView.shortDescriptionLabel.text = self.bcvm.shortDescription
         self.bookingDetailView.infoLabel.set(text: self.bcvm.info)

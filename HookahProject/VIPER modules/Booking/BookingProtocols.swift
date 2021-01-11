@@ -20,7 +20,7 @@ protocol BookingModuleInput: class{
 }
 
 protocol BookingInteractorInput{
-    func getCatalog()
+    func fetchCatalog()
     func addToBasket()
 }
 

@@ -41,8 +41,8 @@ final class RegisterViewController: UIViewController {
         let textFieldView = RegisterFieldView()
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
         textFieldView.backgroundColor = UIColor.clear
-        textFieldView.setLabelText(text: "ФИО")
-        textFieldView.setInputAttrs(imageName: "account", placeholderText: "Например: Иванов Иван Иванович")
+        textFieldView.setLabelText(text: "Имя")
+        textFieldView.setInputAttrs(imageName: "account", placeholderText: "Например: Иван")
         return textFieldView
     }()
     let phoneView : RegisterFieldView = {
@@ -59,7 +59,7 @@ final class RegisterViewController: UIViewController {
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
         textFieldView.backgroundColor = UIColor.clear
         textFieldView.setLabelText(text: "Электронная почта")
-        textFieldView.setInputAttrs(imageName: "mail", placeholderText: "Например: alibaba@gay.com")
+        textFieldView.setInputAttrs(imageName: "mail", placeholderText: "Например: email@mail.ru")
         return textFieldView
     }()
     

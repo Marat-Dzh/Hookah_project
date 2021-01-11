@@ -21,6 +21,9 @@ class FeedTableViewCell: UITableViewCell {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(title)
+        title.font = Font.system(ofSize: 25.0, weight: .medium)
+        title.textColor = .white
+        title.backgroundColor = .black
         title.topAnchor.constraint(equalTo: topAnchor).isActive = true
         title.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         title.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
@@ -30,10 +33,13 @@ class FeedTableViewCell: UITableViewCell {
         newsImage.topAnchor.constraint(equalTo: title.bottomAnchor).isActive = true
         newsImage.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         newsImage.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        newsImage.heightAnchor.constraint(equalToConstant: 400.0).isActive = true
         
     
         addSubview(descriptionLabel)
-        
+        descriptionLabel.font = Font.system(ofSize: 17, weight: .regular)
+        descriptionLabel.textColor = .white
+        descriptionLabel.backgroundColor = .black
         descriptionLabel.topAnchor.constraint(equalTo: newsImage.bottomAnchor).isActive = true
         descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
