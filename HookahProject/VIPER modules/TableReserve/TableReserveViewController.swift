@@ -14,6 +14,7 @@ class TableReserveViewController: UIViewController {
     var tableReserveTableView: UITableView
     var tableReserveModelArray = [TableReserveModel]()
     var personInfoModelArray = [PersonInfo]()
+    let refreshControl = UIRefreshControl()
     
     
     init(output: TableReserveViewOutput) {
@@ -40,14 +41,15 @@ class TableReserveViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.refreshControl.tintColor = .white
+        self.refreshControl.addTarget(self, action: #selector(onTapUpdate), for: .valueChanged)
+        self.tableReserveTableView.refreshControl = refreshControl
         self.navigationItem.title = "Бронирования"
         self.output.viewDidLoad()
-        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Обновить", style: .done, target: self, action: #selector(onTapUpdate))
-        
     }
     
     @objc
-    func onTapUpdate() {
+    private func onTapUpdate() {
         self.output.viewDidLoad()
     }
 }
@@ -58,6 +60,7 @@ extension TableReserveViewController: TableReserveViewInput{
         self.tableReserveModelArray = viewModelsReserve
         self.personInfoModelArray = viewModelsInfo
         self.tableReserveTableView.reloadData()
+        self.tableReserveTableView.refreshControl?.endRefreshing()
     }
 }
 
@@ -80,8 +83,7 @@ extension TableReserveViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let phoneFromTableReserveModelArray = self.tableReserveModelArray[indexPath.row].phoneNumber
-        guard let number1 = URL(string: "tel://" + phoneFromTableReserveModelArray)  else { return }
-        UIApplication.shared.open(number1)
+        self.output.showCallVisitor(phoneNumber: phoneFromTableReserveModelArray)
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -123,5 +125,6 @@ extension TableReserveViewController: UITableViewDelegate {
         self.tableReserveTableView.dataSource = self
         self.tableReserveTableView.register(TableReserveCell<TableReserveCellView>.self)
         self.tableReserveTableView.backgroundColor = .black
+//        self.tableReserveTableView.contentInset = UIEdgeInsets(top: 50, left: 10, bottom: 10, right: 10)
     }
 }

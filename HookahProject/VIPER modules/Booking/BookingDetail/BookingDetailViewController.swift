@@ -6,14 +6,23 @@
 //
 
 import UIKit
+import Kingfisher
 
 class BookingDetailViewController : UIViewController {
-    
+    private var output: BookingDetailViewOutput
     
     private var bookingDetailView: BookingDetailView {
         self.view as! BookingDetailView
     }
     
+    init(output: BookingDetailViewOutput) {
+        self.output = output
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     override func loadView() {
@@ -22,16 +31,21 @@ class BookingDetailViewController : UIViewController {
     
     //var bookingDetailModel = BookingDetailView()
     
-    var bcvm = BookingCardViewModel(info: "", title: "", shortDescription: "", imageName: URL.init(string: ""))
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bookingDetailView.backgroundColor = .black
         //self.bookingDetailView.imageView.image = self.bcvm.imageName
-        self.bookingDetailView.imageView.load(url: self.bcvm.imageName ?? URL.init(string: "https://pbs.twimg.com/profile_images/1186126408055173120/8RN3221B_400x400.jpg")!)
-        self.bookingDetailView.titleLabel.text = self.bcvm.title
-        self.bookingDetailView.shortDescriptionLabel.text = self.bcvm.shortDescription
-        self.bookingDetailView.infoLabel.set(text: self.bcvm.info)
+//        self.bookingDetailView.imageView.load(url: self.bcvm.imageName ?? URL.init(string: "https://pbs.twimg.com/profile_images/1186126408055173120/8RN3221B_400x400.jpg")!)
+
+    }
+}
+
+extension BookingDetailViewController: BookingDetailViewInput {
+    func setupBookingDetail(bcvm: BookingCardViewModel) {
+        self.bookingDetailView.imageView.kf.setImage(with: bcvm.imageNameURL)
+        self.bookingDetailView.titleLabel.text = bcvm.title
+        self.bookingDetailView.shortDescriptionLabel.text = bcvm.shortDescription
+        self.bookingDetailView.infoLabel.set(text: bcvm.info)
     }
 }
 

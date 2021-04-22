@@ -19,12 +19,13 @@ class ChangeScoresInteractor {
 extension ChangeScoresInteractor: ChangeScoresInteractorInput {
     
     
-    func minusScoresInFB(cardInt: Int, scoresInt: Int) {
+    func changeScoresInFB(cardInt: Int, scoresInt: Int) {
         self.db.collection("users").whereField("cardId", isEqualTo: cardInt).getDocuments  { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
-                for document in querySnapshot!.documents {
+                guard let querySnapshot = querySnapshot else { return }
+                for document in querySnapshot.documents {
                     self.db.collection("users").document(document.documentID).updateData(["numberOfPoints" : scoresInt]) { err in
                         if let err = err {
                             print("Error updating document: \(err)")

@@ -9,7 +9,8 @@ import UIKit
 
 class ChangeScoresContainer {
     let viewController: UIViewController
-    weak var moduleInput: ChangeScoresModuleInput?
+    let moduleInput: ChangeScoresModuleInput?
+    private(set) weak var router: ChangeScoresRouterInput?
     
     static func assemble() -> ChangeScoresContainer {
         let router = ChangeScoresRouter()
@@ -21,12 +22,19 @@ class ChangeScoresContainer {
         
         interactor.output = presenter
         
-        return ChangeScoresContainer(viewController: viewController, moduleInput: presenter)
+        router.viewController = viewController
+        
+        return ChangeScoresContainer(viewController: viewController, moduleInput: presenter, router: router)
     }
     
-    init(viewController: UIViewController, moduleInput: ChangeScoresModuleInput?) {
+    init(viewController: UIViewController, moduleInput: ChangeScoresModuleInput?, router: ChangeScoresRouterInput) {
         self.viewController = viewController
         self.moduleInput = moduleInput
+        self.router = router
     }
     
+}
+
+struct ChangeScoresContext {
+    weak var moduleOutput: ChangeScoresModuleOutput?
 }

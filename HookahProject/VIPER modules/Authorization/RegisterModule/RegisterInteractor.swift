@@ -23,7 +23,7 @@ extension RegisterInteractor: RegisterInteractorInput{
         if isOk{
             presenter?.checkDidSucceeded(data: data)
         }else{
-            presenter?.checkFailed(errorResults: [])
+      //      presenter?.checkFailed(errorResults: [])
         }
     }
 }

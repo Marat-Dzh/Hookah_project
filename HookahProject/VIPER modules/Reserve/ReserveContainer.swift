@@ -9,7 +9,8 @@ import UIKit
 
 final class ReserveContainer {
     let viewController: UIViewController
-    weak var moduleInput: ReserveModuleInput?
+    let moduleInput: ReserveModuleInput?
+    private(set) weak var router: ReserveRouterInput?
     
     static func assemble() -> ReserveContainer {
         let router = ReserveRouter()
@@ -17,11 +18,23 @@ final class ReserveContainer {
         let presenter = ReservePresenter(router: router, interactor: interactor)
         let viewController = ReserveViewController(output: presenter)
         
-        return ReserveContainer(viewController: viewController, moduleInput: presenter)
+        presenter.view = viewController
+        
+        
+        interactor.output = presenter
+        
+        router.viewController = viewController
+        
+        return ReserveContainer(viewController: viewController, moduleInput: presenter, router: router)
     }
     
-    init(viewController: UIViewController, moduleInput: ReserveModuleInput?) {
+    init(viewController: UIViewController, moduleInput: ReserveModuleInput?, router: ReserveRouterInput) {
         self.viewController = viewController
         self.moduleInput = moduleInput
+        self.router = router
     }
+}
+
+struct ReserveContext {
+    weak var moduleOutput: ReserveModuleOutput? 
 }

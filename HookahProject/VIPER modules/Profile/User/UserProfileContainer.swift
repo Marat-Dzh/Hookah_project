@@ -9,7 +9,7 @@ import UIKit
 
 final class UserProfileContainer{
     let viewController: UIViewController
-    weak var moduleInput: UserProfileModuleInput?
+    let moduleInput: UserProfileModuleInput?
     
     class func assemble(userInfo: UserProfileContext) -> UserProfileContainer{
         let router = UserProfileRouter()
@@ -20,6 +20,10 @@ final class UserProfileContainer{
         interactor.output = presenter
         presenter.view = viewController
         presenter.moduleOutput = userInfo.moduleOutput
+        
+        router.navigationControllerProvider = { [weak viewController] in
+            viewController?.navigationController
+        }
         
         return UserProfileContainer(viewController: viewController, moduleInput: presenter)
     }
@@ -32,7 +36,7 @@ final class UserProfileContainer{
 
 struct UserProfileContext {
     let info: UserInfo?
-    let moduleOutput: UserProfileModuleOutput?
+    weak var moduleOutput: UserProfileModuleOutput?
     init(userInfo: UserInfo?, output: UserProfileModuleOutput?){
         info = userInfo
         moduleOutput = output

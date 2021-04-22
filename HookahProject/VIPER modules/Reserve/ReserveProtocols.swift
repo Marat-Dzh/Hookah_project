@@ -22,6 +22,7 @@ protocol ReserveViewInput: class {
 
 protocol ReserveViewOutput : class {
     func addReserve(date: Date, numGuest: Int)
+    func showErrorReserve() 
 }
 
 protocol ReserveInteractorInput {
@@ -33,7 +34,8 @@ protocol ReserveInteractorOutput: class {
 }
 
 protocol ReserveRouterInput: class {
-
+    func suссessReserve1(dateString: String, numGuest: String, completion: @escaping (String, String) -> Void)
+    func errorReserve()
 }
 
 protocol ReserveRouterOutput: class {

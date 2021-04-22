@@ -20,8 +20,9 @@ final class ConfirmInteractor{
 extension ConfirmInteractor: ConfirmInteractorInput{
     func resendMessage() {
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] (verificationID, error) in
+            guard let self = self else { return }
           if error != nil {
-            self?.presenter?.gotError(error?.localizedDescription ?? "Unknown Error...")
+            self.presenter?.gotError(error?.localizedDescription ?? "Unknown Error...")
             return
           } else{
             UserDefaults.standard.set(verificationID, forKey: "VerificationID")

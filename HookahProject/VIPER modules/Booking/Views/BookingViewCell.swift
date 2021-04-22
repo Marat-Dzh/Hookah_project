@@ -24,5 +24,7 @@ class BookingViewCell<T: UIView>: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.containerView.frame = self.contentView.frame
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
     }
 }

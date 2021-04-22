@@ -8,7 +8,7 @@ protocol BookingViewInput: class{
 
 protocol BookingViewOutput : class{
     func viewDidLoad()
-    
+    func showBookingDetailVC(bookingCardViewModel:  BookingCardViewModel)
 }
 
 protocol BookingModuleOutput: class{
@@ -21,15 +21,15 @@ protocol BookingModuleInput: class{
 
 protocol BookingInteractorInput{
     func fetchCatalog()
-    func addToBasket()
 }
 
 protocol BookingInteractorOutput: class{
-    func makeMenuArray(arrayDicts: [[String : Any]], images: [String:URL])
+    func didLoadObjects(images: [String : URL], data: [[String : Any]])
+    func didReciveError()
 }
 
 protocol BookingRouterInput: class{
-   
+    func bookingDetailVC(bookingCardViewModel:  BookingCardViewModel)
 }
 
 protocol BookingRouterOutput: class{

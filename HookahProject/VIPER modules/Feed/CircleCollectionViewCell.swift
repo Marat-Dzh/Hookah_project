@@ -21,7 +21,7 @@ final class CircleCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.layer.borderWidth = 3
+        imageView.layer.borderWidth = 1.5
         imageView.layer.borderColor = UIColor.white.cgColor
         return imageView
     }()

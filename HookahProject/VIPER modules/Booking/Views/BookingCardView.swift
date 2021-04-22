@@ -55,7 +55,8 @@ class BookingCardView: AutoLayoutView{
         self.titleLabel.text = viewModel.title
         self.shortDescriptionLabel.text = viewModel.shortDescription
         //self.cardImageView.image =  viewModel.imageName
-        self.cardImageView.load(url: ((viewModel.imageName ?? URL.init(string: "https://pbs.twimg.com/profile_images/1186126408055173120/8RN3221B_400x400.jpg"))!))
+//        self.cardImageView.load(url: ((viewModel.imageName ?? URL.init(string: "https://pbs.twimg.com/profile_images/1186126408055173120/8RN3221B_400x400.jpg"))!))
+        self.cardImageView.kf.setImage(with: viewModel.imageNameURL)
         self.setNeedsLayout()
     }
 }

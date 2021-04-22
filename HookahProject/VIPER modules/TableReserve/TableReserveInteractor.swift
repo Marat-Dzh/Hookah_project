@@ -25,11 +25,11 @@ extension TableReserveInteractor: TableReserveInteractorInput{
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
-                for document in querySnapshot!.documents {
+                guard let querySnapshot = querySnapshot else { return }
+                for document in querySnapshot.documents {
                     self.arrayDictsReserve.append(document.data())
                 }
             }
-            print("self.arrayDictsReserve ===> \(self.arrayDictsReserve)")
             self.output?.makeReserve(arrayDicts: self.arrayDictsReserve)
             self.arrayDictsReserve.removeAll()
         }

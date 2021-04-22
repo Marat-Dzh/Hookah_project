@@ -9,6 +9,7 @@ import UIKit
 
 final class ReservePresenter {
     weak var view: ReserveViewInput?
+    weak var moduleOutput: ReserveModuleOutput?
     
     private let router: ReserveRouterInput
     private let interactor: ReserveInteractorInput
@@ -24,10 +25,23 @@ final class ReservePresenter {
 
 extension ReservePresenter: ReserveViewOutput {
     func addReserve(date: Date, numGuest: Int) {
-        var dateString = String(describing: date)
-        dateString = String(dateString.dropLast(5))
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "RU-ru")
+        dateFormatter.dateFormat = "dd.MM.yy"
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        dateFormatter.timeZone = TimeZone.current
+        let dateString = dateFormatter.string(from: date)
+//        dateString = String(dateString.dropLast(5))
         let numGuest = String(describing: numGuest)
-        self.interactor.reserveTime(dateString: dateString, numGuest: numGuest)
+        self.router.suссessReserve1(dateString: dateString, numGuest: numGuest) { [weak self] (dateString1, numGuest1) in
+            guard let self = self else { return }
+            self.interactor.reserveTime(dateString: dateString1, numGuest: numGuest1)
+        }
+    }
+    
+    func showErrorReserve() {
+        self.router.errorReserve()
     }
 }
 
@@ -41,6 +55,3 @@ extension ReservePresenter: ReserveModuleInput {
     
 }
 
-extension ReservePresenter: ReserveRouterOutput {
-    
-}

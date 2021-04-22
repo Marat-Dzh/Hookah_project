@@ -8,13 +8,21 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    private lazy var coordinator = AppCoordinator()
+    private lazy var appCoordinator = AppCoordinator()
 
+    let notificationCenter = UNUserNotificationCenter.current()
+    let notifications = Notifications()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        notifications.requestAutorization()
+        notifications.notificationCenter.delegate = notifications
         
-        
-        coordinator.start()
+        appCoordinator.start()
         return true
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
 }
 

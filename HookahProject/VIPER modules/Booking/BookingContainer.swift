@@ -8,7 +8,7 @@
 import UIKit
 
 final class BookingContainer{
-    weak var input: BookingModuleInput?
+    let input: BookingModuleInput?
     let viewController: UIViewController
     
     class func assemble(context: BookingContext) -> BookingContainer{
@@ -19,6 +19,10 @@ final class BookingContainer{
         
         presenter.view = viewController
         presenter.moduleOutput = context.moduleOutput
+        
+        router.navigationControllerProvider = { [weak viewController] in
+            viewController?.navigationController
+        }
         
         interactor.output = presenter
         

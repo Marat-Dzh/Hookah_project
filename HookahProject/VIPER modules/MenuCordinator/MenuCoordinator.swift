@@ -39,16 +39,16 @@ class MenuCoordinator {
     
     func start(){
         self.setupBooking()
-        self.setupBasket()
+        self.setupReserve()
         self.setupFeed()
         self.setupAccount()
         let navigationControllers = NavControllerType.allCases.compactMap{
             self.navigationControllers[$0]
         }
         self.tabBarController.setViewControllers(navigationControllers, animated: true)
-        let vc = self.window.rootViewController?.children
-        if vc != nil || vc?.count ?? 0 > 1{
-            for item in vc!{
+        guard let vc = self.window.rootViewController?.children else {return}
+        if vc.count > 1 {
+            for item in vc {
                 item.dismiss(animated: true, completion: nil)
             }
         }
@@ -70,7 +70,7 @@ private extension MenuCoordinator {
         navController.setViewControllers([container.viewController], animated: false)
         container.viewController.navigationItem.title = NavControllerType.menu.title
     }
-  
+    
     func setupFeed(){
         guard let navController = self.navigationControllers[.feed] else {
             fatalError("can't finid navController")
@@ -81,39 +81,39 @@ private extension MenuCoordinator {
         feedContainer.viewController.navigationItem.title = NavControllerType.feed.title
     }
     
-    func setupBasket(){
-    guard let navController = self.navigationControllers[.basket] else {
-    fatalError("can't finid navController")
-    }
-    //let basketContext = BasketContext(output: nil)
-    let reserveContainer = ReserveContainer.assemble()
-    navController.setViewControllers([reserveContainer.viewController], animated: false)
-    reserveContainer.viewController.navigationItem.title = NavControllerType.basket.title
+    func setupReserve(){
+        guard let navController = self.navigationControllers[.basket] else {
+            fatalError("can't finid navController")
+        }
+        //let basketContext = BasketContext(output: nil)
+        let reserveContainer = ReserveContainer.assemble()
+        navController.setViewControllers([reserveContainer.viewController], animated: false)
+        reserveContainer.viewController.navigationItem.title = NavControllerType.basket.title
         reserve = reserveContainer.moduleInput
     }
-
+    
     func setupAccount(){
-    guard let navController = self.navigationControllers[.account] else {
-    fatalError("can't finid navController")
-    }
+        guard let navController = self.navigationControllers[.account] else {
+            fatalError("can't finid navController")
+        }
         let context = UserProfileContext(userInfo: userContext?.info, output: self)
         let userProfileContainer = UserProfileContainer.assemble(userInfo: context)
         account = userProfileContainer.moduleInput
-    navController.setViewControllers([userProfileContainer.viewController], animated: false)
-    userProfileContainer.viewController.navigationItem.title = NavControllerType.account.title
+        navController.setViewControllers([userProfileContainer.viewController], animated: false)
+        userProfileContainer.viewController.navigationItem.title = NavControllerType.account.title
     }
     
     
     func setupAppearance() {
         UINavigationBar.appearance().barTintColor = .black
         UINavigationBar.appearance().tintColor = .white
-
+        
         if #available(iOS 13.0, *) {
             let appearance = UINavigationBarAppearance()
             appearance.backgroundColor = .black
             appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
             appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-
+            
             UINavigationBar.appearance().tintColor = .white
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().compactAppearance = appearance
@@ -126,10 +126,10 @@ private extension MenuCoordinator {
             UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         }
         UINavigationBar.appearance().shadowImage = UIImage()
-    
-
         
-
+        
+        
+        
         UITabBar.appearance().barTintColor = .black
         UITabBar.appearance().tintColor = .white
         UITabBar.appearance().unselectedItemTintColor = .gray

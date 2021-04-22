@@ -23,7 +23,9 @@ final class UserProfilePresenter {
 extension UserProfilePresenter: UserProfileViewOutput {
     func uploadImage(image: UIImage) {
         let imageData = image.jpegData(compressionQuality: 0.6)
-        self.interactor.uploadImageInFB(image: imageData!)
+        if let imageData = imageData {
+            self.interactor.uploadImageInFB(image: imageData)
+        }
     }
     
     func dowloadImageProfile() {
@@ -33,6 +35,27 @@ extension UserProfilePresenter: UserProfileViewOutput {
     func onLogoutTapped() {
         self.interactor.logout()
     }
+    
+    func didTapButtonChangeScorese() {
+        self.router.showChangeScores()
+    }
+    
+    func didTapButtonReserve() {
+        self.router.showTableReserve()
+    }
+    
+    func didTapButtonToConnect() {
+        self.router.callNumber()
+    }
+    
+    func didTapButtonShowMap() {
+        self.router.showMap()
+    }
+    
+    func didTapButtonToInstagram() {
+        self.router.openInstagram()
+    }
+    
 }
 
 extension UserProfilePresenter: UserProfileInteractorOutput {
@@ -47,9 +70,9 @@ extension UserProfilePresenter: UserProfileInteractorOutput {
 
 extension UserProfilePresenter: UserProfileModuleInput {
     func setInfo(info: UserInfo?) {
-        if info != nil {
-            self.interactor.setInfoEntity(info: info!)
-            self.view?.showUserInfo(info: info!)
+        if let info = info {
+            self.interactor.setInfoEntity(info: info)
+            self.view?.showUserInfo(info: info)
         } else {
             self.view?.showNothing()
         }

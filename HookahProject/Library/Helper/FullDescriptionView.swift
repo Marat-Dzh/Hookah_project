@@ -13,7 +13,7 @@ import UIKit
 
 final class FullDescriptionView: AutoLayoutView {
     private let label = UILabel()
-    private let showMoreButton = UIButton(type: .system)
+    private let showMoreButton = UIButton(type: .custom)
 
     private var expanded = false
 

@@ -20,10 +20,14 @@ class ChangeScoresPresenter {
 }
 
 extension ChangeScoresPresenter: ChangeScoresViewOutput {
-    func minusScores(card: String, scores: String) {
+    func changeScores(card: String, scores: String) {
         guard let cardInt = Int(card) else { return }
         guard let scoresInt = Int(scores) else {return}
-        self.interactor.minusScoresInFB(cardInt: cardInt, scoresInt: scoresInt)
+        self.router.acChangeScores(card: cardInt, scores: scoresInt) { [weak self] (cardInt1, scoresInt1) in
+            guard let self = self else { return }
+            self.interactor.changeScoresInFB(cardInt: cardInt1, scoresInt: scoresInt1)
+        }
+
     }
     
     func plusScorese(card: String, scores: String) {

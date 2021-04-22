@@ -11,7 +11,8 @@ struct BookingCardViewModel {
     var info: String
     var title: String
     var shortDescription: String
-    var imageName: URL?
+    var imageName: String
+    var imageNameURL: URL?
     
 //    static func makeExample() -> [BookingCardViewModel] {
 //        return [BookingCardViewModel(info: "info1", title: "Кальян на чаше", shortDescription: "800 руб.", imageName: ),

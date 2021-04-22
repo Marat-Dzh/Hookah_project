@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
 class UserProfileViewController: UIViewController {
     private var output: UserProfileViewOutput
@@ -34,6 +35,8 @@ class UserProfileViewController: UIViewController {
         if (Auth.auth().currentUser?.uid == "1w5vI62f4Kg0WfLnHFqcW9FuRbv2") {
             self.userProfileView.buttonReserves.isHidden = false
             self.userProfileView.buttonChangeScorese.isHidden = false
+//            self.userProfileView.scoresLabel.isHidden = true
+//            self.userProfileView.numberCardLabel.isHidden = true
         }
         self.output.dowloadImageProfile()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Выйти", style: .done, target: self, action: #selector(self.onTapSignOut(sender: )))
@@ -48,21 +51,30 @@ class UserProfileViewController: UIViewController {
         
         self.userProfileView.onTapButtonReserve = {[weak self]  in
             guard let self = self else {return}
-            let tableReserveContainer = TableReserveContainer.assemble()
-            self.navigationController?.pushViewController(tableReserveContainer.viewController, animated: true)
+            self.output.didTapButtonReserve()
         }
         
-        self.userProfileView.onTapbuttonChangeScorese = {[weak self]  in
+        self.userProfileView.onTapButtonChangeScorese = {[weak self]  in
             guard let self = self else {return}
-            let changeScoresContainer = ChangeScoresContainer.assemble()
-            self.navigationController?.pushViewController(changeScoresContainer.viewController, animated: true)
+            self.output.didTapButtonChangeScorese()
+        }
+        
+        self.userProfileView.onTapButtonShowMap = {[weak self]  in
+            guard let self = self else {return}
+            self.output.didTapButtonShowMap()
+            //print("Show map")
         }
     
         self.userProfileView.onTapButtonToConnect = { [weak self] in
             guard let self = self else {return}
-            //self?.alertConnect()
-            self.callNumber()
+            self.output.didTapButtonToConnect()
         }
+        
+        self.userProfileView.onTapButtonToInstagram = { [weak self] in
+            guard let self = self else {return}
+            self.output.didTapButtonToInstagram()
+        }
+        
     }
     @objc
     func onTapSignOut(sender: UIBarButtonItem) {
@@ -90,7 +102,8 @@ extension UserProfileViewController: UserProfileViewInput {
     }
     
     func downloadImageProfile(url: URL) {
-        self.userProfileView.photoImage.load(url: url)
+        //self.userProfileView.photoImage.load(url: url)
+        self.userProfileView.photoImage.kf.setImage(with: url)
         self.userProfileView.photoImage.contentMode = .scaleAspectFill
         self.userProfileView.photoImage.layer.cornerRadius = 65.0
         self.userProfileView.photoImage.clipsToBounds = true
@@ -98,14 +111,6 @@ extension UserProfileViewController: UserProfileViewInput {
     
     func showNothing() {
         //
-    }
-    
-}
-
-extension UserProfileViewController {
-    func callNumber(){
-        guard let number1 = URL(string: "tel://" + "+74957064148")  else { return }
-        UIApplication.shared.open(number1)
     }
     
 }
@@ -127,8 +132,11 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
         acImage.addAction(camera)
         acImage.addAction(photo)
         acImage.addAction(cancel)
-        acImage.view.backgroundColor = .gray
-        acImage.view.tintColor = .black
+        if acImage.traitCollection.userInterfaceStyle == .dark {
+            acImage.view.tintColor = .white
+        } else {
+            acImage.view.tintColor = .black
+        }
         self.present(acImage, animated: true, completion: nil)
     }
     func chooseImagePicker(source: UIImagePickerController.SourceType) {
@@ -162,12 +170,17 @@ class UserProfileView: AutoLayoutView {
     fileprivate let buttonToConnect = ButtonToBasket()
     fileprivate let buttonReserves = UIButton()
     fileprivate let buttonChangeScorese = UIButton()
+    fileprivate let buttonShowMap = UIButton()
+    fileprivate let buttonToInstagram = UIImageView()
     
     
     var onTaphotoImage: (() -> Void)?
     var onTapButtonReserve: (() -> Void)?
-    var onTapbuttonChangeScorese: (() -> Void)?
+    var onTapButtonChangeScorese: (() -> Void)?
     var onTapButtonToConnect: (() -> Void)?
+    var onTapButtonShowMap: (() -> Void)?
+    var onTapButtonToInstagram: (() -> Void)?
+
     
     init(){
         super.init(frame: .zero)
@@ -185,8 +198,9 @@ class UserProfileView: AutoLayoutView {
         self.setupScoresLabel()
         self.setupButtonReserves()
         self.setupbuttonChangeScorese()
+        self.setupbuttonShowMap()
         self.setupButtonToConnect()
-        
+        self.setupButtonToInstagram()
         
     }
     
@@ -220,6 +234,15 @@ class UserProfileView: AutoLayoutView {
             self.buttonChangeScorese.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0),
             self.buttonChangeScorese.heightAnchor.constraint(equalToConstant: 44.0),
             
+            self.buttonToInstagram.bottomAnchor.constraint(equalTo: self.buttonShowMap.topAnchor, constant: -16.0),
+            self.buttonToInstagram.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0),
+            self.buttonToInstagram.heightAnchor.constraint(equalToConstant: 45),
+            self.buttonToInstagram.widthAnchor.constraint(equalToConstant: 45),
+            
+            self.buttonShowMap.bottomAnchor.constraint(equalTo: self.buttonToConnect.topAnchor, constant: -16.0),
+            self.buttonShowMap.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16.0),
+            self.buttonShowMap.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16.0),
+            self.buttonShowMap.heightAnchor.constraint(equalToConstant: 44.0),
 
         ].forEach{$0.isActive = true}
         
@@ -254,6 +277,7 @@ extension UserProfileView {
     
     func setupNumberCardLabel() {
         self.addSubview(self.numberCardLabel)
+        self.numberCardLabel.isHidden = false
         self.numberCardLabel.text = "Номер карты"
         self.numberCardLabel.textColor = .white
         self.numberCardLabel.font = Font.system(ofSize: 25, weight: .medium)
@@ -261,6 +285,7 @@ extension UserProfileView {
     
     func setupScoresLabel() {
         self.addSubview(self.scoresLabel)
+        self.scoresLabel.isHidden = false
         self.scoresLabel.text = "Баллы"
         self.scoresLabel.textColor = .white
         self.scoresLabel.font = Font.system(ofSize: 25, weight: .medium)
@@ -301,7 +326,39 @@ extension UserProfileView {
     
     @objc
     func onTapbuttonChangeScoreseFunc() {
-        self.onTapbuttonChangeScorese?()
+        self.onTapButtonChangeScorese?()
+    }
+    
+    func setupbuttonShowMap(){
+        self.addSubview(self.buttonShowMap)
+       // self.buttonChangeScorese.isHidden = true
+        self.buttonShowMap.backgroundColor = .darkGray
+        self.buttonShowMap.setTitle("На карте", for: .normal)
+        self.buttonShowMap.layer.cornerRadius = 8.0
+        self.buttonShowMap.addTarget(self, action: #selector(onTapButtonShowMapFunc), for: .touchUpInside)
+    }
+    
+    @objc
+    func onTapButtonShowMapFunc() {
+        self.onTapButtonShowMap?()
+    }
+    
+    func setupButtonToInstagram() {
+        self.addSubview(self.buttonToInstagram)
+        self.buttonToInstagram.image = UIImage(named: "iconInstagram.png")
+//        self.buttonToInstagram.layer.cornerRadius = self.photoImage.frame.height / 2
+        //self.buttonToInstagram.clipsToBounds = true
+        self.buttonToInstagram.contentMode = .scaleAspectFill
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapButtonToInstagramFunc(tapGestureRecognizer:)))
+        self.buttonToInstagram.isUserInteractionEnabled = true
+        self.buttonToInstagram.addGestureRecognizer(tapGestureRecognizer)
+
+    }
+    
+    @objc
+    func onTapButtonToInstagramFunc(tapGestureRecognizer: UITapGestureRecognizer) {
+        self.onTapButtonToInstagram?()
     }
     
 }

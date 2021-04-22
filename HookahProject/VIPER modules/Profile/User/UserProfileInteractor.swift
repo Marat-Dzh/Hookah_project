@@ -20,11 +20,6 @@ final class UserProfileInteractor {
 }
 
 extension UserProfileInteractor: UserProfileInteractorInput{
-    fileprivate func delay(delay: Double, clouser: @escaping () ->()) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            clouser()
-        }
-    }
     func uploadImageInFB(image: Data) {
         let gsReference = self.storageImage.reference(forURL: "gs://hookahproject.appspot.com/images")
         let imageFolderRef = gsReference.child("photoProfile")
@@ -45,7 +40,9 @@ extension UserProfileInteractor: UserProfileInteractorInput{
             if let error = error {
               print(error)
             } else {
-                self.output?.downloadURLImageProfile(url: url!)
+                if let url = url {
+                    self.output?.downloadURLImageProfile(url: url)
+                }
             }
         }
     }

@@ -46,8 +46,11 @@ extension TableReservePresenter: TableReserveInteractorOutput {
             }
             self.arrayReserves.append(helpArrayReserve)
             self.arrayPersonInfo.append(helpArrayPersonInfo)
+            
         }
         self.view?.set(viewModelsReserve: arrayReserves, viewModelsInfo: arrayPersonInfo)
+        self.arrayPersonInfo.removeAll()
+        self.arrayReserves.removeAll()
     }
 }
 
@@ -62,6 +65,10 @@ extension TableReservePresenter: TableReserveViewOutput {
     
     func changeConfirmation(uid: String, confirmation: Bool) {
         self.interactor.changeConfirmationInFB(uid: uid, confirmation: confirmation)
+    }
+    
+    func showCallVisitor(phoneNumber: String) {
+        self.router.callVisitor(phoneNumber: phoneNumber)
     }
     
 }

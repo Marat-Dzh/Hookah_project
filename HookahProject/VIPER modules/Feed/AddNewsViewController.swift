@@ -33,6 +33,7 @@ final class AddNewsViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
+        textField.textColor = .black
         textField.borderStyle = .roundedRect
         textField.attributedPlaceholder = NSAttributedString(string: "Заголовок", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         textField.delegate = self
@@ -43,6 +44,7 @@ final class AddNewsViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
+        textField.textColor = .black
         textField.borderStyle = .roundedRect
         textField.attributedPlaceholder = NSAttributedString(string: "Описание", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         textField.delegate = self

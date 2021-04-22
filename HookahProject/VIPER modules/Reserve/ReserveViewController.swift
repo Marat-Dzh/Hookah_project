@@ -9,12 +9,14 @@ import UIKit
 
 
 class ReserveViewController : UIViewController {
-
+    
+   // var timer: Timer?
+    
     private var output: ReserveViewOutput
     private var reserveView: ReserveView {
         self.view as! ReserveView
     }
-    
+
     
     init(output: ReserveViewOutput) {
         self.output = output
@@ -24,54 +26,26 @@ class ReserveViewController : UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func loadView() {
         self.view = ReserveView()
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
         self.reserveView.onTapButtonToReserve = {[weak self] in
             guard let self = self else {return}
             if (self.reserveView.datePickerToReserve.date.timeIntervalSince1970 - Date().timeIntervalSince1970 > 45*60) {
-                self.suссessReserve()
-                self.output.addReserve(date: self.reserveView.datePickerToReserve.date.addingTimeInterval(3*60*60), numGuest: self.reserveView.numGuest)
+                self.output.addReserve(date: self.reserveView.datePickerToReserve.date, numGuest: self.reserveView.numGuest)
             }else {
-                self.errorReserve()
+                self.output.showErrorReserve()
             }
         }
     }
 }
 
 extension ReserveViewController: ReserveViewInput {
-
-}
-
-extension ReserveViewController {
-    func suссessReserve() {
-        let date = self.reserveView.datePickerToReserve.date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .short
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.timeZone = TimeZone.current
-        let acSuccess = UIAlertController(title: "Броинрование успешно", message: dateFormatter.string(from: date) + "\n Количество гостей: " + String(self.reserveView.numGuest), preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Oк", style: .default, handler: nil)
-        
-        acSuccess.addAction(okAction)
-//        acSuccess.view.backgroundColor = .gray
-//        acSuccess.view.tintColor = .black
-        self.present(acSuccess, animated: true, completion: nil)
-    }
-    func errorReserve() {
-        let acSuccess = UIAlertController(title: "Броинрование невозможно", message: "Столик можно забронировать не меннее, чем за 45 минут", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Oк", style: .cancel, handler: nil)
-        acSuccess.addAction(okAction)
-//        acSuccess.view.backgroundColor = .gray
-//        acSuccess.view.tintColor = .black
-        self.present(acSuccess, animated: true, completion: nil)
-    }
+    
 }
 
 class ReserveView : AutoLayoutView {

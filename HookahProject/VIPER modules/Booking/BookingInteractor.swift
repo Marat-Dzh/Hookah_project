@@ -14,64 +14,109 @@ final class BookingInteractor{
     weak var output: BookingInteractorOutput?
     private let db = Firestore.firestore()
     private let storageImage = Storage.storage()
-    private var arrayDictsMenuItem = [[String : Any]]()
-    private var arrayMenuPictures = [String : URL]()
+    var dictMenuPictures1 = [String : URL]()
 }
 
 extension BookingInteractor: BookingInteractorInput{
-    func addToBasket() {}
-    fileprivate func delay(delay: Double, clouser: @escaping () ->()) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            clouser()
-        }
-    }
     func fetchCatalog() {
-        //getting catalog from firebase database
-        self.fetchDocumentsMenu()
-        self.fetchImageMenu()
-        delay(delay: 1.5) {
-//            print("arrayMenuPictures:   \(self.arrayMenuPictures)")
-//            print("arrayMenuPictures COUNT:   \(self.arrayMenuPictures.count)")
-            self.output?.makeMenuArray(arrayDicts: self.arrayDictsMenuItem, images: self.arrayMenuPictures)
+        let loadingGroup = DispatchGroup()
+        
+        var isError: Bool = false
+        
+        var arrayDictsMenuItems: [[String : Any]] = []
+        var imageItems: [String : URL] = [:]
+        
+        loadingGroup.enter()
+        fetchDocumentsMenu { result in
+            switch result {
+            case .success(let data):
+                arrayDictsMenuItems = data
+            case .failure(let error):
+                isError = true
+                print("[DEBUG] fetch documents menu error: \(error)")
+            }
+            
+            loadingGroup.leave()
         }
+        
+        loadingGroup.enter()
+        fetchImageMenu { result in
+            switch result {
+            case .success(let data):
+                imageItems = data
+            case .failure(let error):
+                isError = true
+                print("[DEBUG] fetch image menu error: \(error)")
+            }
+            
+            loadingGroup.leave()
+        }
+        
+        loadingGroup.notify(queue: .main) { [weak self] in
+            if isError {
+                self?.output?.didReciveError()
+            } else {
+                self?.output?.didLoadObjects(images: imageItems, data: arrayDictsMenuItems)
+            }
+        }
+        
+        //   }
     }
 }
 
 extension BookingInteractor {
-    func fetchDocumentsMenu() {
+    func fetchDocumentsMenu(completion: @escaping (Result<[[String : Any]], Error>) -> Void) {
+        var arrayDictsMenuItems: [[String : Any]] = []
+        
         let docRef = self.db.collection("products").document("teas").collection("brandTea")
-        docRef.getDocuments() {(querySnapshot, err) in
+        docRef.getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
+                completion(.failure(err))
             } else {
                 for document in querySnapshot!.documents {
-                    self.arrayDictsMenuItem.append(document.data())
+                    arrayDictsMenuItems.append(document.data())
                 }
+                
+                completion(.success(arrayDictsMenuItems))
             }
         }
     }
-    
-    func fetchImageMenu() {
+    func fetchImageMenu(completion: @escaping (Result<[String : URL], Error>) -> Void) {
         let gsReference = self.storageImage.reference(forURL: "gs://hookahproject.appspot.com/images")
         let imageFolderRef = gsReference.child("teas")
         //        let imageRef = gsReference.child("teas/lemontea.jpg")
+        
+        var imageItems: [String : URL] = [:]
+        
         imageFolderRef.listAll { (StorageListResult, Error) in
             if let error = Error{
+                completion(.failure(error))
                 print(error)
             } else {
+                let group = DispatchGroup()
                 for ref in StorageListResult.items{
-                    ref.downloadURL { (URL, Error) in
-                        if let error = Error {
+                    group.enter()
+                    ref.downloadURL() { (url, error) in
+                        if let error = error {
                             print("URL problem: \(error)")
                         } else {
-                            self.arrayMenuPictures[ref.name] = URL
+                            if let url = url {
+                                imageItems[ref.name] = url
+                            }
                         }
+                        group.leave()
                     }
+                }
+                
+                group.notify(queue: .main) {
+                    completion(.success(imageItems))
                 }
             }
         }
     }
 }
+
 
 //                let arrayMenuPicturesRef = StorageListResult.items.map({$0})
 //                let arrayMenuPicturesNameRef = StorageListResult.items.map({$0.name})

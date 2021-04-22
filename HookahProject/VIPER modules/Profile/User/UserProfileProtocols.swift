@@ -26,6 +26,11 @@ protocol UserProfileViewOutput : class {
     func dowloadImageProfile()
     func uploadImage(image: UIImage)
     func onLogoutTapped()
+    func didTapButtonChangeScorese()
+    func didTapButtonReserve()
+    func didTapButtonToConnect()
+    func didTapButtonShowMap()
+    func didTapButtonToInstagram()
 }
 
 protocol UserProfileInteractorInput {
@@ -42,6 +47,11 @@ protocol UserProfileInteractorOutput: class {
 }
 
 protocol UserProfileRouterInput: class {
+    func showChangeScores()
+    func showTableReserve()
+    func callNumber()
+    func showMap()
+    func openInstagram()
 }
 
 protocol UserProfileRouterOutput: class {

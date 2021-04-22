@@ -9,7 +9,7 @@ import UIKit
 
 final class TableReserveContainer{
     let viewController: UIViewController
-    weak var moduleInput: TableReserveModuleInput?
+    let moduleInput: TableReserveModuleInput?
     
     static func assemble() -> TableReserveContainer{
         let router = TableReserveRouter()

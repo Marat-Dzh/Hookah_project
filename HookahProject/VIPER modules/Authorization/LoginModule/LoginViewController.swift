@@ -163,7 +163,7 @@ private extension LoginViewController{
          
          textFieldView1.imgView.image = UIImage(named: "mail")
         let attributesDictionary = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
-         textFieldView1.textField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: attributesDictionary)
+         textFieldView1.textField.attributedPlaceholder = NSAttributedString(string: "E-mail", attributes: attributesDictionary)
          textFieldView1.textField.textColor = templateColor
         textFieldView1.textField.addTarget(self, action: #selector(valueChange), for: .allEditingEvents)
          

@@ -35,11 +35,15 @@ class ChangeScoresViewController: UIViewController {
             guard let self = self else {return}
             guard let card = self.changeScoresView.cardNumberTF.text else {return}
             guard let scores = self.changeScoresView.numScoresTF.text else {return}
-            self.output.minusScores(card: card, scores: scores)
-            self.acChangeScores()
+            self.output.changeScores(card: card, scores: scores)
+            //self.acChangeScores()
         }
         
         self.hideKeyboard()
+    }
+    
+    deinit {
+        print("DEINIT: ", ChangeScoresViewController.self)
     }
 }
 
@@ -48,14 +52,7 @@ extension ChangeScoresViewController: ChangeScoresViewInput {
 }
 
 extension ChangeScoresViewController {
-    func acChangeScores() {
-        guard let card = self.changeScoresView.cardNumberTF.text else {return}
-        guard let scores = self.changeScoresView.numScoresTF.text else {return}
-        let acCS = UIAlertController(title: "Изменил баллы", message: "Номер карты: \(card) \n Количество баллов: \(scores)", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Oк", style: .default, handler: nil)
-        acCS.addAction(okAction)
-        self.present(acCS, animated: true, completion: nil)
-    }
+
 }
 
 class ChangeScoresView: AutoLayoutView {

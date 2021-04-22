@@ -8,7 +8,7 @@
 import Foundation
 
 enum AuthType : String{
-    case loginAndPassword = "Email"
+    case loginAndPassword = "E-mail"
     case phoneNumberAndSMS = "Телефон"
 }
 

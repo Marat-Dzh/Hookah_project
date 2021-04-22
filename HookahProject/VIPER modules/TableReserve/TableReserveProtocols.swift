@@ -23,6 +23,7 @@ protocol TableReserveViewOutput : class {
     func viewDidLoad()
     func deleteReserve(uid: String)
     func changeConfirmation(uid: String, confirmation: Bool)
+    func showCallVisitor(phoneNumber: String)
 }
 
 protocol TableReserveInteractorInput {
@@ -36,7 +37,7 @@ protocol TableReserveInteractorOutput: class {
 }
 
 protocol TableReserveRouterInput: class {
-    
+    func callVisitor(phoneNumber: String)
 }
 
 protocol TableReserveRouterOutput: class {
